@@ -41,8 +41,61 @@ def normalizza_squadra(nome: Optional[str]) -> str:
 
 
 def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
-    """Confronto case-insensitive e accent-insensitive tra due nomi squadra."""
-    return normalizza_stringa(a) == normalizza_stringa(b)
+    """
+    Confronto intelligente tra due nomi (squadre o giocatori).
+
+    Gestisce i casi:
+    - Confronto esatto normalizzato:   "Kane" == "Kane"
+    - Match parziale cognome:          "Kane" in "Harry Kane"
+    - Match parziale inverso:          "Harry Kane" in "Kane"
+    - Accenti e maiuscole ignorate:    "Mbappe" == "Mbappé"
+    - Abbreviazioni con punto:         "H. Kane" ~ "Harry Kane"
+    """
+    na = normalizza_stringa(a)
+    nb = normalizza_stringa(b)
+
+    if not na or not nb:
+        return False
+
+    # 1. Confronto esatto
+    if na == nb:
+        return True
+
+    # 2. Match parziale — uno è contenuto nell'altro
+    # es. "kane" in "harry kane" oppure "harry kane" in "kane"
+    if na in nb or nb in na:
+        return True
+
+    # 3. Gestione abbreviazioni tipo "H. Kane" → "Harry Kane"
+    # Rimuovi iniziali con punto e riprova
+    def rimuovi_iniziali(s: str) -> str:
+        parole = s.split()
+        return " ".join(p for p in parole if len(p) > 2 or not p.endswith("."))
+
+    na2 = rimuovi_iniziali(na)
+    nb2 = rimuovi_iniziali(nb)
+    if na2 and nb2 and (na2 in nb2 or nb2 in na2):
+        return True
+
+    # 4. Confronto per parole — tutte le parole di uno sono in quelle dell'altro
+    # es. "Kane" contro "H. Kane" o "Kane Harry"
+    parole_a = set(na.split())
+    parole_b = set(nb.split())
+
+    # Rimuovi iniziali con punto (es. "h.")
+    parole_a = {p for p in parole_a if len(p) > 1}
+    parole_b = {p for p in parole_b if len(p) > 1}
+
+    if not parole_a or not parole_b:
+        return False
+
+    # Se una delle parole significative coincide (es. il cognome)
+    # e almeno uno dei due ha una sola parola significativa
+    if parole_a & parole_b:  # intersezione non vuota
+        if len(parole_a) == 1 or len(parole_b) == 1:
+            return True
+
+    return False
 
 
 def normalizza_risultato(risultato: Optional[str]) -> Optional[str]:
