@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Totomondiale 2026 – Classifica</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:    #1a2e45;
+            --accent:     #e74c3c;
+            --gold:       #f1c40f;
+            --silver:     #bdc3c7;
+            --bronze:     #cd7f32;
+            --bg:         #f0f4f8;
+            --card-bg:    #ffffff;
+            --text:       #2c3e50;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── Hero ────────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(135deg, #1a2e45 0%, #2980b9 50%, #1abc9c 100%);
+            color: white;
+            padding: 3rem 1rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "⚽";
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.04;
+            top: -4rem; right: -2rem;
+            transform: rotate(15deg);
+            line-height: 1;
+        }
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,.3);
+            margin-bottom: .25rem;
+        }
+        .hero .subtitle {
+            font-size: .95rem;
+            opacity: .85;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── Stat pills ──────────────────────────────────────────── */
+        .stat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            background: rgba(255,255,255,.15);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 2rem;
+            padding: .4rem 1.1rem;
+            font-size: .85rem;
+            color: white;
+            margin: .25rem;
+            transition: background .2s;
+        }
+        .stat-pill:hover { background: rgba(255,255,255,.25); }
+        .stat-pill .val { font-weight: 700; font-size: 1.1rem; }
+
+        /* ── Cards statistiche ───────────────────────────────────── */
+        .stats-row { margin-top: -1.5rem; padding: 0 1rem 1rem; }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+            border-top: 4px solid var(--primary);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+        .stat-card .icon { font-size: 2rem; margin-bottom: .3rem; }
+        .stat-card .num  { font-size: 1.9rem; font-weight: 900; color: var(--primary); }
+        .stat-card .lbl  { font-size: .75rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+
+        /* ── Podio ───────────────────────────────────────────────── */
+        .podio-card {
+            border-radius: 1.2rem;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 6px 25px rgba(0,0,0,.15);
+            transition: transform .2s;
+        }
+        .podio-card:hover { transform: translateY(-6px); }
+        .podio-1 { background: linear-gradient(135deg, #f6d365, #fda085); }
+        .podio-2 { background: linear-gradient(135deg, #a8c0ff, #3f2b96); }
+        .podio-3 { background: linear-gradient(135deg, #cd7f32, #8B5E3C); }
+        .podio-pos  { font-size: 2.5rem; font-weight: 900; }
+        .podio-name { font-size: 1.1rem; font-weight: 700; margin: .25rem 0; }
+        .podio-pts  { font-size: .9rem; opacity: .9; }
+        .podio-medal { font-size: 3rem; display: block; margin-bottom: .25rem; }
+
+        /* ── Progress bar punti ──────────────────────────────────── */
+        .progress-bar-custom { height: 8px; border-radius: 4px; }
+
+        /* ── Tabella classifica ──────────────────────────────────── */
+        .table-section {
+            background: var(--card-bg);
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,.07);
+        }
+        .table thead th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: .8rem;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            border: none;
+            padding: .9rem .6rem;
+            white-space: nowrap;
+        }
+        .table tbody tr { transition: background .15s; }
+        .table tbody tr:hover { background: #e8f0fe !important; }
+        .table tbody td { vertical-align: middle; padding: .7rem .6rem; font-size: .88rem; border-color: #eee; }
+
+        /* Highlight righe podio */
+        tr.pos-1 td { background: rgba(241,196,15,.12) !important; font-weight: 700; }
+        tr.pos-2 td { background: rgba(189,195,199,.18) !important; }
+        tr.pos-3 td { background: rgba(205,127,50,.12) !important; }
+
+        .badge-pos {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 50%;
+            font-weight: 700; font-size: .85rem;
+        }
+        .badge-1  { background: var(--gold);   color: #6B4300; }
+        .badge-2  { background: var(--silver); color: #333; }
+        .badge-3  { background: var(--bronze); color: white; }
+        .badge-n  { background: #ecf0f1; color: #555; }
+
+        .pts-badge {
+            background: var(--primary); color: white;
+            border-radius: 1rem; padding: .2rem .7rem;
+            font-weight: 700; font-size: .92rem;
+        }
+
+        .pts-progress { height: 5px; border-radius: 3px; background: #e9ecef; overflow: hidden; }
+        .pts-bar { height: 100%; border-radius: 3px;
+                   background: linear-gradient(90deg, #667eea, #764ba2); transition: width 1s ease; }
+
+        /* ── Sezione record ──────────────────────────────────────── */
+        .record-card {
+            background: var(--card-bg); border-radius: 1rem; padding: 1rem 1.25rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,.07);
+            border-left: 5px solid var(--accent);
+        }
+        .record-card .rec-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: .1rem; }
+        .record-card .rec-name  { font-weight: 700; font-size: 1rem; }
+        .record-card .rec-val   { font-size: .85rem; color: var(--accent); font-weight: 600; }
+
+        /* ── Footer ──────────────────────────────────────────────── */
+        footer {
+            background: var(--primary); color: rgba(255,255,255,.65);
+            text-align: center; padding: 1.5rem;
+            font-size: .8rem; margin-top: 3rem;
+        }
+
+        /* ── Responsive ──────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .table thead th:nth-child(n+5) { display: none; }
+            .table tbody td:nth-child(n+5) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+<div class="hero">
+    <h1>🏆 Totomondiale 2026</h1>
+    <p class="subtitle">Classifica aggiornata al 29/05/2026 16:45:12</p>
+
+    <div class="mt-2">
+        <span class="stat-pill"><i class="fas fa-users"></i><span class="val">3</span> Partecipanti</span>
+        <span class="stat-pill"><i class="fas fa-futbol"></i><span class="val">73</span> Partite</span>
+        <span class="stat-pill"><i class="fas fa-star"></i><span class="val">27.3</span> Media Punti</span>
+    </div>
+</div>
+
+<div class="container-xl py-4">
+
+    <!-- ══ STAT CARDS ══════════════════════════════════════════════════════ -->
+    <div class="row g-3 mb-4 stats-row">
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="icon">🥇</div>
+                <div class="num">28</div>
+                <div class="lbl">Punteggio Massimo</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#27ae60;">
+                <div class="icon">⚽</div>
+                <div class="num">0</div>
+                <div class="lbl">Record Risultati Esatti</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#e74c3c;">
+                <div class="icon">👟</div>
+                <div class="num">2</div>
+                <div class="lbl">Record Marcatori</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#f39c12;">
+                <div class="icon">📊</div>
+                <div class="num">3</div>
+                <div class="lbl">Classificati</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ PODIO ═══════════════════════════════════════════════════════════ -->
+    
+    <div class="row g-3 mb-4 align-items-end">
+        <div class="col-md-4 order-md-1">
+            <div class="podio-card podio-2">
+                <span class="podio-medal">🥈</span>
+                <div class="podio-pos">2°</div>
+                <div class="podio-name">Mario Rossi</div>
+                <div class="podio-pts">28 punti</div>
+            </div>
+        </div>
+        <div class="col-md-4 order-md-0">
+            <div class="podio-card podio-1" style="transform: scale(1.04);">
+                <span class="podio-medal">🥇</span>
+                <div class="podio-pos">1°</div>
+                <div class="podio-name">Francesco Albricci</div>
+                <div class="podio-pts">28 punti</div>
+            </div>
+        </div>
+        <div class="col-md-4 order-md-2">
+            <div class="podio-card podio-3">
+                <span class="podio-medal">🥉</span>
+                <div class="podio-pos">3°</div>
+                <div class="podio-name">Emiliano Castiello</div>
+                <div class="podio-pts">26 punti</div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- ══ TABELLA CLASSIFICA ══════════════════════════════════════════════ -->
+    <div class="table-section mb-4">
+        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+            <h5 class="mb-0 fw-bold"><i class="fas fa-list-ol me-2 text-primary"></i>Classifica Completa</h5>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <span class="badge bg-secondary">3 partecipanti</span>
+                <span class="badge bg-light text-dark border" style="font-weight:400; font-size:.75rem;">
+                    ⚖️ Spareggio: Punti → Ris.Esatti → Marcatori
+                </span>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="tbl-classifica" class="table table-hover table-bordered align-middle w-100">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Nome</th>
+                        <th>Totale</th>
+                        <th>Barra</th>
+                        <th>Esiti</th>
+                        <th>Ris.Esatti</th>
+                        <th>Marcatori</th>
+                        <th>Gironi</th>
+                        <th>Speciali</th>
+                        <th>Vincitore</th>
+                        <th>Finalista</th>
+                        <th>Cannoniere</th>
+                        <th>Assistman</th>
+                        <th>MVP</th>
+                        <th>Portiere</th>
+                        <th>Giovane</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    
+                    <tr class="pos-1">
+                        <td class="text-center">
+                            <span class="badge-pos badge-1">
+                                1
+                            </span>
+                        </td>
+                        <td><strong>Francesco Albricci</strong></td>
+                        <td class="text-center">
+                            <span class="pts-badge">28</span>
+                        </td>
+                        <td style="min-width:80px;">
+                            <div class="pts-progress">
+                                <div class="pts-bar" style="width:100.0%"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">
+                            
+                                0
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                                <span class="badge bg-warning text-dark">4</span>
+                            
+                        </td>
+                        <td class="text-center">24</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                    </tr>
+                    
+                    
+                    <tr class="pos-2">
+                        <td class="text-center">
+                            <span class="badge-pos badge-2">
+                                2
+                            </span>
+                        </td>
+                        <td><strong>Mario Rossi</strong></td>
+                        <td class="text-center">
+                            <span class="pts-badge">28</span>
+                        </td>
+                        <td style="min-width:80px;">
+                            <div class="pts-progress">
+                                <div class="pts-bar" style="width:100.0%"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">
+                            
+                                0
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                                <span class="badge bg-warning text-dark">4</span>
+                            
+                        </td>
+                        <td class="text-center">24</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                    </tr>
+                    
+                    
+                    <tr class="pos-3">
+                        <td class="text-center">
+                            <span class="badge-pos badge-3">
+                                3
+                            </span>
+                        </td>
+                        <td><strong>Emiliano Castiello</strong></td>
+                        <td class="text-center">
+                            <span class="pts-badge">26</span>
+                        </td>
+                        <td style="min-width:80px;">
+                            <div class="pts-progress">
+                                <div class="pts-bar" style="width:92.9%"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">
+                            
+                                0
+                            
+                        </td>
+                        <td class="text-center">
+                            
+                                <span class="badge bg-warning text-dark">2</span>
+                            
+                        </td>
+                        <td class="text-center">24</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ══ RECORD ══════════════════════════════════════════════════════════ -->
+    <h5 class="fw-bold mb-3"><i class="fas fa-trophy me-2 text-warning"></i>Record & Statistiche</h5>
+    <div class="row g-3 mb-4">
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">🎯 Record Risultati Esatti</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">0 risultati</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">👟 Record Marcatori Indovinati</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">2 marcatori</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">✅ Record Esiti Corretti</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">0 esiti</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">🏟️ Record Punti Gironi</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">24 pt</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">🥇 Vincitore Indovinato</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">0 pt</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">⚽ Capocannoniere Indovinato</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">0 pt</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">🅰️ Assistman Indovinato</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">0 pt</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">🌟 Record Punti Speciali</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">0 pt</div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-sm-6">
+            <div class="record-card">
+                <div class="rec-label">🔢 Record Punti Partite</div>
+                <div class="rec-name">Francesco Albricci</div>
+                <div class="rec-val">4 pt</div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- ══ REGOLAMENTO (collapsible) ══════════════════════════════════════ -->
+    <div class="accordion mb-4" id="accRegolamento">
+        <div class="accordion-item border-0 rounded-3 overflow-hidden shadow-sm">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseReg">
+                    <i class="fas fa-book-open me-2 text-primary"></i>Regolamento Punteggi
+                </button>
+            </h2>
+            <div id="collapseReg" class="accordion-collapse collapse" data-bs-parent="#accRegolamento">
+                <div class="accordion-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <h6 class="fw-bold text-primary">⚽ Partite</h6>
+                            <ul class="list-unstyled small">
+                                <li>🔵 Esito 1X2 corretto → <strong>1 pt</strong></li>
+                                <li>🟢 Risultato esatto → <strong>5 pt</strong> (+ 1 esito)</li>
+                                <li>🟡 Marcatore → <strong>2 pt</strong></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="fw-bold text-success">🏟️ Gironi</h6>
+                            <ul class="list-unstyled small">
+                                <li>✅ Coppia esatta in ordine → <strong>6 pt</strong></li>
+                                <li>🔄 Coppia invertita → <strong>4 pt</strong></li>
+                                <li>☑️ Singola qualificata → <strong>1 pt</strong></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="fw-bold text-danger">🏆 Speciali</h6>
+                            <ul class="list-unstyled small">
+                                <li>🥇 Vincitore Mondiale → <strong>20 pt</strong></li>
+                                <li>🏆 Finale esatta → <strong>15 pt</strong></li>
+                                <li>🥈 Finalista singola → <strong>10 pt</strong></li>
+                                <li>⚽ Capocannoniere → <strong>10 pt</strong></li>
+                                <li>🅰️ Assistman → <strong>12 pt</strong></li>
+                                <li>⭐ MVP Torneo → <strong>10 pt</strong></li>
+                                <li>🧤 Miglior Portiere → <strong>10 pt</strong></li>
+                                <li>🌟 Miglior Giovane U21 → <strong>15 pt</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /container -->
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════════════════ -->
+<footer>
+    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 29/05/2026 16:45:12
+    &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v1.0</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $('#tbl-classifica').DataTable({
+        paging:    false,
+        info:      false,
+        searching: true,
+        order:     [],        // mantieni ordine attuale (già ordinata)
+        language: {
+            search:   '<i class="fas fa-search me-1"></i>Cerca partecipante:',
+            zeroRecords: 'Nessun risultato trovato',
+        },
+        columnDefs: [
+            { orderable: false, targets: [2, 3] },
+            { className: 'text-center', targets: '_all' },
+            { className: 'text-start',  targets: [1] },
+        ]
+    });
+
+    // Animazione progress bar
+    setTimeout(() => {
+        document.querySelectorAll('.pts-bar').forEach(b => {
+            const w = b.style.width;
+            b.style.width = '0';
+            requestAnimationFrame(() => { b.style.width = w; });
+        });
+    }, 200);
+});
+</script>
+</body>
+</html>
