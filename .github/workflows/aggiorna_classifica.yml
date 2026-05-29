@@ -1,0 +1,36 @@
+name: Aggiorna Classifica Totomondiale
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # ogni ora esatta (00, 01, 02, ...)
+  workflow_dispatch:        # permette avvio manuale dal sito GitHub
+
+jobs:
+  aggiorna:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v4
+
+      - name: Installa Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installa dipendenze
+        run: pip install pandas openpyxl jinja2
+
+      - name: Scarica risultati reali e calcola classifica
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+        run: python src/aggiorna_e_calcola.py
+
+      - name: Pubblica classifica aggiornata
+        run: |
+          git config user.name "TotoMondiale Bot"
+          git config user.email "bot@totomondiale.it"
+          cp data/output/index.html index.html
+          git add index.html data/risultati_reali/risultati.xlsx
+          git diff --cached --quiet || git commit -m "Classifica aggiornata $(date '+%d/%m/%Y %H:%M')"
+          git push

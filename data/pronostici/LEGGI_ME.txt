@@ -1,0 +1,6 @@
+INSERISCI QUI I FILE EXCEL DEI PARTECIPANTI
+
+Ogni partecipante deve consegnare il proprio file .xlsx compilato.
+Il nome del file non è importante (es. MarioRossi.xlsx, pronostici_marco.xlsx)
+
+Il sistema leggerà automaticamente TUTTI i file .xlsx presenti in questa cartella.
