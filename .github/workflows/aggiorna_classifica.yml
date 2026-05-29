@@ -5,6 +5,9 @@ on:
     - cron: '0 * * * *'   # ogni ora esatta (00, 01, 02, ...)
   workflow_dispatch:        # permette avvio manuale dal sito GitHub
 
+permissions:
+  contents: write
+
 jobs:
   aggiorna:
     runs-on: ubuntu-latest
