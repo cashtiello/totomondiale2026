@@ -37,4 +37,4 @@ jobs:
           cp data/output/index.html index.html
           git add index.html data/risultati_reali/risultati.xlsx
           git diff --cached --quiet || git commit -m "Classifica aggiornata $(date '+%d/%m/%Y %H:%M')"
-          git push
+           git push origin main
