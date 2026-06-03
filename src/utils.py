@@ -166,3 +166,33 @@ def safe_str(val) -> str:
     if isinstance(val, float) and val != val:  # NaN check
         return ""
     return str(val).strip()
+
+
+# Dizionario bandiere per paese
+BANDIERE = {
+    "messico": "🇲🇽", "sud africa": "🇿🇦", "corea del sud": "🇰🇷",
+    "repubblica ceca": "🇨🇿", "r.ceca": "🇨🇿", "canada": "🇨🇦",
+    "bosnia": "🇧🇦", "bosnia erzegovina": "🇧🇦", "qatar": "🇶🇦",
+    "svizzera": "🇨🇭", "brasile": "🇧🇷", "marocco": "🇲🇦",
+    "haiti": "🇭🇹", "scozia": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "usa": "🇺🇸",
+    "paraguay": "🇵🇾", "australia": "🇦🇺", "turchia": "🇹🇷",
+    "germania": "🇩🇪", "curacao": "🇨🇼", "costa d'avorio": "🇨🇮",
+    "ecuador": "🇪🇨", "olanda": "🇳🇱", "giappone": "🇯🇵",
+    "svezia": "🇸🇪", "tunisia": "🇹🇳", "spagna": "🇪🇸",
+    "capo verde": "🇨🇻", "arabia saudita": "🇸🇦", "uruguay": "🇺🇾",
+    "belgio": "🇧🇪", "egitto": "🇪🇬", "iran": "🇮🇷",
+    "nuova zelanda": "🇳🇿", "francia": "🇫🇷", "senegal": "🇸🇳",
+    "iraq": "🇮🇶", "norvegia": "🇳🇴", "argentina": "🇦🇷",
+    "algeria": "🇩🇿", "austria": "🇦🇹", "giordania": "🇯🇴",
+    "portogallo": "🇵🇹", "congo": "🇨🇩", "uzbekistan": "🇺🇿",
+    "colombia": "🇨🇴", "inghilterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "croazia": "🇭🇷",
+    "ghana": "🇬🇭", "panama": "🇵🇦",
+}
+
+
+def bandiera(nome_squadra: str) -> str:
+    """Restituisce la bandiera emoji per una squadra."""
+    if not nome_squadra:
+        return ""
+    key = normalizza_stringa(nome_squadra)
+    return BANDIERE.get(key, "🏳️")

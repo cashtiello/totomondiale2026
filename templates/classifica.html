@@ -14,92 +14,283 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a2e45; --accent: #e74c3c; --gold: #f1c40f;
-            --silver: #bdc3c7; --bronze: #cd7f32; --bg: #f0f4f8;
+            --primary: #0a1628; --accent: #e74c3c; --gold: #f1c40f;
+            --silver: #bdc3c7; --bronze: #cd7f32; --bg: #0d1b2a;
+            --card-bg: #132338; --text: #e8edf5;
+            --wc-red: #C8102E; --wc-blue: #003087; --wc-green: #009A44;
         }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #2c3e50; }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
 
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #1a2e45 0%, #2980b9 50%, #1abc9c 100%);
-            color: white; padding: 3rem 1rem 2rem; text-align: center; position: relative; overflow: hidden;
+        /* ── SFONDO ANIMATO ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0,48,135,.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(200,16,46,.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0,154,68,.15) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
         }
-        .hero::before { content: "⚽"; position: absolute; font-size: 18rem; opacity: .04; top: -4rem; right: -2rem; transform: rotate(15deg); }
-        .hero h1 { font-size: clamp(1.8rem,5vw,3.2rem); font-weight: 900; margin-bottom: .25rem; }
-        .hero .subtitle { font-size: .95rem; opacity: .85; margin-bottom: 1.5rem; }
-        .stat-pill { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.15); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.25); border-radius: 2rem; padding: .4rem 1.1rem; font-size: .85rem; color: white; margin: .25rem; }
+
+        /* ── HERO ── */
+        .hero {
+            background:
+                linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.65)),
+                url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1400&q=80') center/cover no-repeat;
+            color: white;
+            padding: 4rem 1rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--wc-red);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--wc-blue), var(--wc-red), var(--wc-green), var(--gold));
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(200,16,46,.8);
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 2rem;
+            padding: .3rem 1.2rem;
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(6px);
+        }
+        .hero h1 {
+            font-size: clamp(2rem,6vw,4rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-shadow: 0 3px 20px rgba(0,0,0,.5);
+            margin-bottom: .25rem;
+            line-height: 1.1;
+        }
+        .hero h1 span { color: var(--gold); }
+        .hero .subtitle { font-size: .9rem; opacity: .8; margin-bottom: 1.5rem; }
+        .stat-pill {
+            display: inline-flex; align-items: center; gap: .4rem;
+            background: rgba(255,255,255,.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 2rem; padding: .4rem 1.2rem;
+            font-size: .85rem; color: white; margin: .25rem;
+            transition: background .2s;
+        }
+        .stat-pill:hover { background: rgba(255,255,255,.2); }
         .stat-pill .val { font-weight: 700; font-size: 1.1rem; }
 
-        /* Cards */
-        .stat-card { background: white; border-radius: 1rem; padding: 1.25rem 1rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.08); border-top: 4px solid var(--primary); transition: transform .2s; }
-        .stat-card:hover { transform: translateY(-4px); }
+        /* ── CARDS STATISTICHE ── */
+        .stat-card {
+            background: linear-gradient(135deg, #132338, #1a3250);
+            border-radius: 1rem; padding: 1.25rem 1rem; text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            border: 1px solid rgba(255,255,255,.08);
+            border-top: 3px solid var(--wc-red);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,.4); }
         .stat-card .icon { font-size: 2rem; margin-bottom: .3rem; }
-        .stat-card .num { font-size: 1.9rem; font-weight: 900; color: var(--primary); }
-        .stat-card .lbl { font-size: .75rem; color: #666; font-weight: 600; text-transform: uppercase; }
+        .stat-card .num { font-size: 1.9rem; font-weight: 900; color: var(--gold); }
+        .stat-card .lbl { font-size: .72rem; color: #8899aa; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
 
-        /* Podio */
-        .podio-card { border-radius: 1.2rem; padding: 1.5rem 1rem; text-align: center; color: white; box-shadow: 0 6px 25px rgba(0,0,0,.15); transition: transform .2s; }
-        .podio-card:hover { transform: translateY(-6px); }
-        .podio-1 { background: linear-gradient(135deg, #f6d365, #fda085); }
-        .podio-2 { background: linear-gradient(135deg, #a8c0ff, #3f2b96); }
-        .podio-3 { background: linear-gradient(135deg, #cd7f32, #8B5E3C); }
-        .podio-pos { font-size: 2.5rem; font-weight: 900; }
-        .podio-name { font-size: 1.1rem; font-weight: 700; margin: .25rem 0; }
+        /* ── SEZIONE ERBA ── */
+        .field-divider {
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                #1a5c2a 0px, #1a5c2a 40px,
+                #1e6830 40px, #1e6830 80px
+            );
+            margin: 2rem 0;
+            border-radius: 3px;
+        }
+
+        /* ── PODIO ── */
+        .podio-section {
+            background:
+                linear-gradient(rgba(10,22,40,.85), rgba(10,22,40,.9)),
+                url('https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?w=1200&q=70') center/cover no-repeat;
+            border-radius: 1.5rem;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .podio-section h5 { color: var(--gold); font-weight: 700; margin-bottom: 1.5rem; }
+        .podio-card {
+            border-radius: 1.2rem; padding: 1.5rem 1rem;
+            text-align: center; color: white;
+            box-shadow: 0 8px 30px rgba(0,0,0,.4);
+            transition: transform .2s;
+            border: 1px solid rgba(255,255,255,.15);
+            position: relative; overflow: hidden;
+        }
+        .podio-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,.1) 0%, transparent 100%);
+        }
+        .podio-card:hover { transform: translateY(-8px); }
+        .podio-1 { background: linear-gradient(135deg, #B8860B, #FFD700, #B8860B); }
+        .podio-2 { background: linear-gradient(135deg, #4a5568, #a0aec0, #4a5568); }
+        .podio-3 { background: linear-gradient(135deg, #7B3F00, #cd7f32, #7B3F00); }
+        .podio-pos { font-size: 2.5rem; font-weight: 900; text-shadow: 0 2px 10px rgba(0,0,0,.3); }
+        .podio-name { font-size: 1.1rem; font-weight: 700; margin: .25rem 0; text-shadow: 0 1px 5px rgba(0,0,0,.3); }
         .podio-pts { font-size: .9rem; opacity: .9; }
-        .podio-medal { font-size: 3rem; display: block; margin-bottom: .25rem; }
+        .podio-medal { font-size: 3rem; display: block; margin-bottom: .25rem; filter: drop-shadow(0 3px 6px rgba(0,0,0,.3)); }
 
-        /* Tabella */
-        .table-section { background: white; border-radius: 1.2rem; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
-        .table thead th { background: var(--primary); color: white; font-weight: 600; font-size: .8rem; text-transform: uppercase; border: none; padding: .9rem .6rem; white-space: nowrap; }
-        .table tbody tr { transition: background .15s; }
-        .table tbody tr:hover { background: #e8f0fe !important; }
-        .table tbody td { vertical-align: middle; padding: .7rem .6rem; font-size: .88rem; border-color: #eee; }
-        tr.pos-1 td { background: rgba(241,196,15,.12) !important; font-weight: 700; }
-        tr.pos-2 td { background: rgba(189,195,199,.18) !important; }
-        tr.pos-3 td { background: rgba(205,127,50,.12) !important; }
+        /* ── TABELLA ── */
+        .table-section {
+            background: linear-gradient(135deg, #0f2035, #132338);
+            border-radius: 1.2rem; padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,.3);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .table { color: var(--text) !important; }
+        .table thead th {
+            background: linear-gradient(135deg, var(--wc-blue), #00205b) !important;
+            color: white; font-weight: 600; font-size: .75rem;
+            text-transform: uppercase; border: none;
+            padding: .9rem .6rem; white-space: nowrap;
+            letter-spacing: .3px;
+        }
+        .table tbody tr { transition: background .15s; border-color: rgba(255,255,255,.06) !important; }
+        .table tbody tr:hover { background: rgba(255,255,255,.07) !important; }
+        .table tbody td { vertical-align: middle; padding: .7rem .6rem; font-size: .88rem; border-color: rgba(255,255,255,.06) !important; color: var(--text); }
+        tr.pos-1 td { background: rgba(255,215,0,.1) !important; font-weight: 700; }
+        tr.pos-2 td { background: rgba(160,174,192,.08) !important; }
+        tr.pos-3 td { background: rgba(205,127,50,.08) !important; }
 
-        .badge-pos { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; font-weight: 700; font-size: .85rem; }
-        .badge-1 { background: var(--gold); color: #6B4300; }
-        .badge-2 { background: var(--silver); color: #333; }
-        .badge-3 { background: var(--bronze); color: white; }
-        .badge-n { background: #ecf0f1; color: #555; }
-        .pts-badge { background: var(--primary); color: white; border-radius: 1rem; padding: .2rem .7rem; font-weight: 700; }
-        .pts-progress { height: 5px; border-radius: 3px; background: #e9ecef; overflow: hidden; }
-        .pts-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 1s ease; }
+        .badge-pos { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-weight: 700; font-size: .85rem; }
+        .badge-1 { background: linear-gradient(135deg, #FFD700, #B8860B); color: #3d2b00; box-shadow: 0 2px 8px rgba(255,215,0,.4); }
+        .badge-2 { background: linear-gradient(135deg, #C0C0C0, #808080); color: #1a1a1a; }
+        .badge-3 { background: linear-gradient(135deg, #cd7f32, #7B3F00); color: white; }
+        .badge-n { background: rgba(255,255,255,.1); color: #aaa; }
+        .pts-badge {
+            background: linear-gradient(135deg, var(--wc-red), #a00020);
+            color: white; border-radius: 1rem; padding: .25rem .8rem;
+            font-weight: 700; font-size: .9rem;
+            box-shadow: 0 2px 8px rgba(200,16,46,.4);
+        }
 
-        /* Pulsante dettaglio */
-        .btn-dettaglio { background: none; border: 1px solid var(--primary); color: var(--primary); border-radius: 2rem; padding: .15rem .7rem; font-size: .75rem; cursor: pointer; transition: all .2s; white-space: nowrap; }
-        .btn-dettaglio:hover { background: var(--primary); color: white; }
+        /* ── PULSANTE DETTAGLIO ── */
+        .btn-dettaglio {
+            background: linear-gradient(135deg, rgba(0,48,135,.6), rgba(0,48,135,.8));
+            border: 1px solid rgba(100,150,255,.4);
+            color: #a0c0ff; border-radius: 2rem;
+            padding: .2rem .8rem; font-size: .75rem;
+            cursor: pointer; transition: all .2s; white-space: nowrap;
+        }
+        .btn-dettaglio:hover {
+            background: linear-gradient(135deg, var(--wc-blue), #0040aa);
+            color: white; border-color: var(--wc-blue);
+            box-shadow: 0 3px 12px rgba(0,48,135,.5);
+        }
 
-        /* Record */
-        .record-card { background: white; border-radius: 1rem; padding: 1rem 1.25rem; box-shadow: 0 3px 15px rgba(0,0,0,.07); border-left: 5px solid var(--accent); }
-        .record-card .rec-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; color: #888; }
-        .record-card .rec-name { font-weight: 700; }
-        .record-card .rec-val { font-size: .85rem; color: var(--accent); font-weight: 600; }
+        /* ── RECORD ── */
+        .record-card {
+            background: linear-gradient(135deg, #132338, #1a3250);
+            border-radius: 1rem; padding: 1rem 1.25rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,.2);
+            border: 1px solid rgba(255,255,255,.08);
+            border-left: 4px solid var(--wc-red);
+            transition: transform .2s;
+        }
+        .record-card:hover { transform: translateX(4px); }
+        .record-card .rec-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; color: #6688aa; }
+        .record-card .rec-name { font-weight: 700; color: var(--text); }
+        .record-card .rec-val { font-size: .85rem; color: var(--gold); font-weight: 600; }
 
-        footer { background: var(--primary); color: rgba(255,255,255,.65); text-align: center; padding: 1.5rem; font-size: .8rem; margin-top: 3rem; }
+        /* ── ACCORDION REGOLAMENTO ── */
+        .accordion-item { background: linear-gradient(135deg, #132338, #1a3250) !important; border: 1px solid rgba(255,255,255,.08) !important; border-radius: 1rem !important; overflow: hidden; }
+        .accordion-button { background: linear-gradient(135deg, #132338, #1a3250) !important; color: var(--text) !important; font-weight: 700; }
+        .accordion-button::after { filter: invert(1); }
+        .accordion-button:not(.collapsed) { color: var(--gold) !important; box-shadow: none !important; }
+        .accordion-body { background: rgba(0,0,0,.2) !important; color: var(--text); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: linear-gradient(135deg, #070e1a, #0a1628);
+            color: rgba(255,255,255,.4);
+            text-align: center; padding: 2rem;
+            font-size: .8rem; margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,.08);
+        }
+        footer .footer-flags { font-size: 1.5rem; letter-spacing: .3rem; margin-bottom: .5rem; }
 
         /* ── MODAL DETTAGLIO ── */
         .modal-dettaglio .modal-dialog { max-width: 900px; }
-        .modal-dettaglio .modal-header { background: var(--primary); color: white; border-radius: 0; }
-        .modal-dettaglio .modal-title { font-weight: 700; font-size: 1.2rem; }
+        .modal-dettaglio .modal-content {
+            background: #0f2035;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 1.2rem;
+            overflow: hidden;
+        }
+        .modal-dettaglio .modal-header {
+            background: linear-gradient(135deg, var(--wc-blue), #00205b);
+            color: white; border: none;
+        }
+        .modal-dettaglio .modal-title { font-weight: 700; }
+        .modal-dettaglio .modal-body { background: #0f2035; }
         .modal-dettaglio .btn-close { filter: invert(1); }
 
-        .nav-pills-custom .nav-link { color: var(--primary); border: 1px solid #dee2e6; border-radius: .5rem; margin: 0 .2rem; font-size: .85rem; padding: .4rem 1rem; }
-        .nav-pills-custom .nav-link.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .nav-pills-custom .nav-link {
+            color: #8899aa;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: .5rem; margin: 0 .2rem;
+            font-size: .85rem; padding: .4rem 1rem;
+            background: rgba(255,255,255,.05);
+        }
+        .nav-pills-custom .nav-link.active {
+            background: linear-gradient(135deg, var(--wc-blue), #0040aa);
+            color: white; border-color: var(--wc-blue);
+        }
 
-        /* Tabella pronostici nel modal */
-        .tbl-pron thead th { background: #f8f9fa; color: #555; font-size: .75rem; text-transform: uppercase; padding: .5rem .6rem; border-bottom: 2px solid #dee2e6; }
-        .tbl-pron tbody td { font-size: .82rem; padding: .45rem .6rem; vertical-align: middle; }
-        .tbl-pron tbody tr:hover { background: #f8f9fa; }
+        .tbl-pron { color: var(--text) !important; }
+        .tbl-pron thead th {
+            background: rgba(255,255,255,.08) !important;
+            color: #8899aa; font-size: .75rem;
+            text-transform: uppercase; padding: .5rem .6rem;
+            border-bottom: 1px solid rgba(255,255,255,.1) !important;
+        }
+        .tbl-pron tbody td {
+            font-size: .82rem; padding: .45rem .6rem;
+            vertical-align: middle;
+            border-color: rgba(255,255,255,.06) !important;
+            color: var(--text);
+        }
+        .tbl-pron tbody tr:hover { background: rgba(255,255,255,.05); }
 
-        .badge-ok   { background: #d4edda; color: #155724; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; font-weight: 600; }
-        .badge-no   { background: #f8d7da; color: #721c24; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; font-weight: 600; }
-        .badge-wait { background: #e2e3e5; color: #555; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; }
+        .badge-ok   { background: rgba(40,167,69,.25); color: #6ddb8a; border: 1px solid rgba(40,167,69,.4); border-radius: .4rem; padding: .15rem .6rem; font-size: .75rem; font-weight: 600; }
+        .badge-no   { background: rgba(220,53,69,.2); color: #ff8090; border: 1px solid rgba(220,53,69,.3); border-radius: .4rem; padding: .15rem .6rem; font-size: .75rem; font-weight: 600; }
+        .badge-wait { background: rgba(255,255,255,.08); color: #8899aa; border: 1px solid rgba(255,255,255,.1); border-radius: .4rem; padding: .15rem .6rem; font-size: .75rem; }
 
         .girone-row-ok       { background: rgba(40,167,69,.08) !important; }
-        .girone-row-inv      { background: rgba(255,193,7,.1) !important; }
-        .girone-row-singola  { background: rgba(23,162,184,.08) !important; }
+        .girone-row-inv      { background: rgba(255,193,7,.07) !important; }
+        .girone-row-singola  { background: rgba(23,162,184,.07) !important; }
+
+        /* DataTables override */
+        .dataTables_filter input {
+            background: rgba(255,255,255,.08) !important;
+            border: 1px solid rgba(255,255,255,.15) !important;
+            color: var(--text) !important;
+            border-radius: .5rem !important;
+        }
+        .dataTables_filter label { color: #8899aa !important; }
 
         @media (max-width: 768px) {
             .table thead th:nth-child(n+5) { display: none; }
@@ -111,7 +302,8 @@
 
 <!-- HERO -->
 <div class="hero">
-    <h1>🏆 Totomondiale 2026</h1>
+    <div class="hero-badge">🌍 FIFA World Cup 2026 — USA · Canada · Messico</div>
+    <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
     <p class="subtitle">Classifica aggiornata al {{ timestamp }}</p>
     <div class="mt-2">
         <span class="stat-pill"><i class="fas fa-users"></i><span class="val">{{ n_partecipanti }}</span> Partecipanti</span>
@@ -156,7 +348,9 @@
 
     <!-- PODIO -->
     {% if punteggi | length >= 3 %}
-    <div class="row g-3 mb-4 align-items-end">
+    <div class="podio-section">
+        <h5 class="text-center mb-4"><i class="fas fa-trophy me-2"></i>Podio</h5>
+        <div class="row g-3 align-items-end">
         <div class="col-md-4 order-md-1">
             <div class="podio-card podio-2">
                 <span class="podio-medal">🥈</span>
@@ -180,6 +374,7 @@
                 <div class="podio-name">{{ punteggi[2].nome_completo }}</div>
                 <div class="podio-pts">{{ punteggi[2].punti_totali }} punti</div>
             </div>
+        </div>
         </div>
     </div>
     {% endif %}
@@ -392,7 +587,9 @@
 </div>
 
 <footer>
-    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il {{ timestamp }} &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <div class="footer-flags">🇺🇸 🇨🇦 🇲🇽</div>
+    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il {{ timestamp }} &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <p class="mt-1" style="font-size:.7rem; opacity:.4;">FIFA World Cup 2026 — 11 Giugno / 19 Luglio 2026</p>
 </footer>
 
 <!-- Dati partecipanti in JSON -->
@@ -479,7 +676,7 @@ function apriDettaglio(nome) {
         }
         tbP.innerHTML += `
             <tr>
-                <td><strong>${p.incontro}</strong></td>
+                <td><strong>${p.incontro_display || p.incontro}</strong></td>
                 <td class="text-center">${esitoBadge}</td>
                 <td class="text-center">${risultatoBadge}</td>
                 <td class="text-center">${marcatoreBadge}</td>
