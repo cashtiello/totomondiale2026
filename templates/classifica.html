@@ -464,9 +464,9 @@ function apriDettaglio(nome) {
     d.partite.forEach(p => {
         let esitoBadge, risultatoBadge, marcatoreBadge;
         if (!p.giocata) {
-            esitoBadge = `<span class="badge-wait">⏳</span>`;
-            risultatoBadge = `<span class="badge-wait">⏳</span>`;
-            marcatoreBadge = `<span class="badge-wait">⏳</span>`;
+            esitoBadge = `<span class="badge-wait">${p.esito_pron !== '—' ? p.esito_pron : '—'}</span>`;
+            risultatoBadge = `<span class="badge-wait">${p.risultato_pron !== '—' ? p.risultato_pron : '—'}</span>`;
+            marcatoreBadge = `<span class="badge-wait">${p.marcatore_pron !== '—' ? p.marcatore_pron : '—'}</span>`;
         } else {
             esitoBadge = p.esito_ok
                 ? `<span class="badge-ok">✅ ${p.esito_pron}</span>`

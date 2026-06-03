@@ -112,7 +112,7 @@
 <!-- HERO -->
 <div class="hero">
     <h1>🏆 Totomondiale 2026</h1>
-    <p class="subtitle">Classifica aggiornata al 03/06/2026 15:14:54</p>
+    <p class="subtitle">Classifica aggiornata al 03/06/2026 15:20:49</p>
     <div class="mt-2">
         <span class="stat-pill"><i class="fas fa-users"></i><span class="val">1</span> Partecipanti</span>
         <span class="stat-pill"><i class="fas fa-futbol"></i><span class="val">72</span> Partite</span>
@@ -431,7 +431,7 @@
 </div>
 
 <footer>
-    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 03/06/2026 15:14:54 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 03/06/2026 15:20:49 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
 </footer>
 
 <!-- Dati partecipanti in JSON -->
@@ -501,9 +501,9 @@ function apriDettaglio(nome) {
     d.partite.forEach(p => {
         let esitoBadge, risultatoBadge, marcatoreBadge;
         if (!p.giocata) {
-            esitoBadge = `<span class="badge-wait">⏳</span>`;
-            risultatoBadge = `<span class="badge-wait">⏳</span>`;
-            marcatoreBadge = `<span class="badge-wait">⏳</span>`;
+            esitoBadge = `<span class="badge-wait">${p.esito_pron !== '—' ? p.esito_pron : '—'}</span>`;
+            risultatoBadge = `<span class="badge-wait">${p.risultato_pron !== '—' ? p.risultato_pron : '—'}</span>`;
+            marcatoreBadge = `<span class="badge-wait">${p.marcatore_pron !== '—' ? p.marcatore_pron : '—'}</span>`;
         } else {
             esitoBadge = p.esito_ok
                 ? `<span class="badge-ok">✅ ${p.esito_pron}</span>`
