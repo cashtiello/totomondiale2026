@@ -153,8 +153,10 @@ def calcola_esito_da_risultato(risultato: Optional[str]) -> Optional[str]:
 
 
 def timestamp_ora() -> str:
-    """Restituisce il timestamp attuale formattato."""
-    return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    """Restituisce il timestamp attuale formattato in ora italiana (UTC+2)."""
+    from datetime import timezone, timedelta
+    tz_italia = timezone(timedelta(hours=2))  # CEST (ora legale italiana)
+    return datetime.now(tz=tz_italia).strftime("%d/%m/%Y %H:%M:%S")
 
 
 def safe_str(val) -> str:
