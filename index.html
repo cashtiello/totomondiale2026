@@ -112,7 +112,7 @@
 <!-- HERO -->
 <div class="hero">
     <h1>🏆 Totomondiale 2026</h1>
-    <p class="subtitle">Classifica aggiornata al 03/06/2026 15:30:52</p>
+    <p class="subtitle">Classifica aggiornata al 03/06/2026 15:45:44</p>
     <div class="mt-2">
         <span class="stat-pill"><i class="fas fa-users"></i><span class="val">1</span> Partecipanti</span>
         <span class="stat-pill"><i class="fas fa-futbol"></i><span class="val">0</span> Partite</span>
@@ -170,11 +170,10 @@
             <table id="tbl-classifica" class="table table-hover table-bordered w-100">
                 <thead>
                     <tr>
-                        <th>Pos</th><th>Nome</th><th>Totale</th><th>Barra</th>
+                        <th>Pos</th><th>Nome</th><th>Totale</th><th>Dettaglio</th>
                         <th>Esiti</th><th>Ris.Esatti</th><th>Marcatori</th><th>Gironi</th>
                         <th>Speciali</th><th>Vincitore</th><th>Finalista</th>
                         <th>Cannoniere</th><th>Assistman</th><th>MVP</th><th>Portiere</th><th>Giovane</th>
-                        <th>Dettaglio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,24 +185,23 @@
                         </td>
                         <td><strong>Emiliano Castiello</strong></td>
                         <td class="text-center"><span class="pts-badge">0</span></td>
-                        <td style="min-width:80px;"><div class="pts-progress"><div class="pts-bar" style="width:0.0%"></div></div></td>
-                        <td class="text-center">0</td>
-                        <td class="text-center">0</td>
-                        <td class="text-center">0</td>
-                        <td class="text-center">0</td>
-                        <td class="text-center">0</td>
-                        <td class="text-center">–</td>
-                        <td class="text-center">–</td>
-                        <td class="text-center">–</td>
-                        <td class="text-center">–</td>
-                        <td class="text-center">–</td>
-                        <td class="text-center">–</td>
-                        <td class="text-center">–</td>
                         <td class="text-center">
                             <button class="btn-dettaglio" onclick="apriDettaglio('Emiliano Castiello')">
                                 <i class="fas fa-eye me-1"></i>Vedi
                             </button>
                         </td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
+                        <td class="text-center">–</td>
                     </tr>
                     
                 </tbody>
@@ -431,7 +429,7 @@
 </div>
 
 <footer>
-    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 03/06/2026 15:30:52 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 03/06/2026 15:45:44 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
 </footer>
 
 <!-- Dati partecipanti in JSON -->
@@ -454,7 +452,7 @@ $(document).ready(function() {
         paging: false, info: false, searching: true, order: [],
         language: { search: '<i class="fas fa-search me-1"></i>Cerca partecipante:', zeroRecords: 'Nessun risultato' },
         columnDefs: [
-            { orderable: false, targets: [2,3,16] },
+            { orderable: false, targets: [2,3] },
             { className: 'text-center', targets: '_all' },
             { className: 'text-start', targets: [1] },
         ]
