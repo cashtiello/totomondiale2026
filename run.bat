@@ -59,11 +59,11 @@ echo.
 
 echo ============================================================
 echo  FATTO!
-echo  Sito: https://cashtiello.github.io/totomondiale2026/
+echo  Sito: https://totomondiale2026.emilianocastiello.workers.dev
 echo ============================================================
 echo.
 
-start "" "data\output\index.html"
+start "" "https://totomondiale2026.emilianocastiello.workers.dev"
 echo Premi un tasto per chiudere...
 pause > nul
 exit /b 0
