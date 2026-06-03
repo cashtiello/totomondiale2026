@@ -197,11 +197,10 @@
             <table id="tbl-classifica" class="table table-hover table-bordered w-100">
                 <thead>
                     <tr>
-                        <th>Pos</th><th>Nome</th><th>Totale</th><th>Barra</th>
+                        <th>Pos</th><th>Nome</th><th>Totale</th><th>Dettaglio</th>
                         <th>Esiti</th><th>Ris.Esatti</th><th>Marcatori</th><th>Gironi</th>
                         <th>Speciali</th><th>Vincitore</th><th>Finalista</th>
                         <th>Cannoniere</th><th>Assistman</th><th>MVP</th><th>Portiere</th><th>Giovane</th>
-                        <th>Dettaglio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -213,7 +212,11 @@
                         </td>
                         <td><strong>{{ p.nome_completo }}</strong></td>
                         <td class="text-center"><span class="pts-badge">{{ p.punti_totali }}</span></td>
-                        <td style="min-width:80px;"><div class="pts-progress"><div class="pts-bar" style="width:{{ ((p.punti_totali / max_punti) * 100) | round(1) }}%"></div></div></td>
+                        <td class="text-center">
+                            <button class="btn-dettaglio" onclick="apriDettaglio('{{ p.nome_completo }}')">
+                                <i class="fas fa-eye me-1"></i>Vedi
+                            </button>
+                        </td>
                         <td class="text-center">{{ p.pt_esito }}</td>
                         <td class="text-center">{% if p.n_risultati_esatti > 0 %}<span class="badge bg-success">{{ p.pt_risultato_esatto }}</span>{% else %}{{ p.pt_risultato_esatto }}{% endif %}</td>
                         <td class="text-center">{% if p.n_marcatori_corretti > 0 %}<span class="badge bg-warning text-dark">{{ p.pt_marcatore }}</span>{% else %}{{ p.pt_marcatore }}{% endif %}</td>
@@ -226,11 +229,6 @@
                         <td class="text-center">{% if p.pt_mvp > 0 %}<span class="badge bg-warning text-dark">{{ p.pt_mvp }}</span>{% else %}–{% endif %}</td>
                         <td class="text-center">{% if p.pt_miglior_portiere > 0 %}<span class="badge bg-secondary">{{ p.pt_miglior_portiere }}</span>{% else %}–{% endif %}</td>
                         <td class="text-center">{% if p.pt_miglior_giovane > 0 %}<span class="badge bg-dark">{{ p.pt_miglior_giovane }}</span>{% else %}–{% endif %}</td>
-                        <td class="text-center">
-                            <button class="btn-dettaglio" onclick="apriDettaglio('{{ p.nome_completo }}')">
-                                <i class="fas fa-eye me-1"></i>Vedi
-                            </button>
-                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -417,7 +415,7 @@ $(document).ready(function() {
         paging: false, info: false, searching: true, order: [],
         language: { search: '<i class="fas fa-search me-1"></i>Cerca partecipante:', zeroRecords: 'Nessun risultato' },
         columnDefs: [
-            { orderable: false, targets: [2,3,16] },
+            { orderable: false, targets: [2,3] },
             { className: 'text-center', targets: '_all' },
             { className: 'text-start', targets: [1] },
         ]
