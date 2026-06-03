@@ -300,7 +300,12 @@ def main():
 
     # 5. Genera output
     genera_excel_classifica(punteggi)
-    genera_html(punteggi, n_partite_giocate=len(partite))
+    genera_html(
+        punteggi,
+        n_partite_giocate=len(partite),
+        partecipanti=partecipanti,
+        risultati=risultati,
+    )
 
     log.info(f"=== Completato: {len(punteggi)} partecipanti, {len(partite)} partite ===")
     print(f"\n✅ Classifica aggiornata: {len(punteggi)} partecipanti | {len(partite)} partite giocate")

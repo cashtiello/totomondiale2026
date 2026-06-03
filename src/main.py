@@ -123,7 +123,13 @@ def main() -> int:
 
     # ── 5. Genera HTML ───────────────────────────────────────────────────────
     print("🌐 Generazione pagina HTML...")
-    genera_html(punteggi, n_partite_giocate=n_partite_reali, percorso=OUTPUT_HTML)
+    genera_html(
+        punteggi,
+        n_partite_giocate=n_partite_reali,
+        percorso=OUTPUT_HTML,
+        partecipanti=partecipanti,
+        risultati=risultati,
+    )
     print(f"  ✅ {OUTPUT_HTML}")
 
     # ── Riepilogo ────────────────────────────────────────────────────────────
