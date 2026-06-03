@@ -8,188 +8,99 @@
     <meta http-equiv="Expires" content="0">
     <meta http-equiv="refresh" content="300">
     <title>🏆 Totomondiale 2026 – Classifica</title>
-
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables -->
     <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
     <style>
         :root {
-            --primary:    #1a2e45;
-            --accent:     #e74c3c;
-            --gold:       #f1c40f;
-            --silver:     #bdc3c7;
-            --bronze:     #cd7f32;
-            --bg:         #f0f4f8;
-            --card-bg:    #ffffff;
-            --text:       #2c3e50;
+            --primary: #1a2e45; --accent: #e74c3c; --gold: #f1c40f;
+            --silver: #bdc3c7; --bronze: #cd7f32; --bg: #f0f4f8;
         }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #2c3e50; }
 
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
-
-        /* ── Hero ────────────────────────────────────────────────── */
+        /* Hero */
         .hero {
             background: linear-gradient(135deg, #1a2e45 0%, #2980b9 50%, #1abc9c 100%);
-            color: white;
-            padding: 3rem 1rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            color: white; padding: 3rem 1rem 2rem; text-align: center; position: relative; overflow: hidden;
         }
-        .hero::before {
-            content: "⚽";
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.04;
-            top: -4rem; right: -2rem;
-            transform: rotate(15deg);
-            line-height: 1;
-        }
-        .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 3.2rem);
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(0,0,0,.3);
-            margin-bottom: .25rem;
-        }
-        .hero .subtitle {
-            font-size: .95rem;
-            opacity: .85;
-            margin-bottom: 1.5rem;
-        }
-
-        /* ── Stat pills ──────────────────────────────────────────── */
-        .stat-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
-            background: rgba(255,255,255,.15);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255,255,255,.25);
-            border-radius: 2rem;
-            padding: .4rem 1.1rem;
-            font-size: .85rem;
-            color: white;
-            margin: .25rem;
-            transition: background .2s;
-        }
-        .stat-pill:hover { background: rgba(255,255,255,.25); }
+        .hero::before { content: "⚽"; position: absolute; font-size: 18rem; opacity: .04; top: -4rem; right: -2rem; transform: rotate(15deg); }
+        .hero h1 { font-size: clamp(1.8rem,5vw,3.2rem); font-weight: 900; margin-bottom: .25rem; }
+        .hero .subtitle { font-size: .95rem; opacity: .85; margin-bottom: 1.5rem; }
+        .stat-pill { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.15); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.25); border-radius: 2rem; padding: .4rem 1.1rem; font-size: .85rem; color: white; margin: .25rem; }
         .stat-pill .val { font-weight: 700; font-size: 1.1rem; }
 
-        /* ── Cards statistiche ───────────────────────────────────── */
-        .stats-row { margin-top: -1.5rem; padding: 0 1rem 1rem; }
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.25rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,.08);
-            border-top: 4px solid var(--primary);
-            transition: transform .2s, box-shadow .2s;
-        }
-        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+        /* Cards */
+        .stat-card { background: white; border-radius: 1rem; padding: 1.25rem 1rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.08); border-top: 4px solid var(--primary); transition: transform .2s; }
+        .stat-card:hover { transform: translateY(-4px); }
         .stat-card .icon { font-size: 2rem; margin-bottom: .3rem; }
-        .stat-card .num  { font-size: 1.9rem; font-weight: 900; color: var(--primary); }
-        .stat-card .lbl  { font-size: .75rem; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+        .stat-card .num { font-size: 1.9rem; font-weight: 900; color: var(--primary); }
+        .stat-card .lbl { font-size: .75rem; color: #666; font-weight: 600; text-transform: uppercase; }
 
-        /* ── Podio ───────────────────────────────────────────────── */
-        .podio-card {
-            border-radius: 1.2rem;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            color: white;
-            box-shadow: 0 6px 25px rgba(0,0,0,.15);
-            transition: transform .2s;
-        }
+        /* Podio */
+        .podio-card { border-radius: 1.2rem; padding: 1.5rem 1rem; text-align: center; color: white; box-shadow: 0 6px 25px rgba(0,0,0,.15); transition: transform .2s; }
         .podio-card:hover { transform: translateY(-6px); }
         .podio-1 { background: linear-gradient(135deg, #f6d365, #fda085); }
         .podio-2 { background: linear-gradient(135deg, #a8c0ff, #3f2b96); }
         .podio-3 { background: linear-gradient(135deg, #cd7f32, #8B5E3C); }
-        .podio-pos  { font-size: 2.5rem; font-weight: 900; }
+        .podio-pos { font-size: 2.5rem; font-weight: 900; }
         .podio-name { font-size: 1.1rem; font-weight: 700; margin: .25rem 0; }
-        .podio-pts  { font-size: .9rem; opacity: .9; }
+        .podio-pts { font-size: .9rem; opacity: .9; }
         .podio-medal { font-size: 3rem; display: block; margin-bottom: .25rem; }
 
-        /* ── Progress bar punti ──────────────────────────────────── */
-        .progress-bar-custom { height: 8px; border-radius: 4px; }
-
-        /* ── Tabella classifica ──────────────────────────────────── */
-        .table-section {
-            background: var(--card-bg);
-            border-radius: 1.2rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,.07);
-        }
-        .table thead th {
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            font-size: .8rem;
-            text-transform: uppercase;
-            letter-spacing: .4px;
-            border: none;
-            padding: .9rem .6rem;
-            white-space: nowrap;
-        }
+        /* Tabella */
+        .table-section { background: white; border-radius: 1.2rem; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+        .table thead th { background: var(--primary); color: white; font-weight: 600; font-size: .8rem; text-transform: uppercase; border: none; padding: .9rem .6rem; white-space: nowrap; }
         .table tbody tr { transition: background .15s; }
         .table tbody tr:hover { background: #e8f0fe !important; }
         .table tbody td { vertical-align: middle; padding: .7rem .6rem; font-size: .88rem; border-color: #eee; }
-
-        /* Highlight righe podio */
         tr.pos-1 td { background: rgba(241,196,15,.12) !important; font-weight: 700; }
         tr.pos-2 td { background: rgba(189,195,199,.18) !important; }
         tr.pos-3 td { background: rgba(205,127,50,.12) !important; }
 
-        .badge-pos {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 30px; height: 30px; border-radius: 50%;
-            font-weight: 700; font-size: .85rem;
-        }
-        .badge-1  { background: var(--gold);   color: #6B4300; }
-        .badge-2  { background: var(--silver); color: #333; }
-        .badge-3  { background: var(--bronze); color: white; }
-        .badge-n  { background: #ecf0f1; color: #555; }
-
-        .pts-badge {
-            background: var(--primary); color: white;
-            border-radius: 1rem; padding: .2rem .7rem;
-            font-weight: 700; font-size: .92rem;
-        }
-
+        .badge-pos { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; font-weight: 700; font-size: .85rem; }
+        .badge-1 { background: var(--gold); color: #6B4300; }
+        .badge-2 { background: var(--silver); color: #333; }
+        .badge-3 { background: var(--bronze); color: white; }
+        .badge-n { background: #ecf0f1; color: #555; }
+        .pts-badge { background: var(--primary); color: white; border-radius: 1rem; padding: .2rem .7rem; font-weight: 700; }
         .pts-progress { height: 5px; border-radius: 3px; background: #e9ecef; overflow: hidden; }
-        .pts-bar { height: 100%; border-radius: 3px;
-                   background: linear-gradient(90deg, #667eea, #764ba2); transition: width 1s ease; }
+        .pts-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 1s ease; }
 
-        /* ── Sezione record ──────────────────────────────────────── */
-        .record-card {
-            background: var(--card-bg); border-radius: 1rem; padding: 1rem 1.25rem;
-            box-shadow: 0 3px 15px rgba(0,0,0,.07);
-            border-left: 5px solid var(--accent);
-        }
-        .record-card .rec-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: .1rem; }
-        .record-card .rec-name  { font-weight: 700; font-size: 1rem; }
-        .record-card .rec-val   { font-size: .85rem; color: var(--accent); font-weight: 600; }
+        /* Pulsante dettaglio */
+        .btn-dettaglio { background: none; border: 1px solid var(--primary); color: var(--primary); border-radius: 2rem; padding: .15rem .7rem; font-size: .75rem; cursor: pointer; transition: all .2s; white-space: nowrap; }
+        .btn-dettaglio:hover { background: var(--primary); color: white; }
 
-        /* ── Footer ──────────────────────────────────────────────── */
-        footer {
-            background: var(--primary); color: rgba(255,255,255,.65);
-            text-align: center; padding: 1.5rem;
-            font-size: .8rem; margin-top: 3rem;
-        }
+        /* Record */
+        .record-card { background: white; border-radius: 1rem; padding: 1rem 1.25rem; box-shadow: 0 3px 15px rgba(0,0,0,.07); border-left: 5px solid var(--accent); }
+        .record-card .rec-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; color: #888; }
+        .record-card .rec-name { font-weight: 700; }
+        .record-card .rec-val { font-size: .85rem; color: var(--accent); font-weight: 600; }
 
-        /* ── Responsive ──────────────────────────────────────────── */
+        footer { background: var(--primary); color: rgba(255,255,255,.65); text-align: center; padding: 1.5rem; font-size: .8rem; margin-top: 3rem; }
+
+        /* ── MODAL DETTAGLIO ── */
+        .modal-dettaglio .modal-dialog { max-width: 900px; }
+        .modal-dettaglio .modal-header { background: var(--primary); color: white; border-radius: 0; }
+        .modal-dettaglio .modal-title { font-weight: 700; font-size: 1.2rem; }
+        .modal-dettaglio .btn-close { filter: invert(1); }
+
+        .nav-pills-custom .nav-link { color: var(--primary); border: 1px solid #dee2e6; border-radius: .5rem; margin: 0 .2rem; font-size: .85rem; padding: .4rem 1rem; }
+        .nav-pills-custom .nav-link.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Tabella pronostici nel modal */
+        .tbl-pron thead th { background: #f8f9fa; color: #555; font-size: .75rem; text-transform: uppercase; padding: .5rem .6rem; border-bottom: 2px solid #dee2e6; }
+        .tbl-pron tbody td { font-size: .82rem; padding: .45rem .6rem; vertical-align: middle; }
+        .tbl-pron tbody tr:hover { background: #f8f9fa; }
+
+        .badge-ok   { background: #d4edda; color: #155724; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; font-weight: 600; }
+        .badge-no   { background: #f8d7da; color: #721c24; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; font-weight: 600; }
+        .badge-wait { background: #e2e3e5; color: #555; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; }
+
+        .girone-row-ok       { background: rgba(40,167,69,.08) !important; }
+        .girone-row-inv      { background: rgba(255,193,7,.1) !important; }
+        .girone-row-singola  { background: rgba(23,162,184,.08) !important; }
+
         @media (max-width: 768px) {
             .table thead th:nth-child(n+5) { display: none; }
             .table tbody td:nth-child(n+5) { display: none; }
@@ -198,11 +109,10 @@
 </head>
 <body>
 
-<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+<!-- HERO -->
 <div class="hero">
     <h1>🏆 Totomondiale 2026</h1>
-    <p class="subtitle">Classifica aggiornata al 03/06/2026 15:01:07</p>
-
+    <p class="subtitle">Classifica aggiornata al 03/06/2026 15:15:49</p>
     <div class="mt-2">
         <span class="stat-pill"><i class="fas fa-users"></i><span class="val">1</span> Partecipanti</span>
         <span class="stat-pill"><i class="fas fa-futbol"></i><span class="val">0</span> Partite</span>
@@ -212,8 +122,8 @@
 
 <div class="container-xl py-4">
 
-    <!-- ══ STAT CARDS ══════════════════════════════════════════════════════ -->
-    <div class="row g-3 mb-4 stats-row">
+    <!-- STAT CARDS -->
+    <div class="row g-3 mb-4">
         <div class="col-6 col-md-3">
             <div class="stat-card">
                 <div class="icon">🥇</div>
@@ -244,41 +154,27 @@
         </div>
     </div>
 
-    <!-- ══ PODIO ═══════════════════════════════════════════════════════════ -->
+    <!-- PODIO -->
     
 
-    <!-- ══ TABELLA CLASSIFICA ══════════════════════════════════════════════ -->
+    <!-- TABELLA CLASSIFICA -->
     <div class="table-section mb-4">
         <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
             <h5 class="mb-0 fw-bold"><i class="fas fa-list-ol me-2 text-primary"></i>Classifica Completa</h5>
             <div class="d-flex align-items-center gap-2 flex-wrap">
                 <span class="badge bg-secondary">1 partecipanti</span>
-                <span class="badge bg-light text-dark border" style="font-weight:400; font-size:.75rem;">
-                    ⚖️ Spareggio: Punti → Ris.Esatti → Marcatori
-                </span>
+                <span class="badge bg-light text-dark border" style="font-size:.75rem;">⚖️ Spareggio: Punti → Ris.Esatti → Marcatori</span>
             </div>
         </div>
-
         <div class="table-responsive">
-            <table id="tbl-classifica" class="table table-hover table-bordered align-middle w-100">
+            <table id="tbl-classifica" class="table table-hover table-bordered w-100">
                 <thead>
                     <tr>
-                        <th>Pos</th>
-                        <th>Nome</th>
-                        <th>Totale</th>
-                        <th>Barra</th>
-                        <th>Esiti</th>
-                        <th>Ris.Esatti</th>
-                        <th>Marcatori</th>
-                        <th>Gironi</th>
-                        <th>Speciali</th>
-                        <th>Vincitore</th>
-                        <th>Finalista</th>
-                        <th>Cannoniere</th>
-                        <th>Assistman</th>
-                        <th>MVP</th>
-                        <th>Portiere</th>
-                        <th>Giovane</th>
+                        <th>Pos</th><th>Nome</th><th>Totale</th><th>Barra</th>
+                        <th>Esiti</th><th>Ris.Esatti</th><th>Marcatori</th><th>Gironi</th>
+                        <th>Speciali</th><th>Vincitore</th><th>Finalista</th>
+                        <th>Cannoniere</th><th>Assistman</th><th>MVP</th><th>Portiere</th><th>Giovane</th>
+                        <th>Dettaglio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -286,30 +182,14 @@
                     
                     <tr class="pos-1">
                         <td class="text-center">
-                            <span class="badge-pos badge-1">
-                                1
-                            </span>
+                            <span class="badge-pos badge-1">1</span>
                         </td>
                         <td><strong>Emiliano Castiello</strong></td>
-                        <td class="text-center">
-                            <span class="pts-badge">0</span>
-                        </td>
-                        <td style="min-width:80px;">
-                            <div class="pts-progress">
-                                <div class="pts-bar" style="width:0.0%"></div>
-                            </div>
-                        </td>
+                        <td class="text-center"><span class="pts-badge">0</span></td>
+                        <td style="min-width:80px;"><div class="pts-progress"><div class="pts-bar" style="width:0.0%"></div></div></td>
                         <td class="text-center">0</td>
-                        <td class="text-center">
-                            
-                                0
-                            
-                        </td>
-                        <td class="text-center">
-                            
-                                0
-                            
-                        </td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
                         <td class="text-center">0</td>
                         <td class="text-center">0</td>
                         <td class="text-center">–</td>
@@ -319,6 +199,11 @@
                         <td class="text-center">–</td>
                         <td class="text-center">–</td>
                         <td class="text-center">–</td>
+                        <td class="text-center">
+                            <button class="btn-dettaglio" onclick="apriDettaglio('Emiliano Castiello')">
+                                <i class="fas fa-eye me-1"></i>Vedi
+                            </button>
+                        </td>
                     </tr>
                     
                 </tbody>
@@ -326,7 +211,7 @@
         </div>
     </div>
 
-    <!-- ══ RECORD ══════════════════════════════════════════════════════════ -->
+    <!-- RECORD -->
     <h5 class="fw-bold mb-3"><i class="fas fa-trophy me-2 text-warning"></i>Record & Statistiche</h5>
     <div class="row g-3 mb-4">
         
@@ -404,30 +289,29 @@
         
     </div>
 
-    <!-- ══ REGOLAMENTO (collapsible) ══════════════════════════════════════ -->
+    <!-- REGOLAMENTO -->
     <div class="accordion mb-4" id="accRegolamento">
         <div class="accordion-item border-0 rounded-3 overflow-hidden shadow-sm">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed fw-bold" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapseReg">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReg">
                     <i class="fas fa-book-open me-2 text-primary"></i>Regolamento Punteggi
                 </button>
             </h2>
-            <div id="collapseReg" class="accordion-collapse collapse" data-bs-parent="#accRegolamento">
+            <div id="collapseReg" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <div class="row g-3">
                         <div class="col-md-4">
                             <h6 class="fw-bold text-primary">⚽ Partite</h6>
                             <ul class="list-unstyled small">
                                 <li>🔵 Esito 1X2 corretto → <strong>1 pt</strong></li>
-                                <li>🟢 Risultato esatto → <strong>5 pt</strong> (+ 1 esito)</li>
+                                <li>🟢 Risultato esatto → <strong>5 pt</strong> (+ 1 pt esito)</li>
                                 <li>🟡 Marcatore → <strong>2 pt</strong></li>
                             </ul>
                         </div>
                         <div class="col-md-4">
                             <h6 class="fw-bold text-success">🏟️ Gironi</h6>
                             <ul class="list-unstyled small">
-                                <li>✅ Coppia esatta in ordine → <strong>6 pt</strong></li>
+                                <li>✅ Coppia esatta → <strong>6 pt</strong></li>
                                 <li>🔄 Coppia invertita → <strong>4 pt</strong></li>
                                 <li>☑️ Singola qualificata → <strong>1 pt</strong></li>
                             </ul>
@@ -435,14 +319,14 @@
                         <div class="col-md-4">
                             <h6 class="fw-bold text-danger">🏆 Speciali</h6>
                             <ul class="list-unstyled small">
-                                <li>🥇 Vincitore Mondiale → <strong>20 pt</strong></li>
+                                <li>🥇 Vincitore → <strong>20 pt</strong></li>
                                 <li>🏆 Finale esatta → <strong>15 pt</strong></li>
                                 <li>🥈 Finalista singola → <strong>10 pt</strong></li>
                                 <li>⚽ Capocannoniere → <strong>10 pt</strong></li>
                                 <li>🅰️ Assistman → <strong>12 pt</strong></li>
-                                <li>⭐ MVP Torneo → <strong>10 pt</strong></li>
+                                <li>⭐ MVP → <strong>10 pt</strong></li>
                                 <li>🧤 Miglior Portiere → <strong>10 pt</strong></li>
-                                <li>🌟 Miglior Giovane U21 → <strong>15 pt</strong></li>
+                                <li>🌟 Miglior Giovane → <strong>15 pt</strong></li>
                             </ul>
                         </div>
                     </div>
@@ -451,47 +335,251 @@
         </div>
     </div>
 
-</div><!-- /container -->
+</div>
 
-<!-- ══ FOOTER ══════════════════════════════════════════════════════════════ -->
+<!-- ══ MODAL DETTAGLIO PARTECIPANTE ══════════════════════════════════════════ -->
+<div class="modal fade modal-dettaglio" id="modalDettaglio" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitolo">
+                    <i class="fas fa-user me-2"></i><span id="modalNome"></span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0">
+
+                <!-- Tabs -->
+                <div class="p-3 border-bottom bg-light">
+                    <ul class="nav nav-pills nav-pills-custom" id="tabsDettaglio">
+                        <li class="nav-item"><a class="nav-link active" data-tab="partite" href="#">⚽ Partite</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="gironi" href="#">🏟️ Gironi</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="speciali" href="#">🏆 Speciali</a></li>
+                    </ul>
+                </div>
+
+                <div class="p-3">
+                    <!-- Tab Partite -->
+                    <div id="tab-partite">
+                        <div class="d-flex gap-2 mb-3 flex-wrap">
+                            <span class="badge-ok">✅ Indovinato</span>
+                            <span class="badge-no">❌ Sbagliato</span>
+                            <span class="badge-wait">⏳ Non ancora giocata</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table tbl-pron table-hover table-bordered w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Partita</th>
+                                        <th class="text-center">Esito Pron.</th>
+                                        <th class="text-center">Risultato Pron.</th>
+                                        <th class="text-center">Marcatore Pron.</th>
+                                        <th class="text-center">Risultato Reale</th>
+                                        <th class="text-center">Marcatori Reali</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyPartite"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab Gironi -->
+                    <div id="tab-gironi" style="display:none;">
+                        <div class="d-flex gap-2 mb-3 flex-wrap">
+                            <span class="badge-ok">✅ Coppia esatta (6pt)</span>
+                            <span style="background:#fff3cd;color:#856404;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">🔄 Invertita (4pt)</span>
+                            <span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">☑️ Singola (1pt)</span>
+                            <span class="badge-wait">⏳ Non definito</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table tbl-pron table-hover table-bordered w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Girone</th>
+                                        <th class="text-center">1° Pronosticata</th>
+                                        <th class="text-center">2° Pronosticata</th>
+                                        <th class="text-center">1° Reale</th>
+                                        <th class="text-center">2° Reale</th>
+                                        <th class="text-center">Risultato</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyGironi"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab Speciali -->
+                    <div id="tab-speciali" style="display:none;">
+                        <div class="table-responsive">
+                            <table class="table tbl-pron table-hover table-bordered w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Premio</th>
+                                        <th class="text-center">Pronostico</th>
+                                        <th class="text-center">Reale</th>
+                                        <th class="text-center">Esito</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodySpeciali"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer>
-    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 03/06/2026 15:01:07
-    &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v1.0</p>
+    <p class="mb-0">Totomondiale 2026 &nbsp;|&nbsp; Generato il 03/06/2026 15:15:49 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
 </footer>
 
-<!-- Scripts -->
+<!-- Dati partecipanti in JSON -->
+<script id="datiPartecipanti" type="application/json">
+{"Emiliano Castiello": {"gironi": [{"coppia_ok": false, "definito": null, "girone": "A", "invertita": false, "prima_pron": "Repubblica Ceca", "prima_reale": null, "seconda_pron": "Messico", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "B", "invertita": false, "prima_pron": "Svizzera", "prima_reale": null, "seconda_pron": "Bosnia Erzegovina", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "C", "invertita": false, "prima_pron": "Brazil", "prima_reale": null, "seconda_pron": "Scozia", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "D", "invertita": false, "prima_pron": "Turchia", "prima_reale": null, "seconda_pron": "USA", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "E", "invertita": false, "prima_pron": "Germania", "prima_reale": null, "seconda_pron": "Costa d\u0027Avorio", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "F", "invertita": false, "prima_pron": "Olanda", "prima_reale": null, "seconda_pron": "Svezia", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "G", "invertita": false, "prima_pron": "Belgio", "prima_reale": null, "seconda_pron": "Egitto", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "H", "invertita": false, "prima_pron": "Spagna", "prima_reale": null, "seconda_pron": "Uruguay", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "I", "invertita": false, "prima_pron": "Francia", "prima_reale": null, "seconda_pron": "Norvegia", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "J", "invertita": false, "prima_pron": "Argentina", "prima_reale": null, "seconda_pron": "Austria", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "K", "invertita": false, "prima_pron": "Portogallo", "prima_reale": null, "seconda_pron": "Colombia", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}, {"coppia_ok": false, "definito": null, "girone": "L", "invertita": false, "prima_pron": "Inghilterra", "prima_reale": null, "seconda_pron": "Croazia", "seconda_reale": null, "singola_prima": false, "singola_seconda": false}], "nome": "Emiliano Castiello", "partite": [{"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Messico-Sud Africa", "marcatore_ok": false, "marcatore_pron": "Quinones", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Corea del Sud-R.Ceca", "marcatore_ok": false, "marcatore_pron": "Schick", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Canada-Bosnia", "marcatore_ok": false, "marcatore_pron": "Demirovic", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "USA-Paraguay", "marcatore_ok": false, "marcatore_pron": "Balogun", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Qatar-Svizzera", "marcatore_ok": false, "marcatore_pron": "Embolo", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Brasile-Marocco", "marcatore_ok": false, "marcatore_pron": "Vinicius", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Haiti-Scozia", "marcatore_ok": false, "marcatore_pron": "McTominay", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Australia-Turchia", "marcatore_ok": false, "marcatore_pron": "Calhanoglu", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Germania-Curacao", "marcatore_ok": false, "marcatore_pron": "Havertz", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "4-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Olanda-Giappone", "marcatore_ok": false, "marcatore_pron": "Gakpo", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Costa d\u0027Avorio-Ecuador", "marcatore_ok": false, "marcatore_pron": "Guessand", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Svezia-Tunisia", "marcatore_ok": false, "marcatore_pron": "Gyokeres", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Spagna-Capo Verde", "marcatore_ok": false, "marcatore_pron": "Yamal", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "4-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Belgio-Egitto", "marcatore_ok": false, "marcatore_pron": "Doku", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Arabia Saudita-Uruguay", "marcatore_ok": false, "marcatore_pron": "Nunez", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Iran-Nuova Zelanda", "marcatore_ok": false, "marcatore_pron": "Taremi", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Francia-Senegal", "marcatore_ok": false, "marcatore_pron": "Dembel\u00e8", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Iraq-Norvegia", "marcatore_ok": false, "marcatore_pron": "Haaland", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-3", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Argentina-Algeria", "marcatore_ok": false, "marcatore_pron": "Messi", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Austria-Giordania", "marcatore_ok": false, "marcatore_pron": "Baumgartner", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "3-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Portogallo-Congo", "marcatore_ok": false, "marcatore_pron": "Ronaldo", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "3-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Inghilterra-Croazia", "marcatore_ok": false, "marcatore_pron": "Kane", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Ghana-Panama", "marcatore_ok": false, "marcatore_pron": "Semenyo", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Uzbekistan-Colombia", "marcatore_ok": false, "marcatore_pron": "Suarez", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "R.Ceca-Sud Africa", "marcatore_ok": false, "marcatore_pron": "Sulc", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Svizzera-Bosnia", "marcatore_ok": false, "marcatore_pron": "Vargas", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Canada-Qatar", "marcatore_ok": false, "marcatore_pron": "David", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Messico-Corea del Sud", "marcatore_ok": false, "marcatore_pron": "Jimenez", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "USA-Australia", "marcatore_ok": false, "marcatore_pron": "Pulisic", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Scozia-Marocco", "marcatore_ok": false, "marcatore_pron": "Saibari", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Brasile-Haiti", "marcatore_ok": false, "marcatore_pron": "Raphinha", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "4-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Turchia-Paraguay", "marcatore_ok": false, "marcatore_pron": "Guler", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Olanda-Svezia", "marcatore_ok": false, "marcatore_pron": "Malen", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Germania-Costa d\u0027Avorio", "marcatore_ok": false, "marcatore_pron": "Musiala", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Ecuador-Curacao", "marcatore_ok": false, "marcatore_pron": "Yeboah", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Tunisia-Giappone", "marcatore_ok": false, "marcatore_pron": "Ueda", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Spagna-Arabia Saudita", "marcatore_ok": false, "marcatore_pron": "Torres", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "3-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Belgio-Iran", "marcatore_ok": false, "marcatore_pron": "Trossard", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Uruguay-Capo Verde", "marcatore_ok": false, "marcatore_pron": "Salah", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Nuova Zelanda-Egitto", "marcatore_ok": false, "marcatore_pron": "Marmoush", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Argentina-Austria", "marcatore_ok": false, "marcatore_pron": "Martinez", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Francia-Iraq", "marcatore_ok": false, "marcatore_pron": "Mbapp\u00e8", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "3-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Norvegia-Senegal", "marcatore_ok": false, "marcatore_pron": "Haaland", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Giordania-Algeria", "marcatore_ok": false, "marcatore_pron": "Gouiri", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Portogallo-Uzbekistan", "marcatore_ok": false, "marcatore_pron": "Felix", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "3-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Inghilterra-Ghana", "marcatore_ok": false, "marcatore_pron": "Kane", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Panama-Croazia", "marcatore_ok": false, "marcatore_pron": "Budimir", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Colombia-Congo", "marcatore_ok": false, "marcatore_pron": "Suarez", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Svizzera-Canada", "marcatore_ok": false, "marcatore_pron": "Embolo", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Bosnia-Qatar", "marcatore_ok": false, "marcatore_pron": "Dzeko", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Scozia-Brasile", "marcatore_ok": false, "marcatore_pron": "Vinicius", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Marocco-Haiti", "marcatore_ok": false, "marcatore_pron": "Diaz", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "3-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "R.Ceca-Messico", "marcatore_ok": false, "marcatore_pron": "Schick", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Sud Africa-Corea del Sud", "marcatore_ok": false, "marcatore_pron": "Son", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Ecuador-Germania", "marcatore_ok": false, "marcatore_pron": "Woltemade", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Curacao-Costa d\u0027Avorio", "marcatore_ok": false, "marcatore_pron": "Diomand\u00e9", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Tunisia-Olanda", "marcatore_ok": false, "marcatore_pron": "Depay", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-3", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Giappone-Svezia", "marcatore_ok": false, "marcatore_pron": "Gyokeres", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Paraguay-Australia", "marcatore_ok": false, "marcatore_pron": "Enciso", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Turchia-USA", "marcatore_ok": false, "marcatore_pron": "McKennie", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Norvegia-Francia", "marcatore_ok": false, "marcatore_pron": "Mbapp\u00e8", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Senegal-Iraq", "marcatore_ok": false, "marcatore_pron": "Man\u00e9", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Uruguay-Spagna", "marcatore_ok": false, "marcatore_pron": "Yamal", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Capo Verde-Arabia Saudita", "marcatore_ok": false, "marcatore_pron": "Mandash", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Egitto-Iran", "marcatore_ok": false, "marcatore_pron": "Salah", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Nuova Zelanda-Belgio", "marcatore_ok": false, "marcatore_pron": "Doku", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Panama-Inghilterra", "marcatore_ok": false, "marcatore_pron": "Kane", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-3", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "1", "giocata": false, "incontro": "Croazia-Ghana", "marcatore_ok": false, "marcatore_pron": "Kramaric", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-0", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Colombia-Portogallo", "marcatore_ok": false, "marcatore_pron": "Ronaldo", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-2", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "X", "giocata": false, "incontro": "Congo-Uzbekistan", "marcatore_ok": false, "marcatore_pron": "Wissa", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "2-1", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Giordania-Argentina", "marcatore_ok": false, "marcatore_pron": "Messi", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "0-4", "risultato_reale": null}, {"esito_ok": false, "esito_pron": "2", "giocata": false, "incontro": "Algeria-Austria", "marcatore_ok": false, "marcatore_pron": "Gouiri", "marcatore_reale": null, "risultato_ok": false, "risultato_pron": "1-1", "risultato_reale": null}], "speciali": [{"ok": false, "pron": "SPAGNA", "reale": null, "voce": "\ud83c\udfc6 Vincitore Mondiale"}, {"ok": false, "pron": "FRANCIA", "reale": null, "voce": "\ud83e\udd47 Finalista 1"}, {"ok": false, "pron": "PORTOGALLO", "reale": null, "voce": "\ud83e\udd48 Finalista 2"}, {"ok": false, "pron": "MBAPPE", "reale": null, "voce": "\u26bd Capocannoniere"}, {"ok": false, "pron": "OLISE", "reale": null, "voce": "\ud83c\udd70\ufe0f Assistman"}, {"ok": false, "pron": "OLISE", "reale": null, "voce": "\u2b50 MVP Torneo"}, {"ok": false, "pron": "MAIGNAN", "reale": null, "voce": "\ud83e\udde4 Miglior Portiere"}, {"ok": false, "pron": "RAYAN", "reale": null, "voce": "\ud83c\udf1f Miglior Giovane U21"}]}}
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-$(document).ready(function () {
+// Carica dati partecipanti
+const DATI = JSON.parse(document.getElementById('datiPartecipanti').textContent);
+
+// DataTables
+$(document).ready(function() {
     $('#tbl-classifica').DataTable({
-        paging:    false,
-        info:      false,
-        searching: true,
-        order:     [],        // mantieni ordine attuale (già ordinata)
-        language: {
-            search:   '<i class="fas fa-search me-1"></i>Cerca partecipante:',
-            zeroRecords: 'Nessun risultato trovato',
-        },
+        paging: false, info: false, searching: true, order: [],
+        language: { search: '<i class="fas fa-search me-1"></i>Cerca partecipante:', zeroRecords: 'Nessun risultato' },
         columnDefs: [
-            { orderable: false, targets: [2, 3] },
+            { orderable: false, targets: [2,3,16] },
             { className: 'text-center', targets: '_all' },
-            { className: 'text-start',  targets: [1] },
+            { className: 'text-start', targets: [1] },
         ]
     });
-
-    // Animazione progress bar
+    // Animazione barre
     setTimeout(() => {
         document.querySelectorAll('.pts-bar').forEach(b => {
-            const w = b.style.width;
-            b.style.width = '0';
+            const w = b.style.width; b.style.width = '0';
             requestAnimationFrame(() => { b.style.width = w; });
         });
     }, 200);
 });
+
+// Tabs nel modal
+document.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        ['partite','gironi','speciali'].forEach(t => {
+            document.getElementById('tab-' + t).style.display = 'none';
+        });
+        document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+    });
+});
+
+function apriDettaglio(nome) {
+    const d = DATI[nome];
+    if (!d) return;
+
+    document.getElementById('modalNome').textContent = nome;
+
+    // Reset tabs
+    document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-tab="partite"]').classList.add('active');
+    ['partite','gironi','speciali'].forEach(t => {
+        document.getElementById('tab-' + t).style.display = 'none';
+    });
+    document.getElementById('tab-partite').style.display = 'block';
+
+    // Popola partite
+    const tbP = document.getElementById('tbodyPartite');
+    tbP.innerHTML = '';
+    d.partite.forEach(p => {
+        let esitoBadge, risultatoBadge, marcatoreBadge;
+        if (!p.giocata) {
+            esitoBadge = `<span class="badge-wait">⏳</span>`;
+            risultatoBadge = `<span class="badge-wait">⏳</span>`;
+            marcatoreBadge = `<span class="badge-wait">⏳</span>`;
+        } else {
+            esitoBadge = p.esito_ok
+                ? `<span class="badge-ok">✅ ${p.esito_pron}</span>`
+                : `<span class="badge-no">❌ ${p.esito_pron}</span>`;
+            risultatoBadge = p.risultato_ok
+                ? `<span class="badge-ok">✅ ${p.risultato_pron}</span>`
+                : `<span class="badge-no">❌ ${p.risultato_pron}</span>`;
+            marcatoreBadge = p.marcatore_pron === '—' ? '—' :
+                p.marcatore_ok
+                ? `<span class="badge-ok">✅ ${p.marcatore_pron}</span>`
+                : `<span class="badge-no">❌ ${p.marcatore_pron}</span>`;
+        }
+        tbP.innerHTML += `
+            <tr>
+                <td><strong>${p.incontro}</strong></td>
+                <td class="text-center">${esitoBadge}</td>
+                <td class="text-center">${risultatoBadge}</td>
+                <td class="text-center">${marcatoreBadge}</td>
+                <td class="text-center">${p.risultato_reale || (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+                <td class="text-center">${p.marcatore_reale || (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+            </tr>`;
+    });
+
+    // Popola gironi
+    const tbG = document.getElementById('tbodyGironi');
+    tbG.innerHTML = '';
+    d.gironi.forEach(g => {
+        let cls = '', esito = '';
+        if (!g.definito) {
+            esito = `<span class="badge-wait">⏳</span>`;
+        } else if (g.coppia_ok) {
+            cls = 'girone-row-ok';
+            esito = `<span class="badge-ok">✅ Coppia esatta</span>`;
+        } else if (g.invertita) {
+            cls = 'girone-row-inv';
+            esito = `<span style="background:#fff3cd;color:#856404;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">🔄 Invertita</span>`;
+        } else if (g.singola_prima || g.singola_seconda) {
+            cls = 'girone-row-singola';
+            esito = `<span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">☑️ Singola</span>`;
+        } else {
+            esito = `<span class="badge-no">❌</span>`;
+        }
+        tbG.innerHTML += `
+            <tr class="${cls}">
+                <td class="text-center"><strong>Girone ${g.girone}</strong></td>
+                <td class="text-center">${g.prima_pron}</td>
+                <td class="text-center">${g.seconda_pron}</td>
+                <td class="text-center">${g.prima_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+                <td class="text-center">${g.seconda_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+                <td class="text-center">${esito}</td>
+            </tr>`;
+    });
+
+    // Popola speciali
+    const tbS = document.getElementById('tbodySpeciali');
+    tbS.innerHTML = '';
+    d.speciali.forEach(s => {
+        let esitoBadge;
+        if (!s.reale) {
+            esitoBadge = `<span class="badge-wait">⏳ Non assegnato</span>`;
+        } else if (s.ok) {
+            esitoBadge = `<span class="badge-ok">✅ Indovinato</span>`;
+        } else {
+            esitoBadge = `<span class="badge-no">❌ Sbagliato</span>`;
+        }
+        tbS.innerHTML += `
+            <tr>
+                <td><strong>${s.voce}</strong></td>
+                <td class="text-center">${s.pron}</td>
+                <td class="text-center">${s.reale || '<span class="badge-wait">⏳</span>'}</td>
+                <td class="text-center">${esitoBadge}</td>
+            </tr>`;
+    });
+
+    new bootstrap.Modal(document.getElementById('modalDettaglio')).show();
+}
 </script>
 </body>
 </html>
