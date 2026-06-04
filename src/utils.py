@@ -174,7 +174,7 @@ BANDIERE = {
     "repubblica ceca": "🇨🇿", "r.ceca": "🇨🇿", "canada": "🇨🇦",
     "bosnia": "🇧🇦", "bosnia erzegovina": "🇧🇦", "qatar": "🇶🇦",
     "svizzera": "🇨🇭", "brasile": "🇧🇷", "marocco": "🇲🇦",
-    "haiti": "🇭🇹", "scozia": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "usa": "🇺🇸",
+    "haiti": "🇭🇹", "scozia": "🏴", "usa": "🇺🇸",
     "paraguay": "🇵🇾", "australia": "🇦🇺", "turchia": "🇹🇷",
     "germania": "🇩🇪", "curacao": "🇨🇼", "costa d'avorio": "🇨🇮",
     "ecuador": "🇪🇨", "olanda": "🇳🇱", "giappone": "🇯🇵",
@@ -185,7 +185,7 @@ BANDIERE = {
     "iraq": "🇮🇶", "norvegia": "🇳🇴", "argentina": "🇦🇷",
     "algeria": "🇩🇿", "austria": "🇦🇹", "giordania": "🇯🇴",
     "portogallo": "🇵🇹", "congo": "🇨🇩", "uzbekistan": "🇺🇿",
-    "colombia": "🇨🇴", "inghilterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "croazia": "🇭🇷",
+    "colombia": "🇨🇴", "inghilterra": "🏴", "croazia": "🇭🇷",
     "ghana": "🇬🇭", "panama": "🇵🇦",
 }
 
