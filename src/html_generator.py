@@ -7,7 +7,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from src.models import PunteggioDettaglio, PronosticoPartecipante, RisultatiReali
 from src.config import OUTPUT_HTML, TEMPLATES_DIR, OUTPUT_DIR
-from src.utils import timestamp_ora, confronta_squadre, normalizza_risultato, bandiera
+from src.utils import timestamp_ora, confronta_squadre, normalizza_risultato
 from src.logger import get_logger
 
 log = get_logger(__name__)
@@ -77,17 +77,9 @@ def _build_dettaglio_partecipante(
                         marcatore_ok = True
                         break
 
-        # Estrai le due squadre dall'incontro
-        parti = pron.incontro.split("-")
-        sq1 = parti[0].strip() if len(parti) >= 1 else ""
-        sq2 = parti[1].strip() if len(parti) >= 2 else ""
-        flag1 = bandiera(sq1)
-        flag2 = bandiera(sq2)
-        incontro_display = f"{flag1} {sq1} — {flag2} {sq2}" if sq1 and sq2 else pron.incontro
-
         partite_detail.append({
             "incontro":        pron.incontro,
-            "incontro_display": incontro_display,
+            "incontro_display": pron.incontro,
             "esito_pron":      esito_pron or "—",
             "risultato_pron":  pron.risultato_esatto or "—",
             "marcatore_pron":  pron.marcatore or "—",
@@ -128,10 +120,10 @@ def _build_dettaglio_partecipante(
 
         gironi_detail.append({
             "girone":          g.girone,
-            "prima_pron":      f"{bandiera(g.prima)} {g.prima}" if g.prima else "—",
-            "seconda_pron":    f"{bandiera(g.seconda)} {g.seconda}" if g.seconda else "—",
-            "prima_reale":     f"{bandiera(ris_g.prima)} {ris_g.prima}" if definito and ris_g.prima else None,
-            "seconda_reale":   f"{bandiera(ris_g.seconda)} {ris_g.seconda}" if definito and ris_g.seconda else None,
+            "prima_pron":      g.prima or "—",
+            "seconda_pron":    g.seconda or "—",
+            "prima_reale":     ris_g.prima if definito else None,
+            "seconda_reale":   ris_g.seconda if definito else None,
             "definito":        definito,
             "coppia_ok":       coppia_ok,
             "invertita":       invertita,
