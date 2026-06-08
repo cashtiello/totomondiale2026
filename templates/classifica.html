@@ -527,10 +527,16 @@ function apriDettaglio(nome) {
             let pt_singola = (g.singola_prima ? 1 : 0) + (g.singola_seconda ? 1 : 0);
             esito = `<span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.8rem;font-weight:600;">☑️ ${pt_singola} pt</span>`;
             punti = pt_singola;
-            if (g.singola_prima) prima_cls = 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
-            else prima_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
-            if (g.singola_seconda) seconda_cls = 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
-            else seconda_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+            // Colora ogni badge in base a se quella squadra specifica è tra i qualificati reali
+            const reali = [g.prima_reale, g.seconda_reale].filter(Boolean).map(s => s.toLowerCase().trim());
+            const primaIndovinata = reali.some(r => r === g.prima_pron.toLowerCase().trim() || r.includes(g.prima_pron.toLowerCase().trim()) || g.prima_pron.toLowerCase().trim().includes(r));
+            const secondaIndovinata = reali.some(r => r === g.seconda_pron.toLowerCase().trim() || r.includes(g.seconda_pron.toLowerCase().trim()) || g.seconda_pron.toLowerCase().trim().includes(r));
+            prima_cls = primaIndovinata
+                ? 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;'
+                : 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+            seconda_cls = secondaIndovinata
+                ? 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;'
+                : 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
         } else if (g.definito) {
             esito = `<span class="badge-no" style="font-size:.8rem;">❌ 0 pt</span>`;
             prima_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
