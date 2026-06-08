@@ -358,7 +358,8 @@
                         <div class="d-flex gap-2 mb-3 flex-wrap">
                             <span class="badge-ok">✅ Coppia esatta (6pt)</span>
                             <span style="background:#fff3cd;color:#856404;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">🔄 Invertita (4pt)</span>
-                            <span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">☑️ Singola (1pt)</span>
+                            <span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">☑️ Singola (1pt cad.)</span>
+                            <span class="badge-no">❌ Nessun punto</span>
                             <span class="badge-wait">⏳ Non definito</span>
                         </div>
                         <div class="table-responsive">
@@ -504,26 +505,43 @@ function apriDettaglio(nome) {
     const tbG = document.getElementById('tbodyGironi');
     tbG.innerHTML = '';
     d.gironi.forEach(g => {
-        let cls = '', esito = '';
+        let cls = '', esito = '', punti = 0;
+        let prima_cls = '', seconda_cls = '';
+
         if (!g.definito) {
             esito = `<span class="badge-wait">⏳</span>`;
         } else if (g.coppia_ok) {
             cls = 'girone-row-ok';
-            esito = `<span class="badge-ok">✅ Coppia esatta</span>`;
+            esito = `<span class="badge-ok" style="font-size:.8rem;">✅ 6 pt</span>`;
+            punti = 6;
+            prima_cls = 'background:#d4edda;color:#155724;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
+            seconda_cls = prima_cls;
         } else if (g.invertita) {
             cls = 'girone-row-inv';
-            esito = `<span style="background:#fff3cd;color:#856404;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">🔄 Invertita</span>`;
+            esito = `<span style="background:#fff3cd;color:#856404;border-radius:.4rem;padding:.15rem .5rem;font-size:.8rem;font-weight:600;">🔄 4 pt</span>`;
+            punti = 4;
+            prima_cls = 'background:#fff3cd;color:#856404;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
+            seconda_cls = prima_cls;
         } else if (g.singola_prima || g.singola_seconda) {
             cls = 'girone-row-singola';
-            esito = `<span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.75rem;font-weight:600;">☑️ Singola</span>`;
-        } else {
-            esito = `<span class="badge-no">❌</span>`;
+            let pt_singola = (g.singola_prima ? 1 : 0) + (g.singola_seconda ? 1 : 0);
+            esito = `<span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.8rem;font-weight:600;">☑️ ${pt_singola} pt</span>`;
+            punti = pt_singola;
+            if (g.singola_prima) prima_cls = 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
+            else prima_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+            if (g.singola_seconda) seconda_cls = 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
+            else seconda_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+        } else if (g.definito) {
+            esito = `<span class="badge-no" style="font-size:.8rem;">❌ 0 pt</span>`;
+            prima_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+            seconda_cls = prima_cls;
         }
+
         tbG.innerHTML += `
             <tr class="${cls}">
                 <td class="text-center"><strong>Girone ${g.girone}</strong></td>
-                <td class="text-center">${g.prima_pron}</td>
-                <td class="text-center">${g.seconda_pron}</td>
+                <td class="text-center"><span style="${prima_cls}">${g.prima_pron}</span></td>
+                <td class="text-center"><span style="${seconda_cls}">${g.seconda_pron}</span></td>
                 <td class="text-center">${g.prima_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
                 <td class="text-center">${g.seconda_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
                 <td class="text-center">${esito}</td>
