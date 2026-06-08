@@ -284,8 +284,14 @@ def main():
     partite = scarica_risultati()
     gironi  = scarica_gironi()
 
-    # 2. Scrivi risultati.xlsx
-    scrivi_risultati(partite, gironi)
+    # 2. Scrivi risultati.xlsx SOLO se l'API ha restituito dati reali
+    # Se partite == 0 significa che il Mondiale non è iniziato o l'API non funziona
+    # In questo caso NON sovrascrivere il file risultati inserito manualmente
+    if len(partite) > 0:
+        scrivi_risultati(partite, gironi)
+        log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
+    else:
+        log.info("API ha restituito 0 partite — risultati.xlsx NON modificato (preservo dati manuali)")
 
     # 3. Leggi pronostici partecipanti
     from src.config import PRONOSTICI_DIR
