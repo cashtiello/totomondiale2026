@@ -45,11 +45,13 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     Confronto intelligente tra due nomi (squadre o giocatori).
 
     Gestisce i casi:
-    - Confronto esatto normalizzato:   "Kane" == "Kane"
-    - Match parziale cognome:          "Kane" in "Harry Kane"
-    - Match parziale inverso:          "Harry Kane" in "Kane"
-    - Accenti e maiuscole ignorate:    "Mbappe" == "Mbappé"
-    - Abbreviazioni con punto:         "H. Kane" ~ "Harry Kane"
+    - Confronto esatto normalizzato:      "Kane" == "Kane"
+    - Match parziale cognome:             "Kane" in "Harry Kane"
+    - Accenti e maiuscole ignorate:       "Mbappe" == "Mbappé"
+    - Abbreviazioni con punto:            "H. Kane" ~ "Harry Kane"
+    - Nome puntato + cognome:             "J.David" ~ "Jonathan David" ~ "David"
+    - Sottostringa fuzzy:                 "Rapinha" ~ "Raphinha"
+    - Alias comuni:                       "Vini Jr" ~ "Vinicius Junior"
     """
     na = normalizza_stringa(a)
     nb = normalizza_stringa(b)
@@ -57,42 +59,120 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     if not na or not nb:
         return False
 
-    # 1. Confronto esatto
+    # ── 1. Confronto esatto ───────────────────────────────────────────────────
     if na == nb:
         return True
 
-    # 2. Match parziale — uno è contenuto nell'altro
-    # es. "kane" in "harry kane" oppure "harry kane" in "kane"
+    # ── 2. Match parziale contenimento ───────────────────────────────────────
     if na in nb or nb in na:
         return True
 
-    # 3. Gestione abbreviazioni tipo "H. Kane" → "Harry Kane"
-    # Rimuovi iniziali con punto e riprova
+    # ── 3. Nome puntato: "j.david" → "david" oppure "jonathan david" ─────────
+    # Rimuovi iniziali tipo "j." "r." all'inizio o in mezzo
     def rimuovi_iniziali(s: str) -> str:
         parole = s.split()
-        return " ".join(p for p in parole if len(p) > 2 or not p.endswith("."))
+        return " ".join(p for p in parole if not re.fullmatch(r"[a-z]\.", p))
+
+    # Gestisci anche "j.david" senza spazio → "david"
+    def espandi_nome_puntato(s: str) -> str:
+        # "j.david" → "david", "r.lewandowski" → "lewandowski"
+        return re.sub(r"^[a-z]\.", "", s).strip()
 
     na2 = rimuovi_iniziali(na)
     nb2 = rimuovi_iniziali(nb)
-    if na2 and nb2 and (na2 in nb2 or nb2 in na2):
+    na3 = espandi_nome_puntato(na)
+    nb3 = espandi_nome_puntato(nb)
+
+    if na2 and nb2:
+        if na2 == nb2:
+            return True
+        if na2 in nb2 or nb2 in na2:
+            return True
+    if na3 and nb3:
+        if na3 == nb3:
+            return True
+        if na3 in nb3 or nb3 in na3:
+            return True
+    if na3 and nb2 and (na3 in nb2 or nb2 in na3):
+        return True
+    if nb3 and na2 and (nb3 in na2 or na2 in nb3):
         return True
 
-    # 4. Confronto per parole — tutte le parole di uno sono in quelle dell'altro
-    # es. "Kane" contro "H. Kane" o "Kane Harry"
-    parole_a = set(na.split())
-    parole_b = set(nb.split())
+    # ── 4. Parole significative condivise ─────────────────────────────────────
+    # Es. "De Bruyne" vs "Kevin De Bruyne" → parola "de bruyne" in comune
+    parole_a = {p for p in na2.split() if len(p) > 2}
+    parole_b = {p for p in nb2.split() if len(p) > 2}
+    if parole_a and parole_b:
+        comuni = parole_a & parole_b
+        if comuni and (len(parole_a) == 1 or len(parole_b) == 1):
+            return True
+        # Tutte le parole di uno sono nell'altro
+        if parole_a.issubset(parole_b) or parole_b.issubset(parole_a):
+            return True
 
-    # Rimuovi iniziali con punto (es. "h.")
-    parole_a = {p for p in parole_a if len(p) > 1}
-    parole_b = {p for p in parole_b if len(p) > 1}
+    # ── 5. Similarità fuzzy per errori di battitura ───────────────────────────
+    # Es. "rapinha" vs "raphinha", "vinicius" vs "vini"
+    # Usa distanza di Levenshtein semplificata
+    def distanza_levenshtein(s1: str, s2: str) -> int:
+        if len(s1) > len(s2):
+            s1, s2 = s2, s1
+        distanze = range(len(s1) + 1)
+        for c2 in s2:
+            nuove = [distanze[0] + 1]
+            for c1, d in zip(s1, distanze):
+                nuove.append(min(d + (c1 != c2), nuove[-1] + 1, distanze[len(nuove)] + 1))
+            distanze = nuove
+        return distanze[-1]
 
-    if not parole_a or not parole_b:
-        return False
+    # Confronta le parole più lunghe dei due nomi (probabile cognome)
+    def parola_principale(s: str) -> str:
+        parole = [p for p in s.split() if len(p) > 3]
+        return max(parole, key=len) if parole else s
 
-    # Se una delle parole significative coincide (es. il cognome)
-    # e almeno uno dei due ha una sola parola significativa
-    if parole_a & parole_b:  # intersezione non vuota
-        if len(parole_a) == 1 or len(parole_b) == 1:
+    pp_a = parola_principale(na)
+    pp_b = parola_principale(nb)
+
+    if pp_a and pp_b:
+        lunghezza_max = max(len(pp_a), len(pp_b))
+        dist = distanza_levenshtein(pp_a, pp_b)
+        # Tollera 1 errore per nomi corti (≤6 chars), 2 per nomi medi, 3 per lunghi
+        if lunghezza_max <= 6 and dist <= 1:
+            return True
+        elif lunghezza_max <= 10 and dist <= 2:
+            return True
+        elif lunghezza_max > 10 and dist <= 3:
+            return True
+
+    # ── 6. Alias e soprannomi comuni ──────────────────────────────────────────
+    ALIAS = {
+        "vini jr":        ["vinicius junior", "vinicius", "vini"],
+        "vini":           ["vinicius junior", "vinicius"],
+        "vinicius":       ["vinicius junior", "vini jr", "vini"],
+        "raphinha":       ["rapinha", "raphinha"],
+        "rapinha":        ["raphinha"],
+        "neymar":         ["neymar jr"],
+        "neymar jr":      ["neymar"],
+        "ronaldo":        ["cristiano ronaldo", "cr7"],
+        "cr7":            ["cristiano ronaldo", "ronaldo"],
+        "messi":          ["lionel messi", "leo messi"],
+        "leo messi":      ["messi", "lionel messi"],
+        "mbappe":         ["kylian mbappe", "kylian mbape"],
+        "son":            ["heung-min son", "heung min son"],
+        "benzema":        ["karim benzema"],
+        "salah":          ["mohamed salah"],
+        "firmino":        ["roberto firmino"],
+        "luiz diaz":      ["luis diaz"],
+        "luis diaz":      ["luiz diaz"],
+    }
+
+    for alias_key, alias_vals in ALIAS.items():
+        if na == alias_key and nb in alias_vals:
+            return True
+        if nb == alias_key and na in alias_vals:
+            return True
+        if na in alias_vals and nb == alias_key:
+            return True
+        if nb in alias_vals and na == alias_key:
             return True
 
     return False
