@@ -119,46 +119,9 @@
     <div class="hero-badge">🌍 FIFA World Cup 2026 — USA · Canada · Messico</div>
     <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
     <p class="subtitle">Classifica aggiornata al {{ timestamp }}</p>
-    <div class="mt-2">
-        <span class="stat-pill"><i class="fas fa-users"></i><span class="val">{{ n_partecipanti }}</span> Partecipanti</span>
-        <span class="stat-pill"><i class="fas fa-futbol"></i><span class="val">{{ n_partite_giocate }}</span> Partite</span>
-        <span class="stat-pill"><i class="fas fa-star"></i><span class="val">{{ media_punti }}</span> Media Punti</span>
-    </div>
 </div>
 
 <div class="container-xl py-4">
-
-    <!-- STAT CARDS -->
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-            <div class="stat-card">
-                <div class="icon">🥇</div>
-                <div class="num">{{ punteggi[0].punti_totali if punteggi else 0 }}</div>
-                <div class="lbl">Punteggio Massimo</div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="stat-card" style="border-color:#27ae60;">
-                <div class="icon">⚽</div>
-                <div class="num">{{ max_risultati_esatti }}</div>
-                <div class="lbl">Record Risultati Esatti</div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="stat-card" style="border-color:#e74c3c;">
-                <div class="icon">👟</div>
-                <div class="num">{{ max_marcatori }}</div>
-                <div class="lbl">Record Marcatori</div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="stat-card" style="border-color:#f39c12;">
-                <div class="icon">📊</div>
-                <div class="num">{{ punteggi | length }}</div>
-                <div class="lbl">Classificati</div>
-            </div>
-        </div>
-    </div>
 
     <!-- PODIO -->
     {% if punteggi | length >= 3 %}
@@ -242,6 +205,38 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="icon">🥇</div>
+                <div class="num">{{ punteggi[0].punti_totali if punteggi else 0 }}</div>
+                <div class="lbl">Punteggio Massimo</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#27ae60;">
+                <div class="icon">⚽</div>
+                <div class="num">{{ max_risultati_esatti }}</div>
+                <div class="lbl">Record Risultati Esatti</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#e74c3c;">
+                <div class="icon">👟</div>
+                <div class="num">{{ max_marcatori }}</div>
+                <div class="lbl">Record Marcatori</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#f39c12;">
+                <div class="icon">📊</div>
+                <div class="num">{{ punteggi | length }}</div>
+                <div class="lbl">Classificati</div>
+            </div>
         </div>
     </div>
 
