@@ -106,6 +106,11 @@
 
         .dataTables_filter input { border-radius: .5rem !important; }
 
+        .arrow-su    { color: #27ae60; font-size: .75rem; font-weight: 700; }
+        .arrow-giu   { color: #e74c3c; font-size: .75rem; font-weight: 700; }
+        .arrow-new   { color: #8e44ad; font-size: .65rem; font-weight: 700; }
+        .arrow-stabile { color: #bdc3c7; font-size: .75rem; }
+
         @media (max-width: 768px) {
             .table thead th:nth-child(n+5) { display: none; }
             .table tbody td:nth-child(n+5) { display: none; }
@@ -181,6 +186,10 @@
                     <tr class="{% if pos==1 %}pos-1{% elif pos==2 %}pos-2{% elif pos==3 %}pos-3{% endif %}">
                         <td class="text-center">
                             <span class="badge-pos {% if pos==1 %}badge-1{% elif pos==2 %}badge-2{% elif pos==3 %}badge-3{% else %}badge-n{% endif %}">{{ pos }}</span>
+                            {% if p.variazione == 'su' %}<span class="arrow-su">▲</span>
+                            {% elif p.variazione == 'giu' %}<span class="arrow-giu">▼</span>
+                            {% elif p.variazione == 'new' %}<span class="arrow-new">NEW</span>
+                            {% else %}<span class="arrow-stabile">—</span>{% endif %}
                         </td>
                         <td><strong>{{ p.nome_completo }}</strong></td>
                         <td class="text-center"><span class="pts-badge">{{ p.punti_totali }}</span></td>

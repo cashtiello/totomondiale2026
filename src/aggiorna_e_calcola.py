@@ -273,6 +273,18 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     log.info(f"risultati.xlsx aggiornato: {RISULTATI_FILE}")
 
 
+def salva_storico_posizioni(punteggi, storico_path: Path) -> None:
+    """Salva le posizioni correnti in JSON prima di aggiornare."""
+    storico_path.parent.mkdir(parents=True, exist_ok=True)
+    posizioni = {p.nome_completo: idx + 1 for idx, p in enumerate(punteggi)}
+    try:
+        with open(storico_path, "w", encoding="utf-8") as f:
+            json.dump(posizioni, f, ensure_ascii=False, indent=2)
+        log.info(f"Storico posizioni salvato: {storico_path}")
+    except Exception as e:
+        log.error(f"Errore salvataggio storico: {e}")
+
+
 def main():
     if not API_KEY:
         log.error("API_FOOTBALL_KEY non trovata nelle variabili d'ambiente!")
@@ -304,13 +316,16 @@ def main():
     risultati = leggi_risultati(RISULTATI_FILE)
     punteggi  = calcola_tutti_punteggi(partecipanti, risultati)
 
-    # 5. Genera output
+    # 5. Salva storico posizioni e genera output
+    storico_path = Path(__file__).parent / "data" / "storico_posizioni.json"
+    salva_storico_posizioni(punteggi, storico_path)
     genera_excel_classifica(punteggi)
     genera_html(
         punteggi,
         n_partite_giocate=len(partite),
         partecipanti=partecipanti,
         risultati=risultati,
+        storico_path=storico_path,
     )
 
     log.info(f"=== Completato: {len(punteggi)} partecipanti, {len(partite)} partite ===")
