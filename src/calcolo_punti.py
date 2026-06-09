@@ -269,6 +269,118 @@ def calcola_punteggio(
     return dettaglio
 
 
+def calcola_statistiche_torneo(
+    partecipanti: list[PronosticoPartecipante],
+    risultati: RisultatiReali,
+    punteggi: list[PunteggioDettaglio],
+) -> dict:
+    """Calcola statistiche aggregate del torneo per la sezione stats nell'HTML."""
+    n = len(partecipanti)
+    if n == 0:
+        return {}
+
+    # ── Statistiche per partita ───────────────────────────────────────────
+    stats_partite = {}
+    for incontro, ris in risultati.partite.items():
+        if not ris.risultato:
+            continue
+        n_esito = n_ris = n_marc = 0
+        for part in partecipanti:
+            for pron in part.partite:
+                if not confronta_squadre(pron.incontro, incontro):
+                    continue
+                esito_pron = pron.esito or calcola_esito_da_risultato(pron.risultato_esatto)
+                if esito_pron and ris.esito and esito_pron == ris.esito:
+                    n_esito += 1
+                r_p = normalizza_risultato(pron.risultato_esatto)
+                r_r = normalizza_risultato(ris.risultato)
+                if r_p and r_r and r_p == r_r:
+                    n_ris += 1
+                if pron.marcatore and ris.marcatore:
+                    for mr in [m.strip() for m in ris.marcatore.split(",") if m.strip()]:
+                        if confronta_squadre(pron.marcatore, mr):
+                            n_marc += 1
+                            break
+        stats_partite[incontro] = {
+            "risultato": ris.risultato,
+            "n_esito": n_esito,
+            "n_risultato": n_ris,
+            "n_marcatore": n_marc,
+            "pct_esito": round(n_esito / n * 100),
+        }
+
+    # ── Partita più/meno indovinata ───────────────────────────────────────
+    giocate = {k: v for k, v in stats_partite.items() if v["n_esito"] > 0 or v["n_risultato"] > 0}
+    partita_piu_indovinata = max(giocate, key=lambda k: giocate[k]["pct_esito"]) if giocate else None
+    partita_meno_indovinata = min(giocate, key=lambda k: giocate[k]["pct_esito"]) if giocate else None
+
+    # ── Pronostico vincitore più gettonato ────────────────────────────────
+    voti_vincitore = {}
+    for part in partecipanti:
+        v = part.speciali.vincitore
+        if v:
+            voti_vincitore[v] = voti_vincitore.get(v, 0) + 1
+    vincitore_gettonato = sorted(voti_vincitore.items(), key=lambda x: x[1], reverse=True)[:5]
+
+    # ── Totali aggregati ──────────────────────────────────────────────────
+    tot_esiti    = sum(p.n_esiti_corretti for p in punteggi)
+    tot_risultati = sum(p.n_risultati_esatti for p in punteggi)
+    tot_marcatori = sum(p.n_marcatori_corretti for p in punteggi)
+    tot_gironi_esatti = sum(p.n_gironi_coppia_esatta for p in punteggi)
+
+    # ── Chi ha fatto meglio nelle partite vs gironi vs speciali ──────────
+    top_partite  = max(punteggi, key=lambda p: p.punti_partite)
+    top_gironi   = max(punteggi, key=lambda p: p.pt_gironi)
+    top_speciali = max(punteggi, key=lambda p: p.punti_speciali)
+    top_esiti    = max(punteggi, key=lambda p: p.n_esiti_corretti)
+    top_marcatori = max(punteggi, key=lambda p: p.n_marcatori_corretti)
+
+    # ── Marcatore più indovinato ──────────────────────────────────────────
+    marc_counts = {}
+    for part in partecipanti:
+        for pron in part.partite:
+            if not pron.marcatore:
+                continue
+            for incontro, ris in risultati.partite.items():
+                if not confronta_squadre(pron.incontro, incontro) or not ris.marcatore:
+                    continue
+                for mr in [m.strip() for m in ris.marcatore.split(",") if m.strip()]:
+                    if confronta_squadre(pron.marcatore, mr):
+                        marc_counts[mr] = marc_counts.get(mr, 0) + 1
+    marcatore_top = max(marc_counts.items(), key=lambda x: x[1]) if marc_counts else None
+
+    # ── Distribuzione punteggi ────────────────────────────────────────────
+    fasce = {"0-20": 0, "21-30": 0, "31-40": 0, "41+": 0}
+    for p in punteggi:
+        t = p.punti_totali
+        if t <= 20:      fasce["0-20"] += 1
+        elif t <= 30:    fasce["21-30"] += 1
+        elif t <= 40:    fasce["31-40"] += 1
+        else:            fasce["41+"] += 1
+
+    return {
+        "n_partecipanti":         n,
+        "tot_esiti":              tot_esiti,
+        "tot_risultati":          tot_risultati,
+        "tot_marcatori":          tot_marcatori,
+        "tot_gironi_esatti":      tot_gironi_esatti,
+        "media_esiti":            round(tot_esiti / n, 1),
+        "media_risultati":        round(tot_risultati / n, 1),
+        "media_marcatori":        round(tot_marcatori / n, 1),
+        "top_partite":            {"nome": top_partite.nome_completo,  "val": top_partite.punti_partite},
+        "top_gironi":             {"nome": top_gironi.nome_completo,   "val": top_gironi.pt_gironi},
+        "top_speciali":           {"nome": top_speciali.nome_completo, "val": top_speciali.punti_speciali},
+        "top_esiti":              {"nome": top_esiti.nome_completo,    "val": top_esiti.n_esiti_corretti},
+        "top_marcatori":          {"nome": top_marcatori.nome_completo,"val": top_marcatori.n_marcatori_corretti},
+        "partita_piu_indovinata": {"nome": partita_piu_indovinata, **giocate[partita_piu_indovinata]} if partita_piu_indovinata else None,
+        "partita_meno_indovinata":{"nome": partita_meno_indovinata, **giocate[partita_meno_indovinata]} if partita_meno_indovinata else None,
+        "marcatore_top":          {"nome": marcatore_top[0], "val": marcatore_top[1]} if marcatore_top else None,
+        "vincitore_gettonato":    vincitore_gettonato,
+        "stats_partite":          stats_partite,
+        "fasce":                  fasce,
+    }
+
+
 def calcola_tutti_punteggi(
     partecipanti: list[PronosticoPartecipante],
     risultati: RisultatiReali,

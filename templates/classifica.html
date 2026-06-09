@@ -284,6 +284,153 @@
         {% endfor %}
     </div>
 
+    <!-- STATISTICHE TORNEO -->
+    {% if stats %}
+    <h5 class="fw-bold mb-3"><i class="fas fa-chart-bar me-2 text-info"></i>Statistiche Torneo</h5>
+
+    <!-- Totali aggregati -->
+    <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#3498db;">
+                <div class="icon">✅</div>
+                <div class="num">{{ stats.tot_esiti }}</div>
+                <div class="lbl">Esiti indovinati in totale</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#27ae60;">
+                <div class="icon">🎯</div>
+                <div class="num">{{ stats.tot_risultati }}</div>
+                <div class="lbl">Risultati esatti totali</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#e67e22;">
+                <div class="icon">👟</div>
+                <div class="num">{{ stats.tot_marcatori }}</div>
+                <div class="lbl">Marcatori indovinati totali</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card" style="border-color:#9b59b6;">
+                <div class="icon">🏟️</div>
+                <div class="num">{{ stats.tot_gironi_esatti }}</div>
+                <div class="lbl">Gironi esatti totali</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medie -->
+    <div class="row g-3 mb-3">
+        <div class="col-4">
+            <div class="record-card text-center">
+                <div class="rec-label">📊 Media esiti a testa</div>
+                <div class="rec-val">{{ stats.media_esiti }}</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="record-card text-center">
+                <div class="rec-label">🎯 Media risultati esatti</div>
+                <div class="rec-val">{{ stats.media_risultati }}</div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="record-card text-center">
+                <div class="rec-label">👟 Media marcatori</div>
+                <div class="rec-val">{{ stats.media_marcatori }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top per categoria -->
+    <div class="row g-3 mb-3">
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">⚽ Re delle Partite</div>
+                <div class="rec-name">{{ stats.top_partite.nome }}</div>
+                <div class="rec-val">{{ stats.top_partite.val }} pt partite</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">🏟️ Re dei Gironi</div>
+                <div class="rec-name">{{ stats.top_gironi.nome }}</div>
+                <div class="rec-val">{{ stats.top_gironi.val }} pt gironi</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">🌟 Re degli Speciali</div>
+                <div class="rec-name">{{ stats.top_speciali.nome }}</div>
+                <div class="rec-val">{{ stats.top_speciali.val }} pt speciali</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partite più/meno indovinate + marcatore top -->
+    <div class="row g-3 mb-3">
+        {% if stats.partita_piu_indovinata %}
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">🟢 Partita più indovinata</div>
+                <div class="rec-name">{{ stats.partita_piu_indovinata.nome }}</div>
+                <div class="rec-val">{{ stats.partita_piu_indovinata.n_esito }}/{{ stats.n_partecipanti }} esiti ({{ stats.partita_piu_indovinata.pct_esito }}%)</div>
+            </div>
+        </div>
+        {% endif %}
+        {% if stats.partita_meno_indovinata %}
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">🔴 Partita meno indovinata</div>
+                <div class="rec-name">{{ stats.partita_meno_indovinata.nome }}</div>
+                <div class="rec-val">{{ stats.partita_meno_indovinata.n_esito }}/{{ stats.n_partecipanti }} esiti ({{ stats.partita_meno_indovinata.pct_esito }}%)</div>
+            </div>
+        </div>
+        {% endif %}
+        {% if stats.marcatore_top %}
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">👟 Marcatore più indovinato</div>
+                <div class="rec-name">{{ stats.marcatore_top.nome }}</div>
+                <div class="rec-val">indovinato da {{ stats.marcatore_top.val }} partecipanti</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Vincitore più votato -->
+    {% if stats.vincitore_gettonato %}
+    <div class="mb-3">
+        <div class="record-card">
+            <div class="rec-label mb-2">🏆 Vincitore più pronosticato</div>
+            <div class="d-flex flex-wrap gap-2">
+                {% for squadra, voti in stats.vincitore_gettonato %}
+                <span style="background:#eaf3de;color:#3B6D11;border-radius:.4rem;padding:.2rem .7rem;font-size:.8rem;font-weight:600;">
+                    {{ squadra }} <strong>{{ voti }}x</strong>
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Distribuzione punteggi -->
+    <div class="mb-4">
+        <div class="record-card">
+            <div class="rec-label mb-2">📊 Distribuzione punteggi</div>
+            <div class="row g-2 text-center">
+                {% for fascia, count in stats.fasce.items() %}
+                <div class="col-3">
+                    <div style="font-size:.75rem;color:#888;margin-bottom:.2rem;">{{ fascia }} pt</div>
+                    <div style="font-size:1.3rem;font-weight:700;color:#1a2e45;">{{ count }}</div>
+                    <div style="font-size:.7rem;color:#aaa;">partecipanti</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- REGOLAMENTO -->
     <div class="accordion mb-4" id="accRegolamento">
         <div class="accordion-item border-0 rounded-3 overflow-hidden shadow-sm">

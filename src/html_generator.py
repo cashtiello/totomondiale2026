@@ -9,6 +9,7 @@ from src.models import PunteggioDettaglio, PronosticoPartecipante, RisultatiReal
 from src.config import OUTPUT_HTML, TEMPLATES_DIR, OUTPUT_DIR
 from src.utils import timestamp_ora, confronta_squadre, normalizza_risultato
 from src.logger import get_logger
+from src.calcolo_punti import calcola_statistiche_torneo
 
 log = get_logger(__name__)
 
@@ -244,6 +245,12 @@ def genera_html(
         for p in partecipanti:
             dettagli[p.nome_completo] = _build_dettaglio_partecipante(p, risultati)
 
+    # Calcola statistiche torneo
+    stats = {}
+    if partecipanti and risultati and punteggi:
+        from src.calcolo_punti import calcola_statistiche_torneo
+        stats = calcola_statistiche_torneo(partecipanti, risultati, punteggi)
+
     html = template.render(
         punteggi=punteggi,
         timestamp=timestamp_ora(),
@@ -255,6 +262,7 @@ def genera_html(
         max_marcatori=max((p.n_marcatori_corretti for p in punteggi), default=0),
         records=_build_records(punteggi),
         dettagli=dettagli,
+        stats=stats,
     )
 
     percorso.write_text(html, encoding="utf-8")
