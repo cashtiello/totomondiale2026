@@ -199,8 +199,32 @@ def genera_html(
     percorso: Path = OUTPUT_HTML,
     partecipanti: list[PronosticoPartecipante] = None,
     risultati: RisultatiReali = None,
+    storico_path: Path = None,
 ) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Leggi storico posizioni precedenti
+    storico = {}
+    if storico_path and storico_path.exists():
+        try:
+            import json
+            with open(storico_path, encoding="utf-8") as f:
+                storico = json.load(f)
+        except Exception:
+            pass
+
+    # Aggiungi variazione a ogni punteggio
+    for idx, p in enumerate(punteggi):
+        pos_attuale = idx + 1
+        pos_precedente = storico.get(p.nome_completo)
+        if pos_precedente is None:
+            p.variazione = "new"
+        elif pos_precedente > pos_attuale:
+            p.variazione = "su"
+        elif pos_precedente < pos_attuale:
+            p.variazione = "giu"
+        else:
+            p.variazione = "stabile"
 
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),

@@ -22,16 +22,30 @@
 
         /* ── HERO ── */
         .hero {
-            background: linear-gradient(135deg, #1a2e45 0%, #2980b9 50%, #1abc9c 100%);
-            color: white; padding: 3rem 1rem 2rem; text-align: center; position: relative; overflow: hidden;
+            position: relative; overflow: hidden;
+            background: #0d1b2a;
+            color: white; padding: 3rem 1rem 2.5rem; text-align: center;
         }
-        .hero::before { content: "⚽"; position: absolute; font-size: 18rem; opacity: .04; top: -4rem; right: -2rem; transform: rotate(15deg); }
-        .hero-badge { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); border-radius: 2rem; padding: .3rem 1.2rem; font-size: .75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: .8rem; }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 50% 120%, rgba(26,188,156,.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(41,128,185,.35) 0%, transparent 50%),
+                linear-gradient(180deg, #0d1b2a 0%, #1a2e45 60%, #0f3d2e 100%);
+        }
+        .hero-lines {
+            position: absolute; inset: 0; opacity: .04;
+            background-image:
+                repeating-linear-gradient(90deg, white 0, white 1px, transparent 1px, transparent 80px),
+                repeating-linear-gradient(0deg, white 0, white 1px, transparent 1px, transparent 60px);
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-badge { display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 2rem; padding: .3rem 1.2rem; font-size: .75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: .8rem; }
         .hero h1 { font-size: clamp(1.8rem,5vw,3.2rem); font-weight: 900; margin-bottom: .25rem; }
         .hero h1 span { color: var(--gold); }
-        .hero .subtitle { font-size: .95rem; opacity: .85; margin-bottom: 1.5rem; }
-        .stat-pill { display: inline-flex; align-items: center; gap: .4rem; background: rgba(255,255,255,.15); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.25); border-radius: 2rem; padding: .4rem 1.1rem; font-size: .85rem; color: white; margin: .25rem; }
-        .stat-pill .val { font-weight: 700; font-size: 1.1rem; }
+        .hero .subtitle { font-size: .95rem; opacity: .75; margin-bottom: 0; }
+        .hero-trophy { font-size: 4.5rem; display: block; margin-bottom: .5rem; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
         /* ── CARDS ── */
         .stat-card { background: white; border-radius: 1rem; padding: 1.25rem 1rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.08); border-top: 4px solid var(--primary); transition: transform .2s; }
@@ -42,15 +56,20 @@
 
         /* ── PODIO ── */
         .podio-section { margin-bottom: 2rem; }
-        .podio-card { border-radius: 1.2rem; padding: 1.5rem 1rem; text-align: center; color: white; box-shadow: 0 6px 25px rgba(0,0,0,.15); transition: transform .2s; }
-        .podio-card:hover { transform: translateY(-6px); }
-        .podio-1 { background: linear-gradient(135deg, #f6d365, #fda085); }
-        .podio-2 { background: linear-gradient(135deg, #a8c0ff, #3f2b96); }
-        .podio-3 { background: linear-gradient(135deg, #cd7f32, #8B5E3C); }
-        .podio-pos { font-size: 2.5rem; font-weight: 900; }
-        .podio-name { font-size: 1.1rem; font-weight: 700; margin: .25rem 0; }
-        .podio-pts { font-size: .9rem; opacity: .9; }
-        .podio-medal { font-size: 3rem; display: block; margin-bottom: .25rem; }
+        .podio-stage { display: flex; align-items: flex-end; justify-content: center; gap: 0; }
+        .podio-slot { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 200px; }
+        .podio-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: white; margin-bottom: .4rem; border: 3px solid white; box-shadow: 0 3px 12px rgba(0,0,0,.2); }
+        .av-1 { background: linear-gradient(135deg,#f6d365,#fda085); }
+        .av-2 { background: linear-gradient(135deg,#667eea,#764ba2); }
+        .av-3 { background: linear-gradient(135deg,#cd7f32,#8B5E3C); }
+        .podio-name { font-size: .78rem; font-weight: 600; text-align: center; color: #2c3e50; margin-bottom: .25rem; }
+        .podio-pts-label { font-size: .72rem; color: #888; margin-bottom: .3rem; }
+        .podio-block { width: 100%; border-radius: .6rem .6rem 0 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: white; font-weight: 900; padding: .5rem 0; }
+        .podio-block-1 { height: 100px; background: linear-gradient(180deg,#ffd700,#f39c12); }
+        .podio-block-2 { height: 72px; background: linear-gradient(180deg,#a8b8d8,#7f8fa6); }
+        .podio-block-3 { height: 52px; background: linear-gradient(180deg,#cd9262,#8B5E3C); }
+        .podio-block span { font-size: 1.6rem; }
+        .podio-block small { font-size: .7rem; opacity: .9; font-weight: 700; }
 
         /* ── TABELLA ── */
         .table-section { background: white; border-radius: 1.2rem; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
@@ -121,9 +140,14 @@
 
 <!-- HERO -->
 <div class="hero">
-    <div class="hero-badge">🌍 FIFA World Cup 2026 — USA · Canada · Messico</div>
-    <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
-    <p class="subtitle">Classifica aggiornata al 09/06/2026 15:12:06</p>
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-content">
+        <div class="hero-badge">🌍 FIFA World Cup 2026 — USA · Canada · Messico</div>
+        <span class="hero-trophy">🏆</span>
+        <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
+        <p class="subtitle">Classifica aggiornata al 09/06/2026 15:28:11</p>
+    </div>
 </div>
 
 <div class="container-xl py-4">
@@ -132,31 +156,28 @@
     
     <div class="podio-section">
         <h5 class="text-center mb-4"><i class="fas fa-trophy me-2"></i>Podio</h5>
-        <div class="row g-3 align-items-end">
-        <div class="col-md-4 order-md-1">
-            <div class="podio-card podio-2">
-                <span class="podio-medal">🥈</span>
-                <div class="podio-pos">2°</div>
+        <div class="podio-stage">
+            <!-- 2° posto -->
+            <div class="podio-slot">
+                <div class="podio-avatar av-2">AN</div>
                 <div class="podio-name">Andrea Esposito</div>
-                <div class="podio-pts">43 punti</div>
+                <div class="podio-pts-label">43 pt</div>
+                <div class="podio-block podio-block-2"><span>🥈</span><small>2°</small></div>
             </div>
-        </div>
-        <div class="col-md-4 order-md-0">
-            <div class="podio-card podio-1" style="transform:scale(1.04);">
-                <span class="podio-medal">🥇</span>
-                <div class="podio-pos">1°</div>
+            <!-- 1° posto -->
+            <div class="podio-slot">
+                <div class="podio-avatar av-1">GI</div>
                 <div class="podio-name">Gianmarco Noschese</div>
-                <div class="podio-pts">48 punti</div>
+                <div class="podio-pts-label">48 pt</div>
+                <div class="podio-block podio-block-1"><span>🥇</span><small>1°</small></div>
             </div>
-        </div>
-        <div class="col-md-4 order-md-2">
-            <div class="podio-card podio-3">
-                <span class="podio-medal">🥉</span>
-                <div class="podio-pos">3°</div>
+            <!-- 3° posto -->
+            <div class="podio-slot">
+                <div class="podio-avatar av-3">GI</div>
                 <div class="podio-name">Giovanni Corvino</div>
-                <div class="podio-pts">40 punti</div>
+                <div class="podio-pts-label">40 pt</div>
+                <div class="podio-block podio-block-3"><span>🥉</span><small>3°</small></div>
             </div>
-        </div>
         </div>
     </div>
     
@@ -186,7 +207,8 @@
                     <tr class="pos-1">
                         <td class="text-center">
                             <span class="badge-pos badge-1">1</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Gianmarco Noschese</strong></td>
                         <td class="text-center"><span class="pts-badge">48</span></td>
@@ -213,7 +235,8 @@
                     <tr class="pos-2">
                         <td class="text-center">
                             <span class="badge-pos badge-2">2</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Andrea Esposito</strong></td>
                         <td class="text-center"><span class="pts-badge">43</span></td>
@@ -240,7 +263,8 @@
                     <tr class="pos-3">
                         <td class="text-center">
                             <span class="badge-pos badge-3">3</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Giovanni Corvino</strong></td>
                         <td class="text-center"><span class="pts-badge">40</span></td>
@@ -267,7 +291,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">4</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Stefano Ferrante</strong></td>
                         <td class="text-center"><span class="pts-badge">39</span></td>
@@ -294,7 +319,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">5</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Vincenzo Rubino</strong></td>
                         <td class="text-center"><span class="pts-badge">39</span></td>
@@ -321,7 +347,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">6</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Mattia Girardi</strong></td>
                         <td class="text-center"><span class="pts-badge">39</span></td>
@@ -348,7 +375,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">7</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Riccardo &amp; Antonio</strong></td>
                         <td class="text-center"><span class="pts-badge">38</span></td>
@@ -375,7 +403,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">8</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Emiliano &amp; Simone</strong></td>
                         <td class="text-center"><span class="pts-badge">38</span></td>
@@ -402,7 +431,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">9</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Francesco Albricci</strong></td>
                         <td class="text-center"><span class="pts-badge">38</span></td>
@@ -429,7 +459,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">10</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Pietro De Magistris</strong></td>
                         <td class="text-center"><span class="pts-badge">37</span></td>
@@ -456,7 +487,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">11</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Andrea Bianco</strong></td>
                         <td class="text-center"><span class="pts-badge">37</span></td>
@@ -483,7 +515,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">12</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Luca Notarstefano</strong></td>
                         <td class="text-center"><span class="pts-badge">36</span></td>
@@ -510,7 +543,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">13</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>ALESSANDRO BARRESE</strong></td>
                         <td class="text-center"><span class="pts-badge">36</span></td>
@@ -537,7 +571,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">14</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Matteo Scala</strong></td>
                         <td class="text-center"><span class="pts-badge">36</span></td>
@@ -564,7 +599,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">15</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>ROBERTO PIEZZO</strong></td>
                         <td class="text-center"><span class="pts-badge">36</span></td>
@@ -591,7 +627,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">16</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>LUCA FALSO</strong></td>
                         <td class="text-center"><span class="pts-badge">36</span></td>
@@ -618,7 +655,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">17</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Luca Petti</strong></td>
                         <td class="text-center"><span class="pts-badge">35</span></td>
@@ -645,7 +683,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">18</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Antony Tammaro</strong></td>
                         <td class="text-center"><span class="pts-badge">35</span></td>
@@ -672,7 +711,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">19</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Antonio Giova</strong></td>
                         <td class="text-center"><span class="pts-badge">34</span></td>
@@ -699,7 +739,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">20</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Giulio Plini</strong></td>
                         <td class="text-center"><span class="pts-badge">33</span></td>
@@ -726,7 +767,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">21</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>GAETANO SEBASTIANELLI</strong></td>
                         <td class="text-center"><span class="pts-badge">31</span></td>
@@ -753,7 +795,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">22</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>Emiliano Castiello</strong></td>
                         <td class="text-center"><span class="pts-badge">29</span></td>
@@ -780,7 +823,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">23</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>FRANCESCO POSTIGLIONE</strong></td>
                         <td class="text-center"><span class="pts-badge">26</span></td>
@@ -807,7 +851,8 @@
                     <tr class="">
                         <td class="text-center">
                             <span class="badge-pos badge-n">24</span>
-                            <span class="arrow-stabile">—</span>
+                            <span class="arrow-new">NEW</span>
+                            
                         </td>
                         <td><strong>STEFANO SOLA</strong></td>
                         <td class="text-center"><span class="pts-badge">24</span></td>
@@ -1089,7 +1134,7 @@
 
 <footer>
     <div class="footer-flags">🇺🇸 🇨🇦 🇲🇽</div>
-    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il 09/06/2026 15:12:06 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il 09/06/2026 15:28:11 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
     <p class="mt-1" style="font-size:.7rem; opacity:.4;">FIFA World Cup 2026 — 11 Giugno / 19 Luglio 2026</p>
 </footer>
 
