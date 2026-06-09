@@ -314,12 +314,13 @@ def calcola_statistiche_torneo(
     partita_piu_indovinata = max(giocate, key=lambda k: giocate[k]["pct_esito"]) if giocate else None
     partita_meno_indovinata = min(giocate, key=lambda k: giocate[k]["pct_esito"]) if giocate else None
 
-    # ── Pronostico vincitore più gettonato ────────────────────────────────
+    # ── Pronostico vincitore più gettonato (normalizzato) ────────────────────
     voti_vincitore = {}
     for part in partecipanti:
         v = part.speciali.vincitore
         if v:
-            voti_vincitore[v] = voti_vincitore.get(v, 0) + 1
+            v_norm = v.strip().title()
+            voti_vincitore[v_norm] = voti_vincitore.get(v_norm, 0) + 1
     vincitore_gettonato = sorted(voti_vincitore.items(), key=lambda x: x[1], reverse=True)[:5]
 
     # ── Totali aggregati ──────────────────────────────────────────────────
@@ -329,11 +330,12 @@ def calcola_statistiche_torneo(
     tot_gironi_esatti = sum(p.n_gironi_coppia_esatta for p in punteggi)
 
     # ── Chi ha fatto meglio nelle partite vs gironi vs speciali ──────────
-    top_partite  = max(punteggi, key=lambda p: p.punti_partite)
-    top_gironi   = max(punteggi, key=lambda p: p.pt_gironi)
-    top_speciali = max(punteggi, key=lambda p: p.punti_speciali)
-    top_esiti    = max(punteggi, key=lambda p: p.n_esiti_corretti)
+    top_partite   = max(punteggi, key=lambda p: p.punti_partite)
+    top_gironi    = max(punteggi, key=lambda p: p.pt_gironi)
+    top_speciali  = max(punteggi, key=lambda p: p.punti_speciali)
+    top_esiti     = max(punteggi, key=lambda p: p.n_esiti_corretti)
     top_marcatori = max(punteggi, key=lambda p: p.n_marcatori_corretti)
+    top_risultati = max(punteggi, key=lambda p: p.n_risultati_esatti)
 
     # ── Marcatore più indovinato ──────────────────────────────────────────
     marc_counts = {}
@@ -370,8 +372,9 @@ def calcola_statistiche_torneo(
         "top_partite":            {"nome": top_partite.nome_completo,  "val": top_partite.punti_partite},
         "top_gironi":             {"nome": top_gironi.nome_completo,   "val": top_gironi.pt_gironi},
         "top_speciali":           {"nome": top_speciali.nome_completo, "val": top_speciali.punti_speciali},
-        "top_esiti":              {"nome": top_esiti.nome_completo,    "val": top_esiti.n_esiti_corretti},
-        "top_marcatori":          {"nome": top_marcatori.nome_completo,"val": top_marcatori.n_marcatori_corretti},
+        "top_esiti":              {"nome": top_esiti.nome_completo,     "val": top_esiti.n_esiti_corretti},
+        "top_risultati":          {"nome": top_risultati.nome_completo,  "val": top_risultati.n_risultati_esatti},
+        "top_marcatori":          {"nome": top_marcatori.nome_completo,  "val": top_marcatori.n_marcatori_corretti},
         "partita_piu_indovinata": {"nome": partita_piu_indovinata, **giocate[partita_piu_indovinata]} if partita_piu_indovinata else None,
         "partita_meno_indovinata":{"nome": partita_meno_indovinata, **giocate[partita_meno_indovinata]} if partita_meno_indovinata else None,
         "marcatore_top":          {"nome": marcatore_top[0], "val": marcatore_top[1]} if marcatore_top else None,

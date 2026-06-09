@@ -294,7 +294,7 @@
             <div class="stat-card" style="border-color:#3498db;">
                 <div class="icon">✅</div>
                 <div class="num">{{ stats.tot_esiti }}</div>
-                <div class="lbl">Esiti indovinati in totale</div>
+                <div class="lbl">Esiti indovinati totali</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
@@ -320,49 +320,27 @@
         </div>
     </div>
 
-    <!-- Medie -->
-    <div class="row g-3 mb-3">
-        <div class="col-4">
-            <div class="record-card text-center">
-                <div class="rec-label">📊 Media esiti a testa</div>
-                <div class="rec-val">{{ stats.media_esiti }}</div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="record-card text-center">
-                <div class="rec-label">🎯 Media risultati esatti</div>
-                <div class="rec-val">{{ stats.media_risultati }}</div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="record-card text-center">
-                <div class="rec-label">👟 Media marcatori</div>
-                <div class="rec-val">{{ stats.media_marcatori }}</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Top per categoria -->
+    <!-- Chi ha indovinato di più -->
     <div class="row g-3 mb-3">
         <div class="col-md-4">
             <div class="record-card">
-                <div class="rec-label">⚽ Re delle Partite</div>
-                <div class="rec-name">{{ stats.top_partite.nome }}</div>
-                <div class="rec-val">{{ stats.top_partite.val }} pt partite</div>
+                <div class="rec-label">✅ Più esiti indovinati</div>
+                <div class="rec-name">{{ stats.top_esiti.nome }}</div>
+                <div class="rec-val">{{ stats.top_esiti.val }} esiti corretti</div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="record-card">
-                <div class="rec-label">🏟️ Re dei Gironi</div>
-                <div class="rec-name">{{ stats.top_gironi.nome }}</div>
-                <div class="rec-val">{{ stats.top_gironi.val }} pt gironi</div>
+                <div class="rec-label">🎯 Più risultati esatti</div>
+                <div class="rec-name">{{ stats.top_risultati.nome }}</div>
+                <div class="rec-val">{{ stats.top_risultati.val }} risultati esatti</div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="record-card">
-                <div class="rec-label">🌟 Re degli Speciali</div>
-                <div class="rec-name">{{ stats.top_speciali.nome }}</div>
-                <div class="rec-val">{{ stats.top_speciali.val }} pt speciali</div>
+                <div class="rec-label">👟 Più marcatori indovinati</div>
+                <div class="rec-name">{{ stats.top_marcatori.nome }}</div>
+                <div class="rec-val">{{ stats.top_marcatori.val }} marcatori</div>
             </div>
         </div>
     </div>
@@ -374,7 +352,7 @@
             <div class="record-card">
                 <div class="rec-label">🟢 Partita più indovinata</div>
                 <div class="rec-name">{{ stats.partita_piu_indovinata.nome }}</div>
-                <div class="rec-val">{{ stats.partita_piu_indovinata.n_esito }}/{{ stats.n_partecipanti }} esiti ({{ stats.partita_piu_indovinata.pct_esito }}%)</div>
+                <div class="rec-val">{{ stats.partita_piu_indovinata.n_esito }}/{{ stats.n_partecipanti }} ({{ stats.partita_piu_indovinata.pct_esito }}%)</div>
             </div>
         </div>
         {% endif %}
@@ -383,7 +361,7 @@
             <div class="record-card">
                 <div class="rec-label">🔴 Partita meno indovinata</div>
                 <div class="rec-name">{{ stats.partita_meno_indovinata.nome }}</div>
-                <div class="rec-val">{{ stats.partita_meno_indovinata.n_esito }}/{{ stats.n_partecipanti }} esiti ({{ stats.partita_meno_indovinata.pct_esito }}%)</div>
+                <div class="rec-val">{{ stats.partita_meno_indovinata.n_esito }}/{{ stats.n_partecipanti }} ({{ stats.partita_meno_indovinata.pct_esito }}%)</div>
             </div>
         </div>
         {% endif %}

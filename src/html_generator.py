@@ -219,7 +219,7 @@ def genera_html(
         pos_attuale = idx + 1
         pos_precedente = storico.get(p.nome_completo)
         if pos_precedente is None:
-            p.variazione = "new"
+            p.variazione = "stabile"
         elif pos_precedente > pos_attuale:
             p.variazione = "su"
         elif pos_precedente < pos_attuale:
