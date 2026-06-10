@@ -103,12 +103,20 @@ def _calcola_partite(
 
         # ── Marcatore ────────────────────────────────────────────────────────
         if pron.marcatore and risultato_reale.marcatore:
-            # Supporta più marcatori separati da virgola nel file risultati
-            # es. "Kane, Foden, Mbappe"
             marcatori_reali = [
                 m.strip() for m in risultato_reale.marcatore.split(",")
                 if m.strip()
             ]
+            # Caso speciale: c'è almeno un autogol tra i marcatori
+            if any(m == "autogol" for m in marcatori_reali):
+                if "autogol" in pron.marcatore.lower():
+                    dettaglio.pt_marcatore += PUNTI_MARCATORE
+                    dettaglio.n_marcatori_corretti += 1
+                    log.debug(
+                        f"{dettaglio.nome_completo} | {incontro_key}: "
+                        f"autogol indovinato +{PUNTI_MARCATORE}pt"
+                    )
+                    continue
             for marcatore_reale in marcatori_reali:
                 if confronta_squadre(pron.marcatore, marcatore_reale):
                     dettaglio.pt_marcatore += PUNTI_MARCATORE
@@ -117,7 +125,7 @@ def _calcola_partite(
                         f"{dettaglio.nome_completo} | {incontro_key}: "
                         f"marcatore {pron.marcatore} +{PUNTI_MARCATORE}pt"
                     )
-                    break  # basta trovarne uno, non sommare doppio
+                    break
 
 
 def _calcola_gironi(

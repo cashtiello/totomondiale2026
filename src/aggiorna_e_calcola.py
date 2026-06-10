@@ -129,15 +129,23 @@ def scarica_risultati() -> dict[str, dict]:
         time.sleep(0.25)
         ev = _api("fixtures/events", {"fixture": fid})
         gol = []
+        ha_autogol = False
         for e in ev.get("response", []):
-            if e.get("type") == "Goal" and e.get("detail") != "Own Goal":
-                giocatore = e["player"]["name"]
-                if giocatore not in gol:
-                    gol.append(giocatore)
+            if e.get("type") == "Goal":
+                if e.get("detail") == "Own Goal":
+                    ha_autogol = True
+                else:
+                    giocatore = e["player"]["name"]
+                    if giocatore not in gol:
+                        gol.append(giocatore)
+
+        marcatori_str = ", ".join(gol)
+        if ha_autogol:
+            marcatori_str = (marcatori_str + ", autogol").strip(", ")
 
         risultati[nome] = {
             "risultato": f"{gh}-{ga}",
-            "marcatori": ", ".join(gol),
+            "marcatori": marcatori_str,
         }
         log.info(f"  {nome}: {gh}-{ga} | {', '.join(gol)}")
 
