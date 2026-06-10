@@ -37,5 +37,5 @@ jobs:
           git config user.name "TotoMondiale Bot"
           git config user.email "bot@totomondiale.it"
           cp data/output/index.html index.html
-          git add index.html
+          git add -A
           git diff --cached --quiet || (git commit -m "Classifica aggiornata $(date '+%d/%m/%Y %H:%M')" && git pull --rebase origin main && git push origin main)
