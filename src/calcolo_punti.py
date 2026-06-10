@@ -323,7 +323,24 @@ def calcola_statistiche_torneo(
             voti_vincitore[v_norm] = voti_vincitore.get(v_norm, 0) + 1
     vincitore_gettonato = sorted(voti_vincitore.items(), key=lambda x: x[1], reverse=True)[:5]
 
-    # ── Totali aggregati ──────────────────────────────────────────────────
+    # ── Risultato esatto più indovinato ──────────────────────────────────
+    ris_counts = {}
+    for incontro, ris in risultati.partite.items():
+        if not ris.risultato:
+            continue
+        r_real = normalizza_risultato(ris.risultato)
+        if not r_real:
+            continue
+        n_ris = 0
+        for part in partecipanti:
+            for pron in part.partite:
+                if confronta_squadre(pron.incontro, incontro):
+                    if normalizza_risultato(pron.risultato_esatto) == r_real:
+                        n_ris += 1
+                    break
+        if n_ris > 0:
+            ris_counts[incontro] = {"risultato": ris.risultato, "n": n_ris}
+    risultato_piu_indovinato = max(ris_counts.items(), key=lambda x: x[1]["n"]) if ris_counts else None
     tot_esiti    = sum(p.n_esiti_corretti for p in punteggi)
     tot_risultati = sum(p.n_risultati_esatti for p in punteggi)
     tot_marcatori = sum(p.n_marcatori_corretti for p in punteggi)
@@ -375,6 +392,7 @@ def calcola_statistiche_torneo(
         "top_esiti":              {"nome": top_esiti.nome_completo,     "val": top_esiti.n_esiti_corretti},
         "top_risultati":          {"nome": top_risultati.nome_completo,  "val": top_risultati.n_risultati_esatti},
         "top_marcatori":          {"nome": top_marcatori.nome_completo,  "val": top_marcatori.n_marcatori_corretti},
+        "risultato_piu_indovinato": {"partita": risultato_piu_indovinato[0], "risultato": risultato_piu_indovinato[1]["risultato"], "n": risultato_piu_indovinato[1]["n"]} if risultato_piu_indovinato else None,
         "partita_piu_indovinata": {"nome": partita_piu_indovinata, **giocate[partita_piu_indovinata]} if partita_piu_indovinata else None,
         "partita_meno_indovinata":{"nome": partita_meno_indovinata, **giocate[partita_meno_indovinata]} if partita_meno_indovinata else None,
         "marcatore_top":          {"nome": marcatore_top[0], "val": marcatore_top[1]} if marcatore_top else None,

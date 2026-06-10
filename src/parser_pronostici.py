@@ -55,7 +55,14 @@ def _cella(row: tuple, col: int) -> Optional[str]:
     val = row[col]
     if val is None:
         return None
+    # Se è un oggetto datetime (Excel ha interpretato "2-1" come data) → scarta
+    import datetime
+    if isinstance(val, (datetime.datetime, datetime.date)):
+        return None
     s = str(val).strip()
+    # Se è un numero intero puro senza trattino → potrebbe essere seriale Excel → scarta
+    if s.isdigit():
+        return None
     return s if s else None
 
 

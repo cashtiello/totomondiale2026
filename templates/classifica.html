@@ -347,6 +347,15 @@
 
     <!-- Partite più/meno indovinate + marcatore top -->
     <div class="row g-3 mb-3">
+        {% if stats.risultato_piu_indovinato %}
+        <div class="col-md-4">
+            <div class="record-card">
+                <div class="rec-label">🎯 Risultato esatto più indovinato</div>
+                <div class="rec-name">{{ stats.risultato_piu_indovinato.partita }} <strong>{{ stats.risultato_piu_indovinato.risultato }}</strong></div>
+                <div class="rec-val">indovinato da {{ stats.risultato_piu_indovinato.n }} partecipanti</div>
+            </div>
+        </div>
+        {% endif %}
         {% if stats.partita_piu_indovinata %}
         <div class="col-md-4">
             <div class="record-card">
