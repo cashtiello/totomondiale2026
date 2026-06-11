@@ -39,6 +39,69 @@ API_KEY      = os.environ.get("FOOTBALL_DATA_KEY", "")
 API_BASE     = "https://api.football-data.org/v4"
 CODICE_WC    = "WC"  # FIFA World Cup su football-data.org
 
+# Mappa nomi inglesi (football-data.org) → italiani (pronostici partecipanti)
+NOMI_SQUADRE = {
+    "Mexico": "Messico",
+    "South Africa": "Sud Africa",
+    "Korea Republic": "Corea del Sud",
+    "Czech Republic": "R.Ceca",
+    "Czechia": "R.Ceca",
+    "Canada": "Canada",
+    "Bosnia and Herzegovina": "Bosnia",
+    "Bosnia-Herzegovina": "Bosnia",
+    "Qatar": "Qatar",
+    "Switzerland": "Svizzera",
+    "Brazil": "Brasile",
+    "Morocco": "Marocco",
+    "Haiti": "Haiti",
+    "Scotland": "Scozia",
+    "USA": "USA",
+    "United States": "USA",
+    "Paraguay": "Paraguay",
+    "Australia": "Australia",
+    "Turkey": "Turchia",
+    "Türkiye": "Turchia",
+    "Germany": "Germania",
+    "Curaçao": "Curacao",
+    "Curacao": "Curacao",
+    "Ivory Coast": "Costa d'Avorio",
+    "Côte d'Ivoire": "Costa d'Avorio",
+    "Ecuador": "Ecuador",
+    "Netherlands": "Olanda",
+    "Japan": "Giappone",
+    "Sweden": "Svezia",
+    "Tunisia": "Tunisia",
+    "Spain": "Spagna",
+    "Cape Verde": "Capo Verde",
+    "Saudi Arabia": "Arabia Saudita",
+    "Uruguay": "Uruguay",
+    "Belgium": "Belgio",
+    "Egypt": "Egitto",
+    "Iran": "Iran",
+    "New Zealand": "Nuova Zelanda",
+    "France": "Francia",
+    "Senegal": "Senegal",
+    "Iraq": "Iraq",
+    "Norway": "Norvegia",
+    "Argentina": "Argentina",
+    "Algeria": "Algeria",
+    "Austria": "Austria",
+    "Jordan": "Giordania",
+    "Portugal": "Portogallo",
+    "Congo": "Congo",
+    "DR Congo": "Congo",
+    "Uzbekistan": "Uzbekistan",
+    "Colombia": "Colombia",
+    "England": "Inghilterra",
+    "Croatia": "Croazia",
+    "Ghana": "Ghana",
+    "Panama": "Panama",
+}
+
+def traduci(nome: str) -> str:
+    """Traduce il nome squadra da inglese a italiano."""
+    return NOMI_SQUADRE.get(nome, nome)
+
 # Gironi per i dropdown
 GIRONI_SQUADRE = {
     'A': ['Messico', 'Sud Africa', 'Corea del Sud', 'Repubblica Ceca'],
@@ -113,8 +176,8 @@ def scarica_risultati() -> dict[str, dict]:
     risultati = {}
 
     for match in data.get("matches", []):
-        home = match["homeTeam"]["name"]
-        away = match["awayTeam"]["name"]
+        home = traduci(match["homeTeam"]["name"])
+        away = traduci(match["awayTeam"]["name"])
         gh   = match["score"]["fullTime"]["home"] or 0
         ga   = match["score"]["fullTime"]["away"] or 0
         mid  = match["id"]
@@ -162,8 +225,8 @@ def scarica_gironi() -> dict[str, dict]:
         tabella = standing.get("table", [])
         if len(tabella) >= 2:
             classifiche[lettera] = {
-                "prima":   tabella[0]["team"]["name"],
-                "seconda": tabella[1]["team"]["name"],
+                "prima":   traduci(tabella[0]["team"]["name"]),
+                "seconda": traduci(tabella[1]["team"]["name"]),
             }
 
     log.info(f"Classifiche gironi: {len(classifiche)}")
