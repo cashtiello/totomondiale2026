@@ -172,14 +172,18 @@ def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
     """Parsa la stringa marcatori da worldcup26.ir."""
     if not scorers_str or scorers_str == "null":
         return [], False
-    scorers_str = scorers_str.strip('{}').replace('"', '')
+    import re
+    # Rimuove graffe e tutti i tipi di virgolette incluse quelle unicode curly
+    scorers_str = scorers_str.strip('{}')
+    scorers_str = re.sub(r'[\u0022\u0027\u201c\u201d\u2018\u2019\u00ab\u00bb]', '', scorers_str)
     nomi = []
     ha_autogol = False
     for s in scorers_str.split(","):
         s = s.strip()
         if not s or s == "null":
             continue
-        nome = s.rsplit(" ", 1)[0].strip() if "'" in s else s.strip()
+        # Rimuove il minuto (es. "J. Quiñones 9'" o "J. Quiñones 9'+" → "J. Quiñones")
+        nome = re.sub(r"\s+\d+\+?'.*$", "", s).strip()
         if "autogoal" in nome.lower() or "own goal" in nome.lower():
             ha_autogol = True
         elif nome:
