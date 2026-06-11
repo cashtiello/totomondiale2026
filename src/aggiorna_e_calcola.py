@@ -35,10 +35,9 @@ setup_logging()
 log = get_logger("aggiorna_e_calcola")
 
 # ── Configurazione ────────────────────────────────────────────────────────────
-API_KEY      = os.environ.get("API_FOOTBALL_KEY", "")
-API_BASE     = "https://v3.football.api-sports.io"
-ID_MONDIALE  = 1                # FIFA World Cup
-STAGIONE     = 2026
+API_KEY      = os.environ.get("FOOTBALL_DATA_KEY", "")
+API_BASE     = "https://api.football-data.org/v4"
+CODICE_WC    = "WC"  # FIFA World Cup su football-data.org
 
 # Gironi per i dropdown
 GIRONI_SQUADRE = {
@@ -95,10 +94,10 @@ TUTTE_LE_PARTITE = [
 ]
 
 
-def _api(endpoint: str, params: dict) -> dict:
-    """Chiama l'API-Football e ritorna il JSON."""
-    url = f"{API_BASE}/{endpoint}?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"x-apisports-key": API_KEY})
+def _api(endpoint: str) -> dict:
+    """Chiama football-data.org e ritorna il JSON."""
+    url = f"{API_BASE}/{endpoint}"
+    req = urllib.request.Request(url, headers={"X-Auth-Token": API_KEY})
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             return json.loads(resp.read().decode())
@@ -109,35 +108,30 @@ def _api(endpoint: str, params: dict) -> dict:
 
 def scarica_risultati() -> dict[str, dict]:
     """Scarica risultati e marcatori di tutte le partite finite."""
-    log.info("Scarico partite da API-Football...")
-    data = _api("fixtures", {"league": ID_MONDIALE, "season": STAGIONE})
+    log.info("Scarico partite da football-data.org...")
+    data = _api(f"competitions/{CODICE_WC}/matches?status=FINISHED")
     risultati = {}
 
-    for fix in data.get("response", []):
-        status = fix.get("fixture", {}).get("status", {}).get("short", "")
-        if status not in ("FT", "AET", "PEN"):
-            continue
-
-        home = fix["teams"]["home"]["name"]
-        away = fix["teams"]["away"]["name"]
-        gh   = fix["goals"]["home"] or 0
-        ga   = fix["goals"]["away"] or 0
-        fid  = fix["fixture"]["id"]
+    for match in data.get("matches", []):
+        home = match["homeTeam"]["name"]
+        away = match["awayTeam"]["name"]
+        gh   = match["score"]["fullTime"]["home"] or 0
+        ga   = match["score"]["fullTime"]["away"] or 0
+        mid  = match["id"]
         nome = f"{home}-{away}"
 
-        # Scarica marcatori
-        time.sleep(0.25)
-        ev = _api("fixtures/events", {"fixture": fid})
+        # Scarica marcatori tramite endpoint dettaglio partita
+        time.sleep(0.3)
+        det = _api(f"matches/{mid}")
         gol = []
         ha_autogol = False
-        for e in ev.get("response", []):
-            if e.get("type") == "Goal":
-                if e.get("detail") == "Own Goal":
-                    ha_autogol = True
-                else:
-                    giocatore = e["player"]["name"]
-                    if giocatore not in gol:
-                        gol.append(giocatore)
+        for goal in det.get("goals", []):
+            if goal.get("type") == "OWN":
+                ha_autogol = True
+            else:
+                scorer = goal.get("scorer", {}).get("name", "")
+                if scorer and scorer not in gol:
+                    gol.append(scorer)
 
         marcatori_str = ", ".join(gol)
         if ha_autogol:
@@ -147,7 +141,7 @@ def scarica_risultati() -> dict[str, dict]:
             "risultato": f"{gh}-{ga}",
             "marcatori": marcatori_str,
         }
-        log.info(f"  {nome}: {gh}-{ga} | {', '.join(gol)}")
+        log.info(f"  {nome}: {gh}-{ga} | {marcatori_str}")
 
     log.info(f"Scaricate {len(risultati)} partite completate")
     return risultati
@@ -156,20 +150,21 @@ def scarica_risultati() -> dict[str, dict]:
 def scarica_gironi() -> dict[str, dict]:
     """Scarica le classifiche dei gironi."""
     log.info("Scarico classifiche gironi...")
-    data = _api("standings", {"league": ID_MONDIALE, "season": STAGIONE})
+    data = _api(f"competitions/{CODICE_WC}/standings")
     classifiche = {}
 
-    standings = data.get("response", [{}])
-    if standings:
-        gruppi = standings[0].get("league", {}).get("standings", [])
-        for gruppo in gruppi:
-            if len(gruppo) >= 2:
-                girone = gruppo[0].get("group", "").replace("Group ", "").strip()
-                if girone:
-                    classifiche[girone] = {
-                        "prima":   gruppo[0]["team"]["name"],
-                        "seconda": gruppo[1]["team"]["name"],
-                    }
+    for standing in data.get("standings", []):
+        if standing.get("type") != "TOTAL":
+            continue
+        gruppo = standing.get("group", "")
+        # es. "GROUP_A" → "A"
+        lettera = gruppo.replace("GROUP_", "").strip()
+        tabella = standing.get("table", [])
+        if len(tabella) >= 2:
+            classifiche[lettera] = {
+                "prima":   tabella[0]["team"]["name"],
+                "seconda": tabella[1]["team"]["name"],
+            }
 
     log.info(f"Classifiche gironi: {len(classifiche)}")
     return classifiche

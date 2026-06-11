@@ -29,7 +29,7 @@ jobs:
 
       - name: Scarica risultati reali e calcola classifica
         env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
         run: python src/aggiorna_e_calcola.py
 
       - name: Pubblica classifica aggiornata
