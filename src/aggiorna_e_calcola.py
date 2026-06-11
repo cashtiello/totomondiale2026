@@ -35,9 +35,8 @@ setup_logging()
 log = get_logger("aggiorna_e_calcola")
 
 # ── Configurazione ────────────────────────────────────────────────────────────
-API_KEY      = os.environ.get("FOOTBALL_DATA_KEY", "")
-API_BASE     = "https://api.football-data.org/v4"
-CODICE_WC    = "WC"  # FIFA World Cup su football-data.org
+API_KEY      = os.environ.get("FOOTBALL_DATA_KEY", "")  # non più usata ma tenuta per compatibilità
+API_BASE     = "https://worldcup26.ir"
 
 # Mappa nomi inglesi (football-data.org) → italiani (pronostici partecipanti)
 NOMI_SQUADRE = {
@@ -158,9 +157,9 @@ TUTTE_LE_PARTITE = [
 
 
 def _api(endpoint: str) -> dict:
-    """Chiama football-data.org e ritorna il JSON."""
+    """Chiama worldcup26.ir e ritorna il JSON."""
     url = f"{API_BASE}/{endpoint}"
-    req = urllib.request.Request(url, headers={"X-Auth-Token": API_KEY})
+    req = urllib.request.Request(url, headers={"User-Agent": "TotoMondiale/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             return json.loads(resp.read().decode())
@@ -169,32 +168,45 @@ def _api(endpoint: str) -> dict:
         return {}
 
 
+def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
+    """Parsa la stringa marcatori da worldcup26.ir."""
+    if not scorers_str or scorers_str == "null":
+        return [], False
+    scorers_str = scorers_str.strip('{}').replace('"', '')
+    nomi = []
+    ha_autogol = False
+    for s in scorers_str.split(","):
+        s = s.strip()
+        if not s or s == "null":
+            continue
+        nome = s.rsplit(" ", 1)[0].strip() if "'" in s else s.strip()
+        if "autogoal" in nome.lower() or "own goal" in nome.lower():
+            ha_autogol = True
+        elif nome:
+            nomi.append(nome)
+    return nomi, ha_autogol
+
+
 def scarica_risultati() -> dict[str, dict]:
-    """Scarica risultati e marcatori di tutte le partite finite."""
-    log.info("Scarico partite da football-data.org...")
-    data = _api(f"competitions/{CODICE_WC}/matches?status=FINISHED")
+    """Scarica risultati e marcatori da worldcup26.ir."""
+    log.info("Scarico partite da worldcup26.ir...")
+    data = _api("get/games")
     risultati = {}
 
-    for match in data.get("matches", []):
-        home = traduci(match["homeTeam"]["name"])
-        away = traduci(match["awayTeam"]["name"])
-        gh   = match["score"]["fullTime"]["home"] or 0
-        ga   = match["score"]["fullTime"]["away"] or 0
-        mid  = match["id"]
+    for match in data.get("games", []):
+        if match.get("finished", "FALSE").upper() != "TRUE":
+            continue
+
+        home = traduci(match.get("home_team_name_en", ""))
+        away = traduci(match.get("away_team_name_en", ""))
+        gh = int(match.get("home_score", 0) or 0)
+        ga = int(match.get("away_score", 0) or 0)
         nome = f"{home}-{away}"
 
-        # Scarica marcatori tramite endpoint dettaglio partita
-        time.sleep(0.3)
-        det = _api(f"matches/{mid}")
-        gol = []
-        ha_autogol = False
-        for goal in det.get("goals", []):
-            if goal.get("type") == "OWN":
-                ha_autogol = True
-            else:
-                scorer = goal.get("scorer", {}).get("name", "")
-                if scorer and scorer not in gol:
-                    gol.append(scorer)
+        gol_home, auto_home = _parse_scorers(match.get("home_scorers", "null"))
+        gol_away, auto_away = _parse_scorers(match.get("away_scorers", "null"))
+        gol = gol_home + gol_away
+        ha_autogol = auto_home or auto_away
 
         marcatori_str = ", ".join(gol)
         if ha_autogol:
@@ -211,22 +223,20 @@ def scarica_risultati() -> dict[str, dict]:
 
 
 def scarica_gironi() -> dict[str, dict]:
-    """Scarica le classifiche dei gironi."""
+    """Scarica le classifiche dei gironi da worldcup26.ir."""
     log.info("Scarico classifiche gironi...")
-    data = _api(f"competitions/{CODICE_WC}/standings")
+    data = _api("get/groups")
     classifiche = {}
 
-    for standing in data.get("standings", []):
-        if standing.get("type") != "TOTAL":
-            continue
-        gruppo = standing.get("group", "")
-        # es. "GROUP_A" → "A"
-        lettera = gruppo.replace("GROUP_", "").strip()
-        tabella = standing.get("table", [])
-        if len(tabella) >= 2:
+    for gruppo in data.get("groups", []):
+        lettera = gruppo.get("name", "").replace("Group ", "").strip()
+        teams = gruppo.get("teams", [])
+        if len(teams) >= 2:
+            # Ordina per punti desc
+            teams_sorted = sorted(teams, key=lambda t: int(t.get("pts", 0) or 0), reverse=True)
             classifiche[lettera] = {
-                "prima":   traduci(tabella[0]["team"]["name"]),
-                "seconda": traduci(tabella[1]["team"]["name"]),
+                "prima":   traduci(teams_sorted[0].get("team_name_en", "")),
+                "seconda": traduci(teams_sorted[1].get("team_name_en", "")),
             }
 
     log.info(f"Classifiche gironi: {len(classifiche)}")
@@ -352,11 +362,8 @@ def salva_storico_posizioni(punteggi, storico_path: Path) -> None:
 
 
 def main():
-    if not API_KEY:
-        log.error("API_FOOTBALL_KEY non trovata nelle variabili d'ambiente!")
-        sys.exit(1)
-
     log.info("=== Avvio aggiornamento automatico ===")
+    log.info("Fonte dati: worldcup26.ir (gratuita, no API key)")
 
     # 1. Scarica risultati reali
     partite = scarica_risultati()
