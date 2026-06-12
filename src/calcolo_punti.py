@@ -118,7 +118,10 @@ def _calcola_partite(
                     )
                     continue
             for marcatore_reale in marcatori_reali:
-                if confronta_squadre(pron.marcatore, marcatore_reale):
+                # Rimuove minuto finale (es. "R. Jiménez 67" → "R. Jiménez")
+                import re as _re
+                mr_pulito = _re.sub(r"\s+\d+\+?'?$", "", marcatore_reale.strip()).strip()
+                if confronta_squadre(pron.marcatore, mr_pulito):
                     dettaglio.pt_marcatore += PUNTI_MARCATORE
                     dettaglio.n_marcatori_corretti += 1
                     log.debug(
