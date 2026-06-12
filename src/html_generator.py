@@ -2,6 +2,7 @@
 html_generator.py - Genera la pagina HTML classifica tramite Jinja2.
 """
 
+import re
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
