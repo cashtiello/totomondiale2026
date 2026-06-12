@@ -64,8 +64,18 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
         return True
 
     # ── 2. Match parziale contenimento ───────────────────────────────────────
-    if na in nb or nb in na:
-        return True
+    # Evita false corrispondenze tipo "Gimenez" in "Jimenez"
+    # Solo se la parola principale inizia con la stessa lettera
+    if na in nb:
+        # Verifica che non sia solo una sottostringa casuale
+        # es. "son" in "person" → False, "jimenez" in "r. jimenez" → True
+        idx = nb.index(na)
+        if idx == 0 or nb[idx-1] in (' ', '.', '-'):
+            return True
+    if nb in na:
+        idx = na.index(nb)
+        if idx == 0 or na[idx-1] in (' ', '.', '-'):
+            return True
 
     # ── 3. Nome puntato: "j.david" → "david" oppure "jonathan david" ─────────
     # Rimuovi iniziali tipo "j." "r." all'inizio o in mezzo
@@ -133,14 +143,16 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     pp_b = parola_principale(nb)
 
     if pp_a and pp_b:
+        # La prima lettera deve coincidere per evitare false corrispondenze
+        # es. "gimenez" vs "jimenez" → prima lettera diversa → no match
+        if pp_a[0] != pp_b[0]:
+            return False
         lunghezza_max = max(len(pp_a), len(pp_b))
         dist = distanza_levenshtein(pp_a, pp_b)
-        # Tollera 1 errore per nomi corti (≤6 chars), 2 per nomi medi, 3 per lunghi
-        if lunghezza_max <= 6 and dist <= 1:
+        # Soglie più stringenti: solo 1 errore per nomi fino a 8 chars, 2 per nomi lunghi (>10)
+        if lunghezza_max <= 8 and dist <= 1:
             return True
-        elif lunghezza_max <= 10 and dist <= 2:
-            return True
-        elif lunghezza_max > 10 and dist <= 3:
+        elif lunghezza_max > 10 and dist <= 2:
             return True
 
     # ── 6. Alias e soprannomi comuni ──────────────────────────────────────────
@@ -198,13 +210,10 @@ def normalizza_risultato(risultato: Optional[str]) -> Optional[str]:
 
 
 def normalizza_esito(esito: Optional[str]) -> Optional[str]:
-    """Normalizza esito: accetta '1','X','x','2', 1, 2, 1.0, 2.0 → '1','X','2'"""
-    if esito is None:
+    """Normalizza esito: accetta '1','X','x','2' → '1','X','2'"""
+    if not esito:
         return None
-    if isinstance(esito, (int, float)):
-        esito = str(int(esito))
     e = str(esito).strip().upper()
-    e = re.sub(r"\.0$", "", e)
     if e in ("1", "X", "2"):
         return e
     return None
