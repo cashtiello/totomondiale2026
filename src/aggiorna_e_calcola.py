@@ -208,7 +208,8 @@ def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
         if not s or s == "null":
             continue
         # Rimuove il minuto (es. "J. Quiñones 9'" o "J. Quiñones 9'+" → "J. Quiñones")
-        nome = re.sub(r"\s+\d+\+?'.*$", "", s).strip()
+        nome = re.sub(r"\s+\d+\+?'?$", "", s).strip()
+        nome = re.sub(r"\s+\d+\+?['\u2019]?$", "", nome).strip()
         if "autogoal" in nome.lower() or "own goal" in nome.lower():
             ha_autogol = True
         elif nome:
