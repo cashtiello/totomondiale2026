@@ -5,7 +5,7 @@ Regolamento implementato:
 
 PARTITE
   Esito 1X2 corretto            → 1 pt
-  Risultato esatto corretto     → 5 pt  (+ 1 pt esito automatico)
+  Risultato esatto corretto     → 5 pt  (separato dall'esito, NON cumulativo)
   Marcatore corretto            → 2 pt
 
 GIRONI
@@ -73,12 +73,10 @@ def _calcola_partite(
             if r_pron and r_real and r_pron == r_real:
                 dettaglio.pt_risultato_esatto += PUNTI_RISULTATO_ESATTO
                 dettaglio.n_risultati_esatti += 1
-                # Il risultato esatto include automaticamente l'esito
-                dettaglio.pt_esito += PUNTI_ESITO
-                dettaglio.n_esiti_corretti += 1
+                # Il risultato esatto NON include l'esito: sono punti separati
                 log.debug(
                     f"{dettaglio.nome_completo} | {incontro_key}: "
-                    f"risultato esatto {r_pron} +{PUNTI_RISULTATO_ESATTO + PUNTI_ESITO}pt"
+                    f"risultato esatto {r_pron} +{PUNTI_RISULTATO_ESATTO}pt"
                 )
             else:
                 # ── Solo esito ───────────────────────────────────────────────
