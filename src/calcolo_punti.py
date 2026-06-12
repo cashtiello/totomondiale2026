@@ -66,38 +66,27 @@ def _calcola_partite(
 
         esito_reale = risultato_reale.esito
 
-        # ── Risultato esatto ─────────────────────────────────────────────────
+        # ── Risultato esatto (indipendente dall'esito) ───────────────────────
         if pron.risultato_esatto and risultato_reale.risultato:
             r_pron = normalizza_risultato(pron.risultato_esatto)
             r_real = normalizza_risultato(risultato_reale.risultato)
             if r_pron and r_real and r_pron == r_real:
                 dettaglio.pt_risultato_esatto += PUNTI_RISULTATO_ESATTO
                 dettaglio.n_risultati_esatti += 1
-                # Il risultato esatto NON include l'esito: sono punti separati
                 log.debug(
                     f"{dettaglio.nome_completo} | {incontro_key}: "
                     f"risultato esatto {r_pron} +{PUNTI_RISULTATO_ESATTO}pt"
                 )
-            else:
-                # ── Solo esito ───────────────────────────────────────────────
-                esito_pron = pron.esito or calcola_esito_da_risultato(pron.risultato_esatto)
-                if esito_pron and esito_reale and esito_pron == esito_reale:
-                    dettaglio.pt_esito += PUNTI_ESITO
-                    dettaglio.n_esiti_corretti += 1
-                    log.debug(
-                        f"{dettaglio.nome_completo} | {incontro_key}: "
-                        f"esito {esito_pron} +{PUNTI_ESITO}pt"
-                    )
-        else:
-            # Nessun risultato esatto, guarda solo esito
-            esito_pron = pron.esito or calcola_esito_da_risultato(pron.risultato_esatto)
-            if esito_pron and esito_reale and esito_pron == esito_reale:
-                dettaglio.pt_esito += PUNTI_ESITO
-                dettaglio.n_esiti_corretti += 1
-                log.debug(
-                    f"{dettaglio.nome_completo} | {incontro_key}: "
-                    f"esito {esito_pron} +{PUNTI_ESITO}pt"
-                )
+
+        # ── Esito 1X2 (indipendente dal risultato esatto) ────────────────────
+        esito_pron = pron.esito or calcola_esito_da_risultato(pron.risultato_esatto)
+        if esito_pron and esito_reale and esito_pron == esito_reale:
+            dettaglio.pt_esito += PUNTI_ESITO
+            dettaglio.n_esiti_corretti += 1
+            log.debug(
+                f"{dettaglio.nome_completo} | {incontro_key}: "
+                f"esito {esito_pron} +{PUNTI_ESITO}pt"
+            )
 
         # ── Marcatore ────────────────────────────────────────────────────────
         if pron.marcatore and risultato_reale.marcatore:
