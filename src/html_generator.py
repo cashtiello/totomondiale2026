@@ -74,7 +74,9 @@ def _build_dettaglio_partecipante(
             if pron.marcatore and ris_reale.marcatore:
                 marcatori_reali = [m.strip() for m in ris_reale.marcatore.split(",") if m.strip()]
                 for mr in marcatori_reali:
-                    if confronta_squadre(pron.marcatore, mr):
+                    # Rimuove minuto finale (es. "R. Jiménez 67" → "R. Jiménez")
+                    mr_pulito = re.sub(r"\s+\d+\+?'?$", "", mr.strip()).strip()
+                    if confronta_squadre(pron.marcatore, mr_pulito):
                         marcatore_ok = True
                         break
 
