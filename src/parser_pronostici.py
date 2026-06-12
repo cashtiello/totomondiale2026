@@ -55,14 +55,12 @@ def _cella(row: tuple, col: int) -> Optional[str]:
     val = row[col]
     if val is None:
         return None
-    # Se è un datetime → Excel ha interpretato "M-G" come data (es. "2-1" → 1 Feb)
-    # Recuperiamo il risultato originale invertendo: month-day
     import datetime
     if isinstance(val, (datetime.datetime, datetime.date)):
         return f"{val.month}-{val.day}"
     s = str(val).strip()
-    # Numero intero puro senza trattino → seriale Excel → scarta
-    if s.isdigit():
+    # Scarta solo numeri seriali Excel grandi (>100), non esiti 1/2
+    if s.isdigit() and int(s) > 100:
         return None
     return s if s else None
 
