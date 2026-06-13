@@ -146,7 +146,7 @@
         <div class="hero-badge">🌍 FIFA World Cup 2026 — USA · Canada · Messico</div>
         <span class="hero-trophy">🏆</span>
         <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
-        <p class="subtitle">Classifica aggiornata al 13/06/2026 17:19:45</p>
+        <p class="subtitle">Classifica aggiornata al 13/06/2026 17:24:17</p>
     </div>
 </div>
 
@@ -1791,7 +1791,7 @@
 
 <footer>
     <div class="footer-flags">🇺🇸 🇨🇦 🇲🇽</div>
-    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il 13/06/2026 17:19:45 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il 13/06/2026 17:24:17 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
     <p class="mt-1" style="font-size:.7rem; opacity:.4;">FIFA World Cup 2026 — 11 Giugno / 19 Luglio 2026</p>
 </footer>
 
@@ -1849,7 +1849,7 @@ function formatMarcatori(str) {
     // Sostituisce (OG) con "(A)" per autogol
     return str.split(',').map(m => {
         m = m.trim();
-        m = m.replace(/\s+\d+(\+\d+)?'?$/, '');  // rimuovi minuto
+        m = m.replace(/\s*\d+(\+\d+)?'?\s*(?=\(|$)/, '');  // rimuovi minuto (anche attaccato a OG)
         m = m.replace(/\(OG\)/gi, ' (A)');           // OG → (A)
         return m.trim();
     }).join(', ');
