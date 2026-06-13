@@ -146,7 +146,7 @@
         <div class="hero-badge">🌍 FIFA World Cup 2026 — USA · Canada · Messico</div>
         <span class="hero-trophy">🏆</span>
         <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
-        <p class="subtitle">Classifica aggiornata al 13/06/2026 17:05:54</p>
+        <p class="subtitle">Classifica aggiornata al 13/06/2026 17:19:45</p>
     </div>
 </div>
 
@@ -1791,7 +1791,7 @@
 
 <footer>
     <div class="footer-flags">🇺🇸 🇨🇦 🇲🇽</div>
-    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il 13/06/2026 17:05:54 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
+    <p class="mb-0">TotoMondiale 2026 &nbsp;|&nbsp; Generato il 13/06/2026 17:19:45 &nbsp;|&nbsp; <i class="fas fa-code"></i> TotoManager v2.0</p>
     <p class="mt-1" style="font-size:.7rem; opacity:.4;">FIFA World Cup 2026 — 11 Giugno / 19 Luglio 2026</p>
 </footer>
 
@@ -1843,6 +1843,18 @@ document.querySelectorAll('[data-tab]').forEach(btn => {
     });
 });
 
+function formatMarcatori(str) {
+    if (!str) return str;
+    // Rimuove minuto normale (es. "R. Jiménez 67") e recupero (es. "F. Balogun 45+5")
+    // Sostituisce (OG) con "(A)" per autogol
+    return str.split(',').map(m => {
+        m = m.trim();
+        m = m.replace(/\s+\d+(\+\d+)?'?$/, '');  // rimuovi minuto
+        m = m.replace(/\(OG\)/gi, ' (A)');           // OG → (A)
+        return m.trim();
+    }).join(', ');
+}
+
 function apriDettaglio(nome) {
     const d = DATI[nome];
     if (!d) return;
@@ -1885,7 +1897,7 @@ function apriDettaglio(nome) {
                 <td class="text-center">${risultatoBadge}</td>
                 <td class="text-center">${marcatoreBadge}</td>
                 <td class="text-center">${p.risultato_reale || (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
-                <td class="text-center">${p.marcatore_reale || (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+                <td class="text-center">${p.marcatore_reale ? formatMarcatori(p.marcatore_reale) : (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
             </tr>`;
     });
 
