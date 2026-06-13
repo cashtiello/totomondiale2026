@@ -620,7 +620,7 @@ function formatMarcatori(str) {
     // Sostituisce (OG) con "(A)" per autogol
     return str.split(',').map(m => {
         m = m.trim();
-        m = m.replace(/\s+\d+(\+\d+)?'?$/, '');  // rimuovi minuto
+        m = m.replace(/\s*\d+(\+\d+)?'?\s*(?=\(|$)/, '');  // rimuovi minuto (anche attaccato a OG)
         m = m.replace(/\(OG\)/gi, ' (A)');           // OG → (A)
         return m.trim();
     }).join(', ');
