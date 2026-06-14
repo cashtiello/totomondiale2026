@@ -218,10 +218,15 @@ def normalizza_risultato(risultato: Optional[str]) -> Optional[str]:
 
 
 def normalizza_esito(esito: Optional[str]) -> Optional[str]:
-    """Normalizza esito: accetta '1','X','x','2' → '1','X','2'"""
-    if not esito:
+    """Normalizza esito: accetta '1','X','x','2', 1, 2, 1.0, 2.0 → '1','X','2'"""
+    if esito is None:
         return None
+    # Gestisce numeri interi o float da Excel (es. 1 → "1", 2.0 → "2")
+    if isinstance(esito, (int, float)):
+        esito = str(int(esito))
     e = str(esito).strip().upper()
+    # Rimuove .0 finale (es. "1.0" → "1")
+    e = re.sub(r"\.0$", "", e)
     if e in ("1", "X", "2"):
         return e
     return None
