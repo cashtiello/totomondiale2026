@@ -142,24 +142,12 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     pp_a = parola_principale(na)
     pp_b = parola_principale(nb)
 
-    if pp_a and pp_b:
-        # La prima lettera deve coincidere per evitare false corrispondenze
-        # es. "gimenez" vs "jimenez" → prima lettera diversa → no match
-        if pp_a[0] != pp_b[0]:
-            return False
-        lunghezza_max = max(len(pp_a), len(pp_b))
-        dist = distanza_levenshtein(pp_a, pp_b)
-        # Soglie più stringenti: solo 1 errore per nomi fino a 8 chars, 2 per nomi lunghi (>10)
-        if lunghezza_max <= 8 and dist <= 1:
-            return True
-        elif lunghezza_max > 10 and dist <= 2:
-            return True
-
     # ── 6. Alias e soprannomi comuni ──────────────────────────────────────────
+    # (prima del fuzzy per evitare che il controllo prima lettera blocchi gli alias)
     ALIAS = {
-        "vini jr":        ["vinicius junior", "vinicius", "vini"],
-        "vini":           ["vinicius junior", "vinicius"],
-        "vinicius":       ["vinicius junior", "vini jr", "vini"],
+        "vini jr":        ["vinicius junior", "vinicius", "vini", "junior", "v. junior"],
+        "vini":           ["vinicius junior", "vinicius", "junior", "v. junior"],
+        "vinicius":       ["vinicius junior", "vini jr", "vini", "junior", "v. junior"],
         "raphinha":       ["rapinha", "raphinha"],
         "rapinha":        ["raphinha"],
         "neymar":         ["neymar jr"],
@@ -185,6 +173,26 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
         if na in alias_vals and nb == alias_key:
             return True
         if nb in alias_vals and na == alias_key:
+            return True
+        # Controlla anche se una delle due stringhe CONTIENE l'alias
+        # es. "v. junior" contiene "junior" che è alias di "vinicius"
+        for v in alias_vals:
+            if v in na and alias_key in nb:
+                return True
+            if v in nb and alias_key in na:
+                return True
+
+    # ── 7. Fuzzy per errori di battitura ──────────────────────────────────────
+    if pp_a and pp_b:
+        # La prima lettera deve coincidere per evitare false corrispondenze
+        # es. "gimenez" vs "jimenez" → prima lettera diversa → no match
+        if pp_a[0] != pp_b[0]:
+            return False
+        lunghezza_max = max(len(pp_a), len(pp_b))
+        dist = distanza_levenshtein(pp_a, pp_b)
+        if lunghezza_max <= 8 and dist <= 1:
+            return True
+        elif lunghezza_max > 10 and dist <= 2:
             return True
 
     return False
