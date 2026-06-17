@@ -57,7 +57,7 @@ def _cella(row: tuple, col: int) -> Optional[str]:
         return None
     import datetime
     if isinstance(val, (datetime.datetime, datetime.date)):
-        return f"{val.month}-{val.day}"
+        return f"{val.day}-{val.month}"
     s = str(val).strip()
     # Scarta solo numeri seriali Excel grandi (>100), non esiti 1/2
     if s.isdigit() and int(s) > 100:
