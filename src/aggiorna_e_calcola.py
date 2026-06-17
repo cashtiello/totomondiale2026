@@ -287,6 +287,27 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     f_alt  = [PatternFill("solid", start_color="F8F9FA"),
               PatternFill("solid", start_color="FFFFFF")]
 
+    # Partite con marcatori corretti manualmente (API restituisce dati sbagliati)
+    # Aggiungere qui le partite da non sovrascrivere
+    PARTITE_MANUALI = {
+        "Austria-Giordania",
+    }
+
+    # Leggi marcatori già presenti nel file solo per le partite manuali
+    marcatori_esistenti: dict[str, str] = {}
+    try:
+        wb_old = openpyxl.load_workbook(RISULTATI_FILE, data_only=True)
+        ws_old = wb_old.active
+        for sheet_name in wb_old.sheetnames:
+            if "partite" in sheet_name.lower() or "risultati" in sheet_name.lower():
+                ws_old = wb_old[sheet_name]
+                break
+        for row in ws_old.iter_rows(min_row=2, values_only=True):
+            if row[0] and row[2] and str(row[0]).strip() in PARTITE_MANUALI:
+                marcatori_esistenti[str(row[0]).strip()] = str(row[2]).strip()
+    except Exception:
+        pass
+
     wb = openpyxl.Workbook()
 
     # ── PARTITE ───────────────────────────────────────────────────────────────
@@ -300,7 +321,11 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
 
     for i, (incontro, _) in enumerate(TUTTE_LE_PARTITE):
         info = partite.get(incontro, {})
-        for col, val in enumerate([incontro, info.get("risultato",""), info.get("marcatori","")], 1):
+        # Usa marcatori manuali solo per le partite in PARTITE_MANUALI
+        marcatori_api = info.get("marcatori", "")
+        marcatori_manuali = marcatori_esistenti.get(incontro, "")
+        marcatori_finali = marcatori_manuali if marcatori_manuali else marcatori_api
+        for col, val in enumerate([incontro, info.get("risultato",""), marcatori_finali], 1):
             c = ws.cell(row=i+2, column=col, value=val)
             c.fill = f_alt[i % 2]
             c.alignment = Alignment(horizontal="left" if col==1 else "center", vertical="center")
