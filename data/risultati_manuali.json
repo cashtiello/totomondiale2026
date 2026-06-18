@@ -1,0 +1,437 @@
+{
+  "_istruzioni": "Questo file viene aggiornato automaticamente dall'API. Puoi sovrascrivere risultato e/o marcatori di qualsiasi partita modificando i campi. Lascia vuoto per usare i dati dell'API.",
+  "partite": {
+    "Messico-Sud Africa": {
+      "girone": "A",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Corea del Sud-R.Ceca": {
+      "girone": "A",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Canada-Bosnia": {
+      "girone": "B",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "USA-Paraguay": {
+      "girone": "D",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Qatar-Svizzera": {
+      "girone": "B",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Brasile-Marocco": {
+      "girone": "C",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Haiti-Scozia": {
+      "girone": "C",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Australia-Turchia": {
+      "girone": "D",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Germania-Curacao": {
+      "girone": "E",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Olanda-Giappone": {
+      "girone": "F",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Costa d'Avorio-Ecuador": {
+      "girone": "E",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Svezia-Tunisia": {
+      "girone": "F",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Spagna-Capo Verde": {
+      "girone": "H",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Belgio-Egitto": {
+      "girone": "G",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Arabia Saudita-Uruguay": {
+      "girone": "H",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Iran-Nuova Zelanda": {
+      "girone": "G",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Francia-Senegal": {
+      "girone": "I",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Iraq-Norvegia": {
+      "girone": "I",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Argentina-Algeria": {
+      "girone": "J",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Austria-Giordania": {
+      "girone": "J",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Portogallo-Congo": {
+      "girone": "K",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Inghilterra-Croazia": {
+      "girone": "L",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Ghana-Panama": {
+      "girone": "L",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Uzbekistan-Colombia": {
+      "girone": "K",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "R.Ceca-Sud Africa": {
+      "girone": "A",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Svizzera-Bosnia": {
+      "girone": "B",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Canada-Qatar": {
+      "girone": "B",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Messico-Corea del Sud": {
+      "girone": "A",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "USA-Australia": {
+      "girone": "D",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Scozia-Marocco": {
+      "girone": "C",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Brasile-Haiti": {
+      "girone": "C",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Turchia-Paraguay": {
+      "girone": "D",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Olanda-Svezia": {
+      "girone": "F",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Germania-Costa d'Avorio": {
+      "girone": "E",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Ecuador-Curacao": {
+      "girone": "E",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Tunisia-Giappone": {
+      "girone": "F",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Spagna-Arabia Saudita": {
+      "girone": "H",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Belgio-Iran": {
+      "girone": "G",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Uruguay-Capo Verde": {
+      "girone": "H",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Nuova Zelanda-Egitto": {
+      "girone": "G",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Argentina-Austria": {
+      "girone": "J",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Francia-Iraq": {
+      "girone": "I",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Norvegia-Senegal": {
+      "girone": "I",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Giordania-Algeria": {
+      "girone": "J",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Portogallo-Uzbekistan": {
+      "girone": "K",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Inghilterra-Ghana": {
+      "girone": "L",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Panama-Croazia": {
+      "girone": "L",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Colombia-Congo": {
+      "girone": "K",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Svizzera-Canada": {
+      "girone": "B",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Bosnia-Qatar": {
+      "girone": "B",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Scozia-Brasile": {
+      "girone": "C",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Marocco-Haiti": {
+      "girone": "C",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "R.Ceca-Messico": {
+      "girone": "A",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Sud Africa-Corea del Sud": {
+      "girone": "A",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Ecuador-Germania": {
+      "girone": "E",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Curacao-Costa d'Avorio": {
+      "girone": "E",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Tunisia-Olanda": {
+      "girone": "F",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Giappone-Svezia": {
+      "girone": "F",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Paraguay-Australia": {
+      "girone": "D",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Turchia-USA": {
+      "girone": "D",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Norvegia-Francia": {
+      "girone": "I",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Senegal-Iraq": {
+      "girone": "I",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Uruguay-Spagna": {
+      "girone": "H",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Capo Verde-Arabia Saudita": {
+      "girone": "H",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Egitto-Iran": {
+      "girone": "G",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Nuova Zelanda-Belgio": {
+      "girone": "G",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Panama-Inghilterra": {
+      "girone": "L",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Croazia-Ghana": {
+      "girone": "L",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Colombia-Portogallo": {
+      "girone": "K",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Congo-Uzbekistan": {
+      "girone": "K",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Giordania-Argentina": {
+      "girone": "J",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    },
+    "Algeria-Austria": {
+      "girone": "J",
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": false
+    }
+  }
+}
