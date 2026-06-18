@@ -38,4 +38,5 @@ jobs:
           git config user.email "bot@totomondiale.it"
           cp data/output/index.html index.html
           git add -A
+          git restore --staged data/risultati_manuali.json
           git diff --cached --quiet || (git commit -m "Classifica aggiornata $(date '+%d/%m/%Y %H:%M')" && git push origin main --force-with-lease)
