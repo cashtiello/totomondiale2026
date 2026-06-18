@@ -147,15 +147,15 @@
     },
     "R.Ceca-Sud Africa": {
       "girone": "A",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-1",
+      "marcatori": "Sadilek,Mokoena",
+      "_manuale": true
     },
     "Svizzera-Bosnia": {
       "girone": "B",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "4-1",
+      "marcatori": "Vargas,Manzambi,Xhaka,Mahmic,Manzambi",
+      "_manuale": true
     },
     "Canada-Qatar": {
       "girone": "B",
