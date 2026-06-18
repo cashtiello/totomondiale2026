@@ -15,12 +15,15 @@ import json
 import time
 import urllib.request
 import urllib.parse
+import json
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.logger import setup_logging, get_logger
 from src.config import RISULTATI_FILE
+
+RISULTATI_MANUALI_FILE = Path(__file__).parent.parent / "data" / "risultati_manuali.json"
 from src.excel_reader import leggi_tutti_pronostici
 from src.parser_risultati import leggi_risultati
 from src.calcolo_punti import calcola_tutti_punteggi
@@ -273,6 +276,52 @@ def scarica_gironi() -> dict[str, dict]:
     return classifiche
 
 
+def aggiorna_json_manuali(partite_api: dict) -> dict:
+    """
+    Aggiorna risultati_manuali.json con i dati dell'API,
+    preservando le correzioni manuali (_manuale: True).
+    Restituisce i dati manuali da usare come override.
+    """
+    try:
+        if not RISULTATI_MANUALI_FILE.exists():
+            log.warning("risultati_manuali.json non trovato")
+            return {}
+
+        with open(RISULTATI_MANUALI_FILE, "r", encoding="utf-8") as f:
+            json_data = json.load(f)
+
+        partite_json = json_data.get("partite", {})
+        dati_manuali = {}
+
+        for partita, dati in partite_json.items():
+            is_manuale = dati.get("_manuale", False)
+            api_info = partite_api.get(partita, {})
+
+            if is_manuale:
+                # Preserva i dati manuali e usali come override
+                dati_manuali[partita] = {
+                    "risultato": dati.get("risultato", ""),
+                    "marcatori": dati.get("marcatori", ""),
+                }
+                log.info(f"  JSON manuale preservato: {partita}")
+            else:
+                # Aggiorna con i dati dell'API
+                partite_json[partita]["risultato"] = api_info.get("risultato", "")
+                partite_json[partita]["marcatori"] = api_info.get("marcatori", "")
+
+        # Salva il JSON aggiornato
+        json_data["partite"] = partite_json
+        with open(RISULTATI_MANUALI_FILE, "w", encoding="utf-8") as f:
+            json.dump(json_data, f, ensure_ascii=False, indent=2)
+
+        log.info(f"risultati_manuali.json aggiornato ({len(dati_manuali)} override manuali)")
+        return dati_manuali
+
+    except Exception as e:
+        log.error(f"Errore aggiornamento JSON manuali: {e}")
+        return {}
+
+
 def scrivi_risultati(partite: dict, gironi: dict) -> None:
     """Scrive risultati.xlsx con i dati aggiornati."""
     bordo = lambda: Border(
@@ -287,26 +336,8 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     f_alt  = [PatternFill("solid", start_color="F8F9FA"),
               PatternFill("solid", start_color="FFFFFF")]
 
-    # Partite con marcatori corretti manualmente (API restituisce dati sbagliati)
-    # Aggiungere qui le partite da non sovrascrivere
-    PARTITE_MANUALI = {
-        "Austria-Giordania",
-    }
-
-    # Leggi marcatori già presenti nel file solo per le partite manuali
-    marcatori_esistenti: dict[str, str] = {}
-    try:
-        wb_old = openpyxl.load_workbook(RISULTATI_FILE, data_only=True)
-        ws_old = wb_old.active
-        for sheet_name in wb_old.sheetnames:
-            if "partite" in sheet_name.lower() or "risultati" in sheet_name.lower():
-                ws_old = wb_old[sheet_name]
-                break
-        for row in ws_old.iter_rows(min_row=2, values_only=True):
-            if row[0] and row[2] and str(row[0]).strip() in PARTITE_MANUALI:
-                marcatori_esistenti[str(row[0]).strip()] = str(row[2]).strip()
-    except Exception:
-        pass
+    # Aggiorna JSON con dati API e ottieni override manuali
+    dati_manuali = aggiorna_json_manuali(partite)
 
     wb = openpyxl.Workbook()
 
@@ -321,11 +352,13 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
 
     for i, (incontro, _) in enumerate(TUTTE_LE_PARTITE):
         info = partite.get(incontro, {})
-        # Usa marcatori manuali solo per le partite in PARTITE_MANUALI
-        marcatori_api = info.get("marcatori", "")
-        marcatori_manuali = marcatori_esistenti.get(incontro, "")
-        marcatori_finali = marcatori_manuali if marcatori_manuali else marcatori_api
-        for col, val in enumerate([incontro, info.get("risultato",""), marcatori_finali], 1):
+        # Dati manuali hanno sempre priorità sull'API
+        manuale = dati_manuali.get(incontro, {})
+        risultato_finale = manuale.get("risultato", info.get("risultato", ""))
+        marcatori_finali = manuale.get("marcatori", info.get("marcatori", ""))
+        if manuale:
+            log.info(f"  {incontro}: usando dati manuali ({risultato_finale} | {marcatori_finali})")
+        for col, val in enumerate([incontro, risultato_finale, marcatori_finali], 1):
             c = ws.cell(row=i+2, column=col, value=val)
             c.fill = f_alt[i % 2]
             c.alignment = Alignment(horizontal="left" if col==1 else "center", vertical="center")
