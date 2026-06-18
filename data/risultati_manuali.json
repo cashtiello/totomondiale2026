@@ -136,14 +136,14 @@
     "Ghana-Panama": {
       "girone": "L",
       "risultato": "1-0",
-      "marcatori": "Kalb Iirnki 90+5",
-      "_manuale": false
+      "marcatori": "Yirenkyi",
+      "_manuale": true
     },
     "Uzbekistan-Colombia": {
       "girone": "K",
       "risultato": "1-3",
-      "marcatori": "Abas Bk Fiz Allh Af, Dnil Mvnvz, Lviiz Diaz, Khamintvn Kampaz 90+9",
-      "_manuale": false
+      "marcatori": "Munoz,Fayzullaev,Luis Diaz,Campaz",
+      "_manuale": true
     },
     "R.Ceca-Sud Africa": {
       "girone": "A",
