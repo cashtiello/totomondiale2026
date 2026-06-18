@@ -304,10 +304,11 @@ def aggiorna_json_manuali(partite_api: dict) -> dict:
                     "marcatori": dati.get("marcatori", ""),
                 }
                 log.info(f"  JSON manuale preservato: {partita}")
-            else:
-                # Aggiorna con i dati dell'API
+            elif api_info:
+                # Aggiorna con i dati dell'API solo se l'API ha risposto
                 partite_json[partita]["risultato"] = api_info.get("risultato", "")
                 partite_json[partita]["marcatori"] = api_info.get("marcatori", "")
+            # Se API è down (api_info vuoto) e non è manuale → lascia i valori esistenti nel JSON
 
         # Salva il JSON aggiornato
         json_data["partite"] = partite_json
@@ -339,6 +340,15 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     # Aggiorna JSON con dati API e ottieni override manuali
     dati_manuali = aggiorna_json_manuali(partite)
 
+    # Leggi JSON esistente come fallback quando API è down
+    partite_json_esistente = {}
+    try:
+        if RISULTATI_MANUALI_FILE.exists():
+            with open(RISULTATI_MANUALI_FILE, "r", encoding="utf-8") as f:
+                partite_json_esistente = json.load(f).get("partite", {})
+    except Exception:
+        pass
+
     wb = openpyxl.Workbook()
 
     # ── PARTITE ───────────────────────────────────────────────────────────────
@@ -354,10 +364,14 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
         info = partite.get(incontro, {})
         # Dati manuali hanno sempre priorità sull'API
         manuale = dati_manuali.get(incontro, {})
-        risultato_finale = manuale.get("risultato", info.get("risultato", ""))
-        marcatori_finali = manuale.get("marcatori", info.get("marcatori", ""))
+        # Fallback al JSON esistente se API è down e non c'è manuale
+        json_esistente = partite_json_esistente.get(incontro, {})
+        risultato_finale = manuale.get("risultato") or info.get("risultato") or json_esistente.get("risultato", "")
+        marcatori_finali = manuale.get("marcatori") or info.get("marcatori") or json_esistente.get("marcatori", "")
         if manuale:
             log.info(f"  {incontro}: usando dati manuali ({risultato_finale} | {marcatori_finali})")
+        elif not info and json_esistente.get("risultato"):
+            log.info(f"  {incontro}: API down, usando dati JSON esistenti")
         for col, val in enumerate([incontro, risultato_finale, marcatori_finali], 1):
             c = ws.cell(row=i+2, column=col, value=val)
             c.fill = f_alt[i % 2]
@@ -457,14 +471,13 @@ def main():
     partite = scarica_risultati()
     gironi  = scarica_gironi()
 
-    # 2. Scrivi risultati.xlsx SOLO se l'API ha restituito dati reali
-    # Se partite == 0 significa che il Mondiale non è iniziato o l'API non funziona
-    # In questo caso NON sovrascrivere il file risultati inserito manualmente
+    # 2. Scrivi risultati.xlsx con dati API + override JSON manuale
+    # Se l'API ha 0 partite (errore/down), scrivi comunque per applicare JSON manuali
+    scrivi_risultati(partite, gironi)
     if len(partite) > 0:
-        scrivi_risultati(partite, gironi)
         log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
     else:
-        log.info("API ha restituito 0 partite — risultati.xlsx NON modificato (preservo dati manuali)")
+        log.info("API down (0 partite) — risultati.xlsx aggiornato solo con dati JSON manuali")
 
     # 3. Leggi pronostici partecipanti
     from src.config import PRONOSTICI_DIR
