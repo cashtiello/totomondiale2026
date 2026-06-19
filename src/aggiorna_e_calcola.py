@@ -471,13 +471,14 @@ def main():
     partite = scarica_risultati()
     gironi  = scarica_gironi()
 
-    # 2. Scrivi risultati.xlsx con dati API + override JSON manuale
-    # Se l'API ha 0 partite (errore/down), scrivi comunque per applicare JSON manuali
-    scrivi_risultati(partite, gironi)
+    # 2. Scrivi risultati.xlsx
+    # Se API down (0 partite) → NON sovrascrivere il file, preserva dati esistenti
+    # I dati JSON manuali vengono sempre applicati tramite parser_risultati
     if len(partite) > 0:
+        scrivi_risultati(partite, gironi)
         log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
     else:
-        log.info("API down (0 partite) — risultati.xlsx aggiornato solo con dati JSON manuali")
+        log.info("API down (0 partite) — risultati.xlsx NON modificato, preservo dati esistenti")
 
     # 3. Leggi pronostici partecipanti
     from src.config import PRONOSTICI_DIR
