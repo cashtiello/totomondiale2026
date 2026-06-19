@@ -171,9 +171,9 @@
     },
     "USA-Australia": {
       "girone": "D",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-0",
+      "marcatori": "Borgess(OG),Freeman",
+      "_manuale": true
     },
     "Scozia-Marocco": {
       "girone": "C",
