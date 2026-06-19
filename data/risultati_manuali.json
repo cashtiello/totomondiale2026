@@ -159,15 +159,15 @@
     },
     "Canada-Qatar": {
       "girone": "B",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "6-0",
+      "marcatori": "Larin, David, David, David, Saliba, Al Mannai (OG)",
+      "_manuale": true
     },
     "Messico-Corea del Sud": {
       "girone": "A",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-0",
+      "marcatori": "Romo",
+      "_manuale": true
     },
     "USA-Australia": {
       "girone": "D",
