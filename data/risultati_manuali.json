@@ -201,9 +201,9 @@
     },
     "Germania-Costa d'Avorio": {
       "girone": "E",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-1",
+      "marcatori": "Undav,Undav,Kessie",
+      "_manuale": true
     },
     "Ecuador-Curacao": {
       "girone": "E",
