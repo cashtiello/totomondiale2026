@@ -177,21 +177,21 @@
     },
     "Scozia-Marocco": {
       "girone": "C",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "0-1",
+      "marcatori": "Saibari",
+      "_manuale": true
     },
     "Brasile-Haiti": {
       "girone": "C",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "3-0",
+      "marcatori": "Vinicius,Cunha,Cunha",
+      "_manuale": true
     },
     "Turchia-Paraguay": {
       "girone": "D",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "0-1",
+      "marcatori": "Galarza",
+      "_manuale": true
     },
     "Olanda-Svezia": {
       "girone": "F",
