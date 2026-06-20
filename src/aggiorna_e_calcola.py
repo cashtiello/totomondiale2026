@@ -278,9 +278,9 @@ def scarica_gironi() -> dict[str, dict]:
 
 def aggiorna_json_manuali(partite_api: dict) -> dict:
     """
-    Aggiorna risultati_manuali.json con i dati dell'API,
-    preservando le correzioni manuali (_manuale: True).
-    Restituisce i dati manuali da usare come override.
+    Aggiorna risultati_manuali.json con i dati dell'API.
+    Le partite con _manuale: true NON vengono mai toccate dall'API.
+    Restituisce i dati manuali da usare come override nel risultati.xlsx.
     """
     try:
         if not RISULTATI_MANUALI_FILE.exists():
@@ -298,24 +298,24 @@ def aggiorna_json_manuali(partite_api: dict) -> dict:
             api_info = partite_api.get(partita, {})
 
             if is_manuale:
-                # Preserva i dati manuali e usali come override
+                # _manuale: true → MAI toccare, vince sempre sull'API
                 dati_manuali[partita] = {
                     "risultato": dati.get("risultato", ""),
                     "marcatori": dati.get("marcatori", ""),
                 }
-                log.info(f"  JSON manuale preservato: {partita}")
+                log.info(f"  ✋ MANUALE protetto: {partita} ({dati.get('marcatori','')})")
             elif api_info:
-                # Aggiorna con i dati dell'API solo se l'API ha risposto
+                # Aggiorna con i dati API solo se non è manuale
                 partite_json[partita]["risultato"] = api_info.get("risultato", "")
                 partite_json[partita]["marcatori"] = api_info.get("marcatori", "")
-            # Se API è down (api_info vuoto) e non è manuale → lascia i valori esistenti nel JSON
+            # API down + non manuale → lascia valori esistenti nel JSON
 
-        # Salva il JSON aggiornato
+        # Salva JSON aggiornato (le partite manuali restano intatte)
         json_data["partite"] = partite_json
         with open(RISULTATI_MANUALI_FILE, "w", encoding="utf-8") as f:
             json.dump(json_data, f, ensure_ascii=False, indent=2)
 
-        log.info(f"risultati_manuali.json aggiornato ({len(dati_manuali)} override manuali)")
+        log.info(f"risultati_manuali.json aggiornato ({len(dati_manuali)} override manuali attivi)")
         return dati_manuali
 
     except Exception as e:
@@ -366,12 +366,21 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
         manuale = dati_manuali.get(incontro, {})
         # Fallback al JSON esistente se API è down e non c'è manuale
         json_esistente = partite_json_esistente.get(incontro, {})
-        risultato_finale = manuale.get("risultato") or info.get("risultato") or json_esistente.get("risultato", "")
-        marcatori_finali = manuale.get("marcatori") or info.get("marcatori") or json_esistente.get("marcatori", "")
         if manuale:
-            log.info(f"  {incontro}: usando dati manuali ({risultato_finale} | {marcatori_finali})")
-        elif not info and json_esistente.get("risultato"):
-            log.info(f"  {incontro}: API down, usando dati JSON esistenti")
+            # _manuale: true vince su tutto — API, JSON, xlsx
+            risultato_finale = manuale.get("risultato", "")
+            marcatori_finali = manuale.get("marcatori", "")
+            log.info(f"  ✋ {incontro}: MANUALE ({risultato_finale} | {marcatori_finali})")
+        elif info:
+            # API ha risposto → usa dati API
+            risultato_finale = info.get("risultato", "")
+            marcatori_finali = info.get("marcatori", "")
+        else:
+            # API down → fallback JSON esistente
+            risultato_finale = json_esistente.get("risultato", "")
+            marcatori_finali = json_esistente.get("marcatori", "")
+            if risultato_finale:
+                log.info(f"  {incontro}: API down, uso JSON esistente")
         for col, val in enumerate([incontro, risultato_finale, marcatori_finali], 1):
             c = ws.cell(row=i+2, column=col, value=val)
             c.fill = f_alt[i % 2]
@@ -471,14 +480,13 @@ def main():
     partite = scarica_risultati()
     gironi  = scarica_gironi()
 
-    # 2. Scrivi risultati.xlsx
-    # Se API down (0 partite) → NON sovrascrivere il file, preserva dati esistenti
-    # I dati JSON manuali vengono sempre applicati tramite parser_risultati
+    # 2. Scrivi risultati.xlsx con dati API + override JSON manuale
+    # Se l'API ha 0 partite (errore/down), scrivi comunque per applicare JSON manuali
+    scrivi_risultati(partite, gironi)
     if len(partite) > 0:
-        scrivi_risultati(partite, gironi)
         log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
     else:
-        log.info("API down (0 partite) — risultati.xlsx NON modificato, preservo dati esistenti")
+        log.info("API down (0 partite) — risultati.xlsx aggiornato solo con dati JSON manuali")
 
     # 3. Leggi pronostici partecipanti
     from src.config import PRONOSTICI_DIR
