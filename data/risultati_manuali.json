@@ -213,9 +213,9 @@
     },
     "Tunisia-Giappone": {
       "girone": "F",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "0-4",
+      "marcatori": "Ueda,Ueda,Kamada,Ito",
+      "_manuale": true
     },
     "Spagna-Arabia Saudita": {
       "girone": "H",
