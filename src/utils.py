@@ -66,13 +66,14 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     # ── 2. Match parziale contenimento ───────────────────────────────────────
     # Evita false corrispondenze tipo "Gimenez" in "Jimenez"
     # Solo se la parola principale inizia con la stessa lettera
-    if na in nb:
+    if na in nb and len(na) >= 4:
         # Verifica che non sia solo una sottostringa casuale
         # es. "son" in "person" → False, "jimenez" in "r. jimenez" → True
+        # Minimo 4 caratteri per evitare "ito" in "mitoma"
         idx = nb.index(na)
         if idx == 0 or nb[idx-1] in (' ', '.', '-'):
             return True
-    if nb in na:
+    if nb in na and len(nb) >= 4:
         idx = na.index(nb)
         if idx == 0 or na[idx-1] in (' ', '.', '-'):
             return True
@@ -96,16 +97,17 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     if na2 and nb2:
         if na2 == nb2:
             return True
-        if na2 in nb2 or nb2 in na2:
+        # Minimo 4 caratteri per evitare "ito" in "mitoma"
+        if len(na2) >= 4 and len(nb2) >= 4 and (na2 in nb2 or nb2 in na2):
             return True
     if na3 and nb3:
         if na3 == nb3:
             return True
-        if na3 in nb3 or nb3 in na3:
+        if len(na3) >= 4 and len(nb3) >= 4 and (na3 in nb3 or nb3 in na3):
             return True
-    if na3 and nb2 and (na3 in nb2 or nb2 in na3):
+    if na3 and nb2 and len(na3) >= 4 and len(nb2) >= 4 and (na3 in nb2 or nb2 in na3):
         return True
-    if nb3 and na2 and (nb3 in na2 or na2 in nb3):
+    if nb3 and na2 and len(nb3) >= 4 and len(na2) >= 4 and (nb3 in na2 or na2 in nb3):
         return True
 
     # ── 4. Parole significative condivise ─────────────────────────────────────
@@ -142,8 +144,7 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     pp_a = parola_principale(na)
     pp_b = parola_principale(nb)
 
-    # ── 6. Alias e soprannomi comuni ──────────────────────────────────────────
-    # (prima del fuzzy per evitare che il controllo prima lettera blocchi gli alias)
+    # ── 6. Alias e soprannomi comuni (PRIMA del fuzzy per evitare return False anticipato) ──
     ALIAS = {
         "vini jr":        ["vinicius junior", "vinicius", "vini", "junior", "v. junior"],
         "vini":           ["vinicius junior", "vinicius", "junior", "v. junior"],
@@ -174,18 +175,10 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
             return True
         if nb in alias_vals and na == alias_key:
             return True
-        # Controlla anche se una delle due stringhe CONTIENE l'alias
-        # es. "v. junior" contiene "junior" che è alias di "vinicius"
-        for v in alias_vals:
-            if v in na and alias_key in nb:
-                return True
-            if v in nb and alias_key in na:
-                return True
 
     # ── 7. Fuzzy per errori di battitura ──────────────────────────────────────
     if pp_a and pp_b:
         # La prima lettera deve coincidere per evitare false corrispondenze
-        # es. "gimenez" vs "jimenez" → prima lettera diversa → no match
         if pp_a[0] != pp_b[0]:
             return False
         lunghezza_max = max(len(pp_a), len(pp_b))
@@ -218,15 +211,10 @@ def normalizza_risultato(risultato: Optional[str]) -> Optional[str]:
 
 
 def normalizza_esito(esito: Optional[str]) -> Optional[str]:
-    """Normalizza esito: accetta '1','X','x','2', 1, 2, 1.0, 2.0 → '1','X','2'"""
-    if esito is None:
+    """Normalizza esito: accetta '1','X','x','2' → '1','X','2'"""
+    if not esito:
         return None
-    # Gestisce numeri interi o float da Excel (es. 1 → "1", 2.0 → "2")
-    if isinstance(esito, (int, float)):
-        esito = str(int(esito))
     e = str(esito).strip().upper()
-    # Rimuove .0 finale (es. "1.0" → "1")
-    e = re.sub(r"\.0$", "", e)
     if e in ("1", "X", "2"):
         return e
     return None
