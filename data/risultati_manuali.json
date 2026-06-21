@@ -225,9 +225,9 @@
     },
     "Belgio-Iran": {
       "girone": "G",
-      "risultato": "",
+      "risultato": "0-0",
       "marcatori": "",
-      "_manuale": false
+      "_manuale": true
     },
     "Uruguay-Capo Verde": {
       "girone": "H",
