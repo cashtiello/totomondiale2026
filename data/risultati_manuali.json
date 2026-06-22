@@ -243,9 +243,9 @@
     },
     "Argentina-Austria": {
       "girone": "J",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-0",
+      "marcatori": "Messi,Messi",
+      "_manuale": true
     },
     "Francia-Iraq": {
       "girone": "I",
