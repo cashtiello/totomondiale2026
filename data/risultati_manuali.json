@@ -231,15 +231,15 @@
     },
     "Uruguay-Capo Verde": {
       "girone": "H",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-2",
+      "marcatori": "Lenini,Araujo,Canobbio,Varela",
+      "_manuale": true
     },
     "Nuova Zelanda-Egitto": {
       "girone": "G",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-3",
+      "marcatori": "Surman,Ziko,Salah,Trezeguet",
+      "_manuale": true
     },
     "Argentina-Austria": {
       "girone": "J",
