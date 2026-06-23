@@ -261,15 +261,15 @@
     },
     "Giordania-Algeria": {
       "girone": "J",
-      "risultato": "5-0",
-      "marcatori": "Ronaldo,Mendes,Ronaldo,Nematov(OG),Leao",
-      "_manuale": true
+      "risultato": "",
+      "marcatori": "",
+      "_manuale": 
     },
     "Portogallo-Uzbekistan": {
       "girone": "K",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "5-0",
+      "marcatori": "Ronaldo,Mendes,Ronaldo,Nematov(OG),Leao",
+      "_manuale": true
     },
     "Inghilterra-Ghana": {
       "girone": "L",
