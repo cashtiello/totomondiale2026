@@ -261,9 +261,9 @@
     },
     "Giordania-Algeria": {
       "girone": "J",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "5-0",
+      "marcatori": "Ronaldo,Mendes,Ronaldo,Nematov(OG),Leao",
+      "_manuale": true
     },
     "Portogallo-Uzbekistan": {
       "girone": "K",
