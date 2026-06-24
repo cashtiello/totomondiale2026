@@ -291,15 +291,15 @@
     },
     "Svizzera-Canada": {
       "girone": "B",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-1",
+      "marcatori": "Vargas,Manzambi,Promise D",
+      "_manuale": true
     },
     "Bosnia-Qatar": {
       "girone": "B",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "3-1",
+      "marcatori": "Alajbegovic,Abunanda(OG),Al Haydos,Mahmic",
+      "_manuale": true
     },
     "Scozia-Brasile": {
       "girone": "C",
