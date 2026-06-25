@@ -327,15 +327,15 @@
     },
     "Ecuador-Germania": {
       "girone": "E",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-1",
+      "marcatori": "Sane,Angulo,Plata",
+      "_manuale": true
     },
     "Curacao-Costa d'Avorio": {
       "girone": "E",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "0-2",
+      "marcatori": "Pepe,Pepe",
+      "_manuale": true
     },
     "Tunisia-Olanda": {
       "girone": "F",
