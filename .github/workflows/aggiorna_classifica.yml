@@ -30,7 +30,6 @@ jobs:
       - name: Scarica risultati reali e calcola classifica
         env:
           FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
-          PYTHONPATH: ${{ github.workspace }}
         run: python src/aggiorna_e_calcola.py
 
       - name: Pubblica classifica aggiornata
