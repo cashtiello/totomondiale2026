@@ -72,7 +72,11 @@ def _build_dettaglio_partecipante(
             if r_pron and r_real:
                 risultato_ok = (r_pron == r_real)
 
-            if pron.marcatore and ris_reale.marcatore:
+            # ── Marcatore: caso speciale 0-0 ─────────────────────────────────
+            r_real_norm = normalizza_risultato(ris_reale.risultato)
+            if r_real_norm == "0-0" and not (pron.marcatore or "").strip():
+                marcatore_ok = True
+            elif pron.marcatore and ris_reale.marcatore:
                 marcatori_reali = [m.strip() for m in ris_reale.marcatore.split(",") if m.strip()]
                 for mr in marcatori_reali:
                     # Rimuove minuto finale (es. "R. Jiménez 67" → "R. Jiménez")
