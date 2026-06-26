@@ -656,11 +656,10 @@ function apriDettaglio(nome) {
             risultatoBadge = p.risultato_ok
                 ? `<span class="badge-ok">✅ ${p.risultato_pron}</span>`
                 : `<span class="badge-no">❌ ${p.risultato_pron}</span>`;
-            marcatoreBadge = p.marcatore_pron === '—' ? '—' :
-                p.marcatore_ok
+            marcatoreBadge = p.marcatore_ok
                 ? `<span class="badge-ok">✅ ${p.marcatore_pron}</span>`
-                : `<span class="badge-no">❌ ${p.marcatore_pron}</span>`;
-        }
+                : (p.marcatore_pron === '—' ? '—' : `<span class="badge-no">❌ ${p.marcatore_pron}</span>`);
+                    }
         tbP.innerHTML += `
             <tr>
                 <td style="font-size:.85rem;">${p.incontro_display || p.incontro}</td>
