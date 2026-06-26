@@ -89,36 +89,42 @@ def _calcola_partite(
             )
 
         # ── Marcatore ────────────────────────────────────────────────────────
-        if pron.marcatore and risultato_reale.marcatore:
-            import re as _re
+        # Caso speciale: partita 0-0 e marcatore pronosticato vuoto/assente → 2pt
+        r_real_norm = normalizza_risultato(risultato_reale.risultato)
+        if r_real_norm == "0-0" and not pron.marcatore:
+            dettaglio.pt_marcatore += PUNTI_MARCATORE
+            dettaglio.n_marcatori_corretti += 1
+            log.debug(
+                f"{dettaglio.nome_completo} | {incontro_key}: "
+                f"0-0 senza marcatore → corretto +{PUNTI_MARCATORE}pt"
+            )
+        elif pron.marcatore and risultato_reale.marcatore:
             marcatori_reali = [
                 m.strip() for m in risultato_reale.marcatore.split(",")
                 if m.strip()
             ]
-            # Controlla se c'è almeno un autogol (es. "D. Bobadilla 7(OG)")
-            ci_sono_autogol = any("(OG)" in m or "(og)" in m.lower() for m in marcatori_reali)
-            if ci_sono_autogol and "autogol" in pron.marcatore.lower():
-                dettaglio.pt_marcatore += PUNTI_MARCATORE
-                dettaglio.n_marcatori_corretti += 1
-                log.debug(
-                    f"{dettaglio.nome_completo} | {incontro_key}: "
-                    f"autogol indovinato +{PUNTI_MARCATORE}pt"
-                )
-            else:
-                for marcatore_reale in marcatori_reali:
-                    # Salta gli autogol per il confronto normale
-                    if "(OG)" in marcatore_reale or "(og)" in marcatore_reale.lower():
-                        continue
-                    # Rimuove minuto e recupero (es. "F. Balogun 45+5" → "F. Balogun")
-                    mr_pulito = _re.sub(r"\s+\d+(\+\d+)?'?$", "", marcatore_reale.strip()).strip()
-                    if confronta_squadre(pron.marcatore, mr_pulito):
-                        dettaglio.pt_marcatore += PUNTI_MARCATORE
-                        dettaglio.n_marcatori_corretti += 1
-                        log.debug(
-                            f"{dettaglio.nome_completo} | {incontro_key}: "
-                            f"marcatore {pron.marcatore} +{PUNTI_MARCATORE}pt"
-                        )
-                        break
+            # Caso speciale: c'è almeno un autogol tra i marcatori
+            if any(m == "autogol" for m in marcatori_reali):
+                if "autogol" in pron.marcatore.lower():
+                    dettaglio.pt_marcatore += PUNTI_MARCATORE
+                    dettaglio.n_marcatori_corretti += 1
+                    log.debug(
+                        f"{dettaglio.nome_completo} | {incontro_key}: "
+                        f"autogol indovinato +{PUNTI_MARCATORE}pt"
+                    )
+                    continue
+            for marcatore_reale in marcatori_reali:
+                # Rimuove minuto finale (es. "R. Jiménez 67" → "R. Jiménez")
+                import re as _re
+                mr_pulito = _re.sub(r"\s+\d+\+?'?$", "", marcatore_reale.strip()).strip()
+                if confronta_squadre(pron.marcatore, mr_pulito):
+                    dettaglio.pt_marcatore += PUNTI_MARCATORE
+                    dettaglio.n_marcatori_corretti += 1
+                    log.debug(
+                        f"{dettaglio.nome_completo} | {incontro_key}: "
+                        f"marcatore {pron.marcatore} +{PUNTI_MARCATORE}pt"
+                    )
+                    break
 
 
 def _calcola_gironi(
