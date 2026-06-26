@@ -1,519 +1,433 @@
 """
-aggiorna_e_calcola.py
-Script eseguito da GitHub Actions ogni ora.
+calcolo_punti.py - Logica di calcolo punteggi per il Totomondiale 2026.
 
-1. Legge API_FOOTBALL_KEY dalla variabile d'ambiente (GitHub Secret)
-2. Scarica risultati reali da API-Football
-3. Aggiorna risultati.xlsx
-4. Calcola classifica
-5. Genera index.html
+Regolamento implementato:
+
+PARTITE
+  Esito 1X2 corretto            → 1 pt
+  Risultato esatto corretto     → 5 pt  (separato dall'esito, NON cumulativo)
+  Marcatore corretto            → 2 pt
+
+GIRONI
+  Accoppiata esatta (ordine corretto) → 6 pt
+  Accoppiata giusta (ordine errato)   → 4 pt
+  Singola squadra qualificata         → 1 pt per squadra indovinata
+
+SEZIONI SPECIALI
+  Finale esatta (entrambe)      → 15 pt
+  Finalista singola             → 10 pt per finalista indovinata
+  Vincitore competizione        → 20 pt
+  Capocannoniere                → 10 pt
+  Assistman                     → 12 pt
+  MVP Torneo                    → 10 pt
+  Miglior Portiere              → 10 pt
+  Miglior Giovane U21           → 15 pt
 """
 
-import os
-import sys
-import json
-import time
-import urllib.request
-import urllib.parse
-import json
-from pathlib import Path
+from src.models import (
+    PronosticoPartecipante, RisultatiReali, PunteggioDettaglio
+)
+from src.utils import (
+    confronta_squadre, normalizza_risultato,
+    normalizza_esito, calcola_esito_da_risultato
+)
+from src.config import (
+    PUNTI_ESITO, PUNTI_RISULTATO_ESATTO, PUNTI_MARCATORE,
+    PUNTI_COPPIA_GIRONE_ESATTA, PUNTI_COPPIA_GIRONE_INVERTITA,
+    PUNTI_SINGOLA_QUALIFICATA,
+    PUNTI_FINALE_ESATTA, PUNTI_FINALISTA_SINGOLA,
+    PUNTI_VINCITORE, PUNTI_CAPOCANNONIERE, PUNTI_ASSISTMAN,
+    PUNTI_MVP, PUNTI_MIGLIOR_PORTIERE, PUNTI_MIGLIOR_GIOVANE,
+)
+from src.logger import get_logger
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from src.logger import setup_logging, get_logger
-from src.config import RISULTATI_FILE
-
-RISULTATI_MANUALI_FILE = Path(__file__).parent.parent / "data" / "risultati_manuali.json"
-from src.excel_reader import leggi_tutti_pronostici
-from src.parser_risultati import leggi_risultati
-from src.calcolo_punti import calcola_tutti_punteggi
-from src.generatore_classifica import genera_excel_classifica
-from src.html_generator import genera_html
-
-import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.worksheet.datavalidation import DataValidation
-
-setup_logging()
-log = get_logger("aggiorna_e_calcola")
-
-# ── Configurazione ────────────────────────────────────────────────────────────
-API_KEY      = os.environ.get("FOOTBALL_DATA_KEY", "")  # non più usata ma tenuta per compatibilità
-API_BASE     = "https://worldcup26.ir"
-
-# Mappa nomi inglesi (football-data.org) → italiani (pronostici partecipanti)
-NOMI_SQUADRE = {
-    # Gruppo A
-    "Mexico": "Messico",
-    "South Africa": "Sud Africa",
-    "Korea Republic": "Corea del Sud",
-    "South Korea": "Corea del Sud",
-    "Korea DPR": "Corea del Nord",
-    "Czech Republic": "R.Ceca",
-    "Czechia": "R.Ceca",
-    "Czech Rep.": "R.Ceca",
-    # Gruppo B
-    "Canada": "Canada",
-    "Bosnia and Herzegovina": "Bosnia",
-    "Bosnia-Herzegovina": "Bosnia",
-    "Bosnia & Herzegovina": "Bosnia",
-    "Bosnia": "Bosnia",
-    "Qatar": "Qatar",
-    "Switzerland": "Svizzera",
-    # Gruppo C
-    "Brazil": "Brasile",
-    "Brasil": "Brasile",
-    "Morocco": "Marocco",
-    "Haiti": "Haiti",
-    "Scotland": "Scozia",
-    # Gruppo D
-    "USA": "USA",
-    "United States": "USA",
-    "United States of America": "USA",
-    "Paraguay": "Paraguay",
-    "Australia": "Australia",
-    "Turkey": "Turchia",
-    "Türkiye": "Turchia",
-    # Gruppo E
-    "Germany": "Germania",
-    "Curaçao": "Curacao",
-    "Curacao": "Curacao",
-    "Ivory Coast": "Costa d'Avorio",
-    "Côte d'Ivoire": "Costa d'Avorio",
-    "Cote d'Ivoire": "Costa d'Avorio",
-    "Ecuador": "Ecuador",
-    # Gruppo F
-    "Netherlands": "Olanda",
-    "Holland": "Olanda",
-    "Japan": "Giappone",
-    "Sweden": "Svezia",
-    "Tunisia": "Tunisia",
-    # Gruppo G
-    "Belgium": "Belgio",
-    "Egypt": "Egitto",
-    "Iran": "Iran",
-    "New Zealand": "Nuova Zelanda",
-    # Gruppo H
-    "Spain": "Spagna",
-    "Cape Verde": "Capo Verde",
-    "Cabo Verde": "Capo Verde",
-    "Saudi Arabia": "Arabia Saudita",
-    "KSA": "Arabia Saudita",
-    "Uruguay": "Uruguay",
-    # Gruppo I
-    "France": "Francia",
-    "Senegal": "Senegal",
-    "Iraq": "Iraq",
-    "Norway": "Norvegia",
-    # Gruppo J
-    "Argentina": "Argentina",
-    "Algeria": "Algeria",
-    "Austria": "Austria",
-    "Jordan": "Giordania",
-    # Gruppo K
-    "Portugal": "Portogallo",
-    "Congo": "Congo",
-    "DR Congo": "Congo",
-    "Democratic Republic of the Congo": "Congo",
-    "Republic of Congo": "Congo",
-    "Uzbekistan": "Uzbekistan",
-    "Colombia": "Colombia",
-    # Gruppo L
-    "England": "Inghilterra",
-    "Croatia": "Croazia",
-    "Ghana": "Ghana",
-    "Panama": "Panama",
-}
-
-def traduci(nome: str) -> str:
-    """Traduce il nome squadra da inglese a italiano."""
-    return NOMI_SQUADRE.get(nome, nome)
-
-# Gironi per i dropdown
-GIRONI_SQUADRE = {
-    'A': ['Messico', 'Sud Africa', 'Corea del Sud', 'Repubblica Ceca'],
-    'B': ['Canada', 'Bosnia Erzegovina', 'Qatar', 'Svizzera'],
-    'C': ['Brasile', 'Marocco', 'Haiti', 'Scozia'],
-    'D': ['USA', 'Paraguay', 'Australia', 'Turchia'],
-    'E': ['Germania', 'Curacao', "Costa d'Avorio", 'Ecuador'],
-    'F': ['Olanda', 'Giappone', 'Svezia', 'Tunisia'],
-    'G': ['Belgio', 'Egitto', 'Iran', 'Nuova Zelanda'],
-    'H': ['Spagna', 'Capo Verde', 'Arabia Saudita', 'Uruguay'],
-    'I': ['Francia', 'Senegal', 'Iraq', 'Norvegia'],
-    'J': ['Argentina', 'Algeria', 'Austria', 'Giordania'],
-    'K': ['Portogallo', 'Congo', 'Uzbekistan', 'Colombia'],
-    'L': ['Inghilterra', 'Croazia', 'Ghana', 'Panama'],
-}
-
-TUTTE_LE_PARTITE = [
-    ("Messico-Sud Africa","A"), ("Corea del Sud-R.Ceca","A"),
-    ("Canada-Bosnia","B"), ("USA-Paraguay","D"), ("Qatar-Svizzera","B"),
-    ("Brasile-Marocco","C"), ("Haiti-Scozia","C"), ("Australia-Turchia","D"),
-    ("Germania-Curacao","E"), ("Olanda-Giappone","F"),
-    ("Costa d'Avorio-Ecuador","E"), ("Svezia-Tunisia","F"),
-    ("Spagna-Capo Verde","H"), ("Belgio-Egitto","G"),
-    ("Arabia Saudita-Uruguay","H"), ("Iran-Nuova Zelanda","G"),
-    ("Francia-Senegal","I"), ("Iraq-Norvegia","I"),
-    ("Argentina-Algeria","J"), ("Austria-Giordania","J"),
-    ("Portogallo-Congo","K"), ("Inghilterra-Croazia","L"),
-    ("Ghana-Panama","L"), ("Uzbekistan-Colombia","K"),
-    ("R.Ceca-Sud Africa","A"), ("Svizzera-Bosnia","B"),
-    ("Canada-Qatar","B"), ("Messico-Corea del Sud","A"),
-    ("USA-Australia","D"), ("Scozia-Marocco","C"),
-    ("Brasile-Haiti","C"), ("Turchia-Paraguay","D"),
-    ("Olanda-Svezia","F"), ("Germania-Costa d'Avorio","E"),
-    ("Ecuador-Curacao","E"), ("Tunisia-Giappone","F"),
-    ("Spagna-Arabia Saudita","H"), ("Belgio-Iran","G"),
-    ("Uruguay-Capo Verde","H"), ("Nuova Zelanda-Egitto","G"),
-    ("Argentina-Austria","J"), ("Francia-Iraq","I"),
-    ("Norvegia-Senegal","I"), ("Giordania-Algeria","J"),
-    ("Portogallo-Uzbekistan","K"), ("Inghilterra-Ghana","L"),
-    ("Panama-Croazia","L"), ("Colombia-Congo","K"),
-    ("Svizzera-Canada","B"), ("Bosnia-Qatar","B"),
-    ("Scozia-Brasile","C"), ("Marocco-Haiti","C"),
-    ("R.Ceca-Messico","A"), ("Sud Africa-Corea del Sud","A"),
-    ("Ecuador-Germania","E"), ("Curacao-Costa d'Avorio","E"),
-    ("Tunisia-Olanda","F"), ("Giappone-Svezia","F"),
-    ("Paraguay-Australia","D"), ("Turchia-USA","D"),
-    ("Norvegia-Francia","I"), ("Senegal-Iraq","I"),
-    ("Uruguay-Spagna","H"), ("Capo Verde-Arabia Saudita","H"),
-    ("Egitto-Iran","G"), ("Nuova Zelanda-Belgio","G"),
-    ("Panama-Inghilterra","L"), ("Croazia-Ghana","L"),
-    ("Colombia-Portogallo","K"), ("Congo-Uzbekistan","K"),
-    ("Giordania-Argentina","J"), ("Algeria-Austria","J"),
-]
+log = get_logger(__name__)
 
 
-def _api(endpoint: str) -> dict:
-    """Chiama worldcup26.ir e ritorna il JSON."""
-    url = f"{API_BASE}/{endpoint}"
-    req = urllib.request.Request(url, headers={"User-Agent": "TotoMondiale/1.0"})
-    try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            return json.loads(resp.read().decode())
-    except Exception as e:
-        log.error(f"Errore API {endpoint}: {e}")
+def _calcola_partite(
+    partecipante: PronosticoPartecipante,
+    risultati: RisultatiReali,
+    dettaglio: PunteggioDettaglio,
+) -> None:
+    """Calcola i punti per tutte le partite del tabellone."""
+
+    for pron in partecipante.partite:
+        incontro_key = pron.incontro
+        # Cerca il risultato reale corrispondente (confronto case-insensitive)
+        risultato_reale = None
+        for key, ris in risultati.partite.items():
+            if confronta_squadre(incontro_key, key):
+                risultato_reale = ris
+                break
+
+        if risultato_reale is None:
+            # Partita non ancora giocata o non presente nei risultati
+            continue
+
+        esito_reale = risultato_reale.esito
+
+        # ── Risultato esatto (indipendente dall'esito) ───────────────────────
+        if pron.risultato_esatto and risultato_reale.risultato:
+            r_pron = normalizza_risultato(pron.risultato_esatto)
+            r_real = normalizza_risultato(risultato_reale.risultato)
+            if r_pron and r_real and r_pron == r_real:
+                dettaglio.pt_risultato_esatto += PUNTI_RISULTATO_ESATTO
+                dettaglio.n_risultati_esatti += 1
+                log.debug(
+                    f"{dettaglio.nome_completo} | {incontro_key}: "
+                    f"risultato esatto {r_pron} +{PUNTI_RISULTATO_ESATTO}pt"
+                )
+
+        # ── Esito 1X2 (indipendente dal risultato esatto) ────────────────────
+        esito_pron = pron.esito or calcola_esito_da_risultato(pron.risultato_esatto)
+        if esito_pron and esito_reale and esito_pron == esito_reale:
+            dettaglio.pt_esito += PUNTI_ESITO
+            dettaglio.n_esiti_corretti += 1
+            log.debug(
+                f"{dettaglio.nome_completo} | {incontro_key}: "
+                f"esito {esito_pron} +{PUNTI_ESITO}pt"
+            )
+
+        # ── Marcatore ────────────────────────────────────────────────────────
+        # Caso speciale: partita 0-0 e marcatore pronosticato vuoto/assente → 2pt
+        r_real_norm = normalizza_risultato(risultato_reale.risultato)
+        if r_real_norm == "0-0" and not (pron.marcatore or "").strip():
+            dettaglio.pt_marcatore += PUNTI_MARCATORE
+            dettaglio.n_marcatori_corretti += 1
+            log.debug(
+                f"{dettaglio.nome_completo} | {incontro_key}: "
+                f"0-0 senza marcatore → corretto +{PUNTI_MARCATORE}pt"
+            )
+        elif pron.marcatore and risultato_reale.marcatore:
+            marcatori_reali = [
+                m.strip() for m in risultato_reale.marcatore.split(",")
+                if m.strip()
+            ]
+            # Caso speciale: c'è almeno un autogol tra i marcatori
+            if any(m == "autogol" for m in marcatori_reali):
+                if "autogol" in pron.marcatore.lower():
+                    dettaglio.pt_marcatore += PUNTI_MARCATORE
+                    dettaglio.n_marcatori_corretti += 1
+                    log.debug(
+                        f"{dettaglio.nome_completo} | {incontro_key}: "
+                        f"autogol indovinato +{PUNTI_MARCATORE}pt"
+                    )
+                    continue
+            for marcatore_reale in marcatori_reali:
+                # Rimuove minuto finale (es. "R. Jiménez 67" → "R. Jiménez")
+                import re as _re
+                mr_pulito = _re.sub(r"\s+\d+\+?'?$", "", marcatore_reale.strip()).strip()
+                if confronta_squadre(pron.marcatore, mr_pulito):
+                    dettaglio.pt_marcatore += PUNTI_MARCATORE
+                    dettaglio.n_marcatori_corretti += 1
+                    log.debug(
+                        f"{dettaglio.nome_completo} | {incontro_key}: "
+                        f"marcatore {pron.marcatore} +{PUNTI_MARCATORE}pt"
+                    )
+                    break
+
+
+def _calcola_gironi(
+    partecipante: PronosticoPartecipante,
+    risultati: RisultatiReali,
+    dettaglio: PunteggioDettaglio,
+) -> None:
+    """Calcola i punti per le accoppiata girone."""
+
+    for pron in partecipante.gironi:
+        girone = pron.girone
+        risultato_girone = risultati.gironi.get(girone)
+
+        if risultato_girone is None:
+            continue  # Girone non ancora concluso
+
+        r_prima = risultato_girone.prima
+        r_secon = risultato_girone.seconda
+        p_prima = pron.prima
+        p_secon = pron.seconda
+
+        # ── Accoppiata esatta (ordine corretto) ──────────────────────────────
+        if (p_prima and p_secon and r_prima and r_secon
+                and confronta_squadre(p_prima, r_prima)
+                and confronta_squadre(p_secon, r_secon)):
+            dettaglio.pt_gironi += PUNTI_COPPIA_GIRONE_ESATTA
+            dettaglio.n_gironi_coppia_esatta += 1
+            log.debug(
+                f"{dettaglio.nome_completo} | Girone {girone}: "
+                f"coppia esatta +{PUNTI_COPPIA_GIRONE_ESATTA}pt"
+            )
+            continue
+
+        # ── Accoppiata invertita ─────────────────────────────────────────────
+        if (p_prima and p_secon and r_prima and r_secon
+                and confronta_squadre(p_prima, r_secon)
+                and confronta_squadre(p_secon, r_prima)):
+            dettaglio.pt_gironi += PUNTI_COPPIA_GIRONE_INVERTITA
+            dettaglio.n_gironi_coppia_invertita += 1
+            log.debug(
+                f"{dettaglio.nome_completo} | Girone {girone}: "
+                f"coppia invertita +{PUNTI_COPPIA_GIRONE_INVERTITA}pt"
+            )
+            continue
+
+        # ── Singole squadre qualificate ──────────────────────────────────────
+        qualificate_reali = {r_prima, r_secon} - {None}
+        pronosticate = {p_prima, p_secon} - {None}
+
+        for pq in pronosticate:
+            for qr in qualificate_reali:
+                if confronta_squadre(pq, qr):
+                    dettaglio.pt_gironi += PUNTI_SINGOLA_QUALIFICATA
+                    dettaglio.n_gironi_singola += 1
+                    log.debug(
+                        f"{dettaglio.nome_completo} | Girone {girone}: "
+                        f"singola {pq} +{PUNTI_SINGOLA_QUALIFICATA}pt"
+                    )
+                    break
+
+
+def _calcola_speciali(
+    partecipante: PronosticoPartecipante,
+    risultati: RisultatiReali,
+    dettaglio: PunteggioDettaglio,
+) -> None:
+    """Calcola i punti per i pronostici speciali."""
+    s = partecipante.speciali
+    r = risultati
+
+    # ── Vincitore competizione ───────────────────────────────────────────────
+    if s.vincitore and r.vincitore:
+        if confronta_squadre(s.vincitore, r.vincitore):
+            dettaglio.pt_vincitore += PUNTI_VINCITORE
+            log.debug(f"{dettaglio.nome_completo}: vincitore +{PUNTI_VINCITORE}pt")
+
+    # ── Finalista/Finale ────────────────────────────────────────────────────
+    finalisti_reali = set()
+    if r.finalista_1:
+        finalisti_reali.add(r.finalista_1)
+    if r.finalista_2:
+        finalisti_reali.add(r.finalista_2)
+
+    finalisti_pron = set()
+    if s.finalista_1:
+        finalisti_pron.add(s.finalista_1)
+    if s.finalista_2:
+        finalisti_pron.add(s.finalista_2)
+
+    # Conta quante finaliste indovinate (normalizzato)
+    indovinate = 0
+    for fp in finalisti_pron:
+        for fr in finalisti_reali:
+            if confronta_squadre(fp, fr):
+                indovinate += 1
+                break
+
+    if indovinate == 2 and len(finalisti_reali) == 2:
+        # Finale esatta (entrambe le squadre, indipendente dall'ordine)
+        # Ma se l'ordine è esatto vale di più?
+        # Regolamento: "Finale esatta: 15 pt" → interpretato come entrambe le finaliste corrette
+        dettaglio.pt_finalista += PUNTI_FINALE_ESATTA
+        log.debug(f"{dettaglio.nome_completo}: finale esatta +{PUNTI_FINALE_ESATTA}pt")
+    elif indovinate == 1:
+        dettaglio.pt_finalista += PUNTI_FINALISTA_SINGOLA
+        log.debug(f"{dettaglio.nome_completo}: finalista singola +{PUNTI_FINALISTA_SINGOLA}pt")
+
+    # ── Premi individuali ────────────────────────────────────────────────────
+    premi = [
+        (s.capocannoniere,   r.capocannoniere,   PUNTI_CAPOCANNONIERE,   "pt_capocannoniere"),
+        (s.assistman,        r.assistman,         PUNTI_ASSISTMAN,        "pt_assistman"),
+        (s.mvp,              r.mvp,               PUNTI_MVP,              "pt_mvp"),
+        (s.miglior_portiere, r.miglior_portiere,  PUNTI_MIGLIOR_PORTIERE, "pt_miglior_portiere"),
+        (s.miglior_giovane,  r.miglior_giovane,   PUNTI_MIGLIOR_GIOVANE,  "pt_miglior_giovane"),
+    ]
+
+    for val_pron, val_reale, punti, campo in premi:
+        if val_pron and val_reale and confronta_squadre(val_pron, val_reale):
+            setattr(dettaglio, campo, getattr(dettaglio, campo) + punti)
+            log.debug(f"{dettaglio.nome_completo}: {campo} +{punti}pt")
+
+
+def calcola_punteggio(
+    partecipante: PronosticoPartecipante,
+    risultati: RisultatiReali,
+) -> PunteggioDettaglio:
+    """
+    Calcola il punteggio completo di un partecipante.
+    Restituisce un PunteggioDettaglio con tutti i breakdown.
+    """
+    dettaglio = PunteggioDettaglio(
+        nome_completo=partecipante.nome_completo,
+        nome=partecipante.nome,
+        cognome=partecipante.cognome,
+        file_sorgente=partecipante.file_sorgente,
+    )
+
+    _calcola_partite(partecipante, risultati, dettaglio)
+    _calcola_gironi(partecipante, risultati, dettaglio)
+    _calcola_speciali(partecipante, risultati, dettaglio)
+
+    log.info(
+        f"Punteggio {dettaglio.nome_completo}: "
+        f"TOT={dettaglio.punti_totali} "
+        f"(partite={dettaglio.punti_partite}, "
+        f"gironi={dettaglio.pt_gironi}, "
+        f"speciali={dettaglio.punti_speciali})"
+    )
+    return dettaglio
+
+
+def calcola_statistiche_torneo(
+    partecipanti: list[PronosticoPartecipante],
+    risultati: RisultatiReali,
+    punteggi: list[PunteggioDettaglio],
+) -> dict:
+    """Calcola statistiche aggregate del torneo per la sezione stats nell'HTML."""
+    n = len(partecipanti)
+    if n == 0:
         return {}
 
-
-def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
-    """Parsa la stringa marcatori da worldcup26.ir."""
-    if not scorers_str or scorers_str == "null":
-        return [], False
-    import re
-    # Rimuove graffe e tutti i tipi di virgolette incluse quelle unicode curly
-    scorers_str = scorers_str.strip('{}')
-    scorers_str = re.sub(r'[\u0022\u0027\u201c\u201d\u2018\u2019\u00ab\u00bb]', '', scorers_str)
-    nomi = []
-    ha_autogol = False
-    for s in scorers_str.split(","):
-        s = s.strip()
-        if not s or s == "null":
+    # ── Statistiche per partita ───────────────────────────────────────────
+    stats_partite = {}
+    for incontro, ris in risultati.partite.items():
+        if not ris.risultato:
             continue
-        # Rimuove il minuto (es. "J. Quiñones 9'" o "J. Quiñones 9'+" → "J. Quiñones")
-        nome = re.sub(r"\s+\d+\+?'?$", "", s).strip()
-        nome = re.sub(r"\s+\d+\+?['\u2019]?$", "", nome).strip()
-        if "autogoal" in nome.lower() or "own goal" in nome.lower():
-            ha_autogol = True
-        elif nome:
-            nomi.append(nome)
-    return nomi, ha_autogol
-
-
-def scarica_risultati() -> dict[str, dict]:
-    """Scarica risultati e marcatori da worldcup26.ir."""
-    log.info("Scarico partite da worldcup26.ir...")
-    data = _api("get/games")
-    risultati = {}
-
-    for match in data.get("games", []):
-        if match.get("finished", "FALSE").upper() != "TRUE":
-            continue
-
-        home = traduci(match.get("home_team_name_en", ""))
-        away = traduci(match.get("away_team_name_en", ""))
-        gh = int(match.get("home_score", 0) or 0)
-        ga = int(match.get("away_score", 0) or 0)
-        nome = f"{home}-{away}"
-
-        gol_home, auto_home = _parse_scorers(match.get("home_scorers", "null"))
-        gol_away, auto_away = _parse_scorers(match.get("away_scorers", "null"))
-        gol = gol_home + gol_away
-        ha_autogol = auto_home or auto_away
-
-        marcatori_str = ", ".join(gol)
-        if ha_autogol:
-            marcatori_str = (marcatori_str + ", autogol").strip(", ")
-
-        risultati[nome] = {
-            "risultato": f"{gh}-{ga}",
-            "marcatori": marcatori_str,
+        n_esito = n_ris = n_marc = 0
+        for part in partecipanti:
+            for pron in part.partite:
+                if not confronta_squadre(pron.incontro, incontro):
+                    continue
+                esito_pron = pron.esito or calcola_esito_da_risultato(pron.risultato_esatto)
+                if esito_pron and ris.esito and esito_pron == ris.esito:
+                    n_esito += 1
+                r_p = normalizza_risultato(pron.risultato_esatto)
+                r_r = normalizza_risultato(ris.risultato)
+                if r_p and r_r and r_p == r_r:
+                    n_ris += 1
+                if pron.marcatore and ris.marcatore:
+                    for mr in [m.strip() for m in ris.marcatore.split(",") if m.strip()]:
+                        if confronta_squadre(pron.marcatore, mr):
+                            n_marc += 1
+                            break
+        stats_partite[incontro] = {
+            "risultato": ris.risultato,
+            "n_esito": n_esito,
+            "n_risultato": n_ris,
+            "n_marcatore": n_marc,
+            "pct_esito": round(n_esito / n * 100),
         }
-        log.info(f"  {nome}: {gh}-{ga} | {marcatori_str}")
 
-    log.info(f"Scaricate {len(risultati)} partite completate")
-    return risultati
+    # ── Partita più/meno indovinata ───────────────────────────────────────
+    giocate = {k: v for k, v in stats_partite.items() if v["n_esito"] > 0 or v["n_risultato"] > 0}
+    partita_piu_indovinata = max(giocate, key=lambda k: giocate[k]["pct_esito"]) if giocate else None
+    partita_meno_indovinata = min(giocate, key=lambda k: giocate[k]["pct_esito"]) if giocate else None
+
+    # ── Pronostico vincitore più gettonato (normalizzato) ────────────────────
+    voti_vincitore = {}
+    for part in partecipanti:
+        v = part.speciali.vincitore
+        if v:
+            v_norm = v.strip().title()
+            voti_vincitore[v_norm] = voti_vincitore.get(v_norm, 0) + 1
+    vincitore_gettonato = sorted(voti_vincitore.items(), key=lambda x: x[1], reverse=True)[:5]
+
+    # ── Risultato esatto più indovinato ──────────────────────────────────
+    ris_counts = {}
+    for incontro, ris in risultati.partite.items():
+        if not ris.risultato:
+            continue
+        r_real = normalizza_risultato(ris.risultato)
+        if not r_real:
+            continue
+        n_ris = 0
+        for part in partecipanti:
+            for pron in part.partite:
+                if confronta_squadre(pron.incontro, incontro):
+                    if normalizza_risultato(pron.risultato_esatto) == r_real:
+                        n_ris += 1
+                    break
+        if n_ris > 0:
+            ris_counts[incontro] = {"risultato": ris.risultato, "n": n_ris}
+    risultato_piu_indovinato = max(ris_counts.items(), key=lambda x: x[1]["n"]) if ris_counts else None
+    tot_esiti    = sum(p.n_esiti_corretti for p in punteggi)
+    tot_risultati = sum(p.n_risultati_esatti for p in punteggi)
+    tot_marcatori = sum(p.n_marcatori_corretti for p in punteggi)
+    tot_gironi_esatti = sum(p.n_gironi_coppia_esatta for p in punteggi)
+
+    # ── Chi ha fatto meglio nelle partite vs gironi vs speciali ──────────
+    top_partite   = max(punteggi, key=lambda p: p.punti_partite)
+    top_gironi    = max(punteggi, key=lambda p: p.pt_gironi)
+    top_speciali  = max(punteggi, key=lambda p: p.punti_speciali)
+    top_esiti     = max(punteggi, key=lambda p: p.n_esiti_corretti)
+    top_marcatori = max(punteggi, key=lambda p: p.n_marcatori_corretti)
+    top_risultati = max(punteggi, key=lambda p: p.n_risultati_esatti)
+
+    # ── Marcatore più indovinato ──────────────────────────────────────────
+    marc_counts = {}
+    for part in partecipanti:
+        for pron in part.partite:
+            if not pron.marcatore:
+                continue
+            for incontro, ris in risultati.partite.items():
+                if not confronta_squadre(pron.incontro, incontro) or not ris.marcatore:
+                    continue
+                for mr in [m.strip() for m in ris.marcatore.split(",") if m.strip()]:
+                    if confronta_squadre(pron.marcatore, mr):
+                        marc_counts[mr] = marc_counts.get(mr, 0) + 1
+    marcatore_top = max(marc_counts.items(), key=lambda x: x[1]) if marc_counts else None
+
+    # ── Distribuzione punteggi ────────────────────────────────────────────
+    fasce = {"0-20": 0, "21-30": 0, "31-40": 0, "41+": 0}
+    for p in punteggi:
+        t = p.punti_totali
+        if t <= 20:      fasce["0-20"] += 1
+        elif t <= 30:    fasce["21-30"] += 1
+        elif t <= 40:    fasce["31-40"] += 1
+        else:            fasce["41+"] += 1
+
+    return {
+        "n_partecipanti":         n,
+        "tot_esiti":              tot_esiti,
+        "tot_risultati":          tot_risultati,
+        "tot_marcatori":          tot_marcatori,
+        "tot_gironi_esatti":      tot_gironi_esatti,
+        "media_esiti":            round(tot_esiti / n, 1),
+        "media_risultati":        round(tot_risultati / n, 1),
+        "media_marcatori":        round(tot_marcatori / n, 1),
+        "top_partite":            {"nome": top_partite.nome_completo,  "val": top_partite.punti_partite},
+        "top_gironi":             {"nome": top_gironi.nome_completo,   "val": top_gironi.pt_gironi},
+        "top_speciali":           {"nome": top_speciali.nome_completo, "val": top_speciali.punti_speciali},
+        "top_esiti":              {"nome": top_esiti.nome_completo,     "val": top_esiti.n_esiti_corretti},
+        "top_risultati":          {"nome": top_risultati.nome_completo,  "val": top_risultati.n_risultati_esatti},
+        "top_marcatori":          {"nome": top_marcatori.nome_completo,  "val": top_marcatori.n_marcatori_corretti},
+        "risultato_piu_indovinato": {"partita": risultato_piu_indovinato[0], "risultato": risultato_piu_indovinato[1]["risultato"], "n": risultato_piu_indovinato[1]["n"]} if risultato_piu_indovinato else None,
+        "partita_piu_indovinata": {"nome": partita_piu_indovinata, **giocate[partita_piu_indovinata]} if partita_piu_indovinata else None,
+        "partita_meno_indovinata":{"nome": partita_meno_indovinata, **giocate[partita_meno_indovinata]} if partita_meno_indovinata else None,
+        "marcatore_top":          {"nome": marcatore_top[0], "val": marcatore_top[1]} if marcatore_top else None,
+        "vincitore_gettonato":    vincitore_gettonato,
+        "stats_partite":          stats_partite,
+        "fasce":                  fasce,
+    }
 
 
-def scarica_gironi() -> dict[str, dict]:
-    """Scarica le classifiche dei gironi da worldcup26.ir."""
-    log.info("Scarico classifiche gironi...")
-    data = _api("get/groups")
-    classifiche = {}
-
-    for gruppo in data.get("groups", []):
-        lettera = gruppo.get("name", "").replace("Group ", "").strip()
-        teams = gruppo.get("teams", [])
-        if len(teams) >= 2:
-            # Ordina per punti desc
-            teams_sorted = sorted(teams, key=lambda t: int(t.get("pts", 0) or 0), reverse=True)
-            classifiche[lettera] = {
-                "prima":   traduci(teams_sorted[0].get("team_name_en", "")),
-                "seconda": traduci(teams_sorted[1].get("team_name_en", "")),
-            }
-
-    log.info(f"Classifiche gironi: {len(classifiche)}")
-    return classifiche
-
-
-def aggiorna_json_manuali(partite_api: dict) -> dict:
+def calcola_tutti_punteggi(
+    partecipanti: list[PronosticoPartecipante],
+    risultati: RisultatiReali,
+) -> list[PunteggioDettaglio]:
     """
-    Aggiorna risultati_manuali.json con i dati dell'API.
-    Le partite con _manuale: true NON vengono mai toccate dall'API.
-    Restituisce i dati manuali da usare come override nel risultati.xlsx.
+    Calcola i punteggi per tutti i partecipanti e restituisce la lista ordinata.
+
+    Criteri di ordinamento (in caso di parità):
+      1. Punti totali (desc)
+      2. Numero risultati esatti indovinati (desc)
+      3. Numero marcatori indovinati (desc)
     """
-    try:
-        if not RISULTATI_MANUALI_FILE.exists():
-            log.warning("risultati_manuali.json non trovato")
-            return {}
-
-        with open(RISULTATI_MANUALI_FILE, "r", encoding="utf-8") as f:
-            json_data = json.load(f)
-
-        partite_json = json_data.get("partite", {})
-        dati_manuali = {}
-
-        for partita, dati in partite_json.items():
-            is_manuale = dati.get("_manuale", False)
-            api_info = partite_api.get(partita, {})
-
-            if is_manuale:
-                # _manuale: true → MAI toccare, vince sempre sull'API
-                dati_manuali[partita] = {
-                    "risultato": dati.get("risultato", ""),
-                    "marcatori": dati.get("marcatori", ""),
-                }
-                log.info(f"  ✋ MANUALE protetto: {partita} ({dati.get('marcatori','')})")
-            elif api_info:
-                # Aggiorna con i dati API solo se non è manuale
-                partite_json[partita]["risultato"] = api_info.get("risultato", "")
-                partite_json[partita]["marcatori"] = api_info.get("marcatori", "")
-            # API down + non manuale → lascia valori esistenti nel JSON
-
-        # Salva JSON aggiornato (le partite manuali restano intatte)
-        json_data["partite"] = partite_json
-        with open(RISULTATI_MANUALI_FILE, "w", encoding="utf-8") as f:
-            json.dump(json_data, f, ensure_ascii=False, indent=2)
-
-        log.info(f"risultati_manuali.json aggiornato ({len(dati_manuali)} override manuali attivi)")
-        return dati_manuali
-
-    except Exception as e:
-        log.error(f"Errore aggiornamento JSON manuali: {e}")
-        return {}
-
-
-def scrivi_risultati(partite: dict, gironi: dict) -> None:
-    """Scrive risultati.xlsx con i dati aggiornati."""
-    bordo = lambda: Border(
-        left=Side(style='thin', color='BDC3C7'),
-        right=Side(style='thin', color='BDC3C7'),
-        top=Side(style='thin', color='BDC3C7'),
-        bottom=Side(style='thin', color='BDC3C7'),
+    punteggi = [calcola_punteggio(p, risultati) for p in partecipanti]
+    punteggi.sort(
+        key=lambda x: (
+            x.punti_totali,
+            x.n_risultati_esatti,
+            x.n_marcatori_corretti,
+        ),
+        reverse=True,
     )
-    h_fill = PatternFill("solid", start_color="2E4057")
-    h_font = Font(bold=True, color="FFFFFF", size=11)
-    h_alg  = Alignment(horizontal="center", vertical="center")
-    f_alt  = [PatternFill("solid", start_color="F8F9FA"),
-              PatternFill("solid", start_color="FFFFFF")]
-
-    # Aggiorna JSON con dati API e ottieni override manuali
-    dati_manuali = aggiorna_json_manuali(partite)
-
-    # Leggi JSON esistente come fallback quando API è down
-    partite_json_esistente = {}
-    try:
-        if RISULTATI_MANUALI_FILE.exists():
-            with open(RISULTATI_MANUALI_FILE, "r", encoding="utf-8") as f:
-                partite_json_esistente = json.load(f).get("partite", {})
-    except Exception:
-        pass
-
-    wb = openpyxl.Workbook()
-
-    # ── PARTITE ───────────────────────────────────────────────────────────────
-    ws = wb.active
-    ws.title = "PARTITE"
-    for col, h in enumerate(["PARTITA", "RISULTATO", "MARCATORE"], 1):
-        c = ws.cell(row=1, column=col, value=h)
-        c.font = h_font; c.fill = h_fill
-        c.alignment = h_alg; c.border = bordo()
-    ws.row_dimensions[1].height = 24
-
-    for i, (incontro, _) in enumerate(TUTTE_LE_PARTITE):
-        info = partite.get(incontro, {})
-        # Dati manuali hanno sempre priorità sull'API
-        manuale = dati_manuali.get(incontro, {})
-        # Fallback al JSON esistente se API è down e non c'è manuale
-        json_esistente = partite_json_esistente.get(incontro, {})
-        if manuale:
-            # _manuale: true vince su tutto — API, JSON, xlsx
-            risultato_finale = manuale.get("risultato", "")
-            marcatori_finali = manuale.get("marcatori", "")
-            log.info(f"  ✋ {incontro}: MANUALE ({risultato_finale} | {marcatori_finali})")
-        elif info:
-            # API ha risposto → usa dati API
-            risultato_finale = info.get("risultato", "")
-            marcatori_finali = info.get("marcatori", "")
-        else:
-            # API down → fallback JSON esistente
-            risultato_finale = json_esistente.get("risultato", "")
-            marcatori_finali = json_esistente.get("marcatori", "")
-            if risultato_finale:
-                log.info(f"  {incontro}: API down, uso JSON esistente")
-        for col, val in enumerate([incontro, risultato_finale, marcatori_finali], 1):
-            c = ws.cell(row=i+2, column=col, value=val)
-            c.fill = f_alt[i % 2]
-            c.alignment = Alignment(horizontal="left" if col==1 else "center", vertical="center")
-            c.border = bordo()
-        ws.row_dimensions[i+2].height = 18
-
-    ws.column_dimensions['A'].width = 32
-    ws.column_dimensions['B'].width = 14
-    ws.column_dimensions['C'].width = 35
-
-    # ── GIRONI ────────────────────────────────────────────────────────────────
-    ws_g = wb.create_sheet("GIRONI")
-    for col, h in enumerate(["GIRONE", "1° CLASSIFICATA", "2° CLASSIFICATA"], 1):
-        c = ws_g.cell(row=1, column=col, value=h)
-        c.font = h_font; c.fill = h_fill
-        c.alignment = h_alg; c.border = bordo()
-    ws_g.row_dimensions[1].height = 24
-
-    gir_fill = PatternFill("solid", start_color="EEF2F7")
-    for i, (lettera, squadre) in enumerate(GIRONI_SQUADRE.items(), 2):
-        info = gironi.get(lettera, {})
-        c = ws_g.cell(row=i, column=1, value=lettera)
-        c.font = Font(bold=True, size=11, color="1A2E45")
-        c.fill = gir_fill; c.alignment = h_alg; c.border = bordo()
-
-        formula = '"' + ','.join(squadre) + '"'
-        for col, val in [(2, info.get("prima","")), (3, info.get("seconda",""))]:
-            cell = ws_g.cell(row=i, column=col, value=val)
-            cell.alignment = Alignment(horizontal="left", vertical="center")
-            cell.border = bordo()
-            dv = DataValidation(type="list", formula1=formula, allow_blank=True, showDropDown=False)
-            ws_g.add_data_validation(dv)
-            dv.add(cell)
-        ws_g.row_dimensions[i].height = 22
-
-    ws_g.column_dimensions['A'].width = 10
-    ws_g.column_dimensions['B'].width = 28
-    ws_g.column_dimensions['C'].width = 28
-
-    # ── SPECIALI ──────────────────────────────────────────────────────────────
-    ws_s = wb.create_sheet("SPECIALI")
-    for col, h in enumerate(["VOCE", "VALORE"], 1):
-        c = ws_s.cell(row=1, column=col, value=h)
-        c.font = h_font; c.fill = h_fill
-        c.alignment = h_alg; c.border = bordo()
-
-    # Leggi valori speciali esistenti dal file attuale (non sovrascriverli)
-    speciali_esistenti = {}
-    try:
-        wb_old = openpyxl.load_workbook(RISULTATI_FILE, data_only=True)
-        if "SPECIALI" in wb_old.sheetnames:
-            ws_old = wb_old["SPECIALI"]
-            for row in ws_old.iter_rows(min_row=2, values_only=True):
-                if row[0] and row[1]:
-                    speciali_esistenti[str(row[0]).strip()] = str(row[1]).strip()
-    except Exception:
-        pass
-
-    voci = ["VINCITORE", "FINALISTA 1", "FINALISTA 2", "CAPOCANNONIERE",
-            "ASSISTMAN", "MVP TORNEO", "MIGLIOR PORTIERE", "MIGLIOR GIOVANE U21"]
-    for i, voce in enumerate(voci, 2):
-        valore = speciali_esistenti.get(voce, "")
-        for col, val in [(1, voce), (2, valore)]:
-            c = ws_s.cell(row=i, column=col, value=val)
-            c.fill = f_alt[i % 2]
-            c.alignment = Alignment(horizontal="left", vertical="center")
-            c.border = bordo()
-        ws_s.row_dimensions[i].height = 20
-
-    ws_s.column_dimensions['A'].width = 25
-    ws_s.column_dimensions['B'].width = 25
-    ws_s.row_dimensions[1].height = 24
-
-    RISULTATI_FILE.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(RISULTATI_FILE)
-    log.info(f"risultati.xlsx aggiornato: {RISULTATI_FILE}")
-
-
-def salva_storico_posizioni(punteggi, storico_path: Path) -> None:
-    """Salva le posizioni correnti in JSON prima di aggiornare."""
-    storico_path.parent.mkdir(parents=True, exist_ok=True)
-    posizioni = {p.nome_completo: idx + 1 for idx, p in enumerate(punteggi)}
-    try:
-        with open(storico_path, "w", encoding="utf-8") as f:
-            json.dump(posizioni, f, ensure_ascii=False, indent=2)
-        log.info(f"Storico posizioni salvato: {storico_path}")
-    except Exception as e:
-        log.error(f"Errore salvataggio storico: {e}")
-
-
-def main():
-    log.info("=== Avvio aggiornamento automatico ===")
-    log.info("Fonte dati: worldcup26.ir (gratuita, no API key)")
-
-    # 1. Scarica risultati reali
-    partite = scarica_risultati()
-    gironi  = scarica_gironi()
-
-    # 2. Scrivi risultati.xlsx con dati API + override JSON manuale
-    # Se l'API ha 0 partite (errore/down), scrivi comunque per applicare JSON manuali
-    scrivi_risultati(partite, gironi)
-    if len(partite) > 0:
-        log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
-    else:
-        log.info("API down (0 partite) — risultati.xlsx aggiornato solo con dati JSON manuali")
-
-    # 3. Leggi pronostici partecipanti
-    from src.config import PRONOSTICI_DIR
-    partecipanti = leggi_tutti_pronostici(PRONOSTICI_DIR)
-    if not partecipanti:
-        log.warning("Nessun partecipante trovato!")
-        return
-
-    # 4. Calcola punteggi
-    risultati = leggi_risultati(RISULTATI_FILE)
-    punteggi  = calcola_tutti_punteggi(partecipanti, risultati)
-
-    # 5. Salva storico posizioni e genera output
-    storico_path = Path(__file__).parent / "data" / "storico_posizioni.json"
-    salva_storico_posizioni(punteggi, storico_path)
-    genera_excel_classifica(punteggi)
-    genera_html(
-        punteggi,
-        n_partite_giocate=len(partite),
-        partecipanti=partecipanti,
-        risultati=risultati,
-        storico_path=storico_path,
-    )
-
-    log.info(f"=== Completato: {len(punteggi)} partecipanti, {len(partite)} partite ===")
-    print(f"\n✅ Classifica aggiornata: {len(punteggi)} partecipanti | {len(partite)} partite giocate")
-
-
-if __name__ == "__main__":
-    main()
+    return punteggi
