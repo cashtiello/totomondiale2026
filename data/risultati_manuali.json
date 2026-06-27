@@ -399,15 +399,15 @@
     },
     "Panama-Inghilterra": {
       "girone": "L",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "0-2",
+      "marcatori": "Kane,Bellingham",
+      "_manuale": true
     },
     "Croazia-Ghana": {
       "girone": "L",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "2-1",
+      "marcatori": "Sucic,Vlasic,Luckassen",
+      "_manuale": true
     },
     "Colombia-Portogallo": {
       "girone": "K",
