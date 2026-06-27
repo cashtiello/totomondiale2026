@@ -1,21 +1,12 @@
 """
 aggiorna_e_calcola.py
 Script eseguito da GitHub Actions ogni ora.
-
-1. Legge API_FOOTBALL_KEY dalla variabile d'ambiente (GitHub Secret)
-2. Scarica risultati reali da API-Football
-3. Aggiorna risultati.xlsx
-4. Calcola classifica
-5. Genera index.html
 """
 
 import os
 import sys
 import json
-import time
 import urllib.request
-import urllib.parse
-import json
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -37,99 +28,43 @@ from openpyxl.worksheet.datavalidation import DataValidation
 setup_logging()
 log = get_logger("aggiorna_e_calcola")
 
-# ── Configurazione ────────────────────────────────────────────────────────────
-API_KEY      = os.environ.get("FOOTBALL_DATA_KEY", "")  # non più usata ma tenuta per compatibilità
-API_BASE     = "https://worldcup26.ir"
+API_KEY  = os.environ.get("FOOTBALL_DATA_KEY", "")
+API_BASE = "https://worldcup26.ir"
 
-# Mappa nomi inglesi (football-data.org) → italiani (pronostici partecipanti)
 NOMI_SQUADRE = {
-    # Gruppo A
-    "Mexico": "Messico",
-    "South Africa": "Sud Africa",
-    "Korea Republic": "Corea del Sud",
-    "South Korea": "Corea del Sud",
-    "Korea DPR": "Corea del Nord",
-    "Czech Republic": "R.Ceca",
-    "Czechia": "R.Ceca",
-    "Czech Rep.": "R.Ceca",
-    # Gruppo B
-    "Canada": "Canada",
-    "Bosnia and Herzegovina": "Bosnia",
-    "Bosnia-Herzegovina": "Bosnia",
-    "Bosnia & Herzegovina": "Bosnia",
-    "Bosnia": "Bosnia",
-    "Qatar": "Qatar",
-    "Switzerland": "Svizzera",
-    # Gruppo C
-    "Brazil": "Brasile",
-    "Brasil": "Brasile",
-    "Morocco": "Marocco",
-    "Haiti": "Haiti",
-    "Scotland": "Scozia",
-    # Gruppo D
-    "USA": "USA",
-    "United States": "USA",
-    "United States of America": "USA",
-    "Paraguay": "Paraguay",
-    "Australia": "Australia",
-    "Turkey": "Turchia",
-    "Türkiye": "Turchia",
-    # Gruppo E
-    "Germany": "Germania",
-    "Curaçao": "Curacao",
-    "Curacao": "Curacao",
-    "Ivory Coast": "Costa d'Avorio",
-    "Côte d'Ivoire": "Costa d'Avorio",
-    "Cote d'Ivoire": "Costa d'Avorio",
-    "Ecuador": "Ecuador",
-    # Gruppo F
-    "Netherlands": "Olanda",
-    "Holland": "Olanda",
-    "Japan": "Giappone",
-    "Sweden": "Svezia",
-    "Tunisia": "Tunisia",
-    # Gruppo G
-    "Belgium": "Belgio",
-    "Egypt": "Egitto",
-    "Iran": "Iran",
+    "Mexico": "Messico", "South Africa": "Sud Africa",
+    "Korea Republic": "Corea del Sud", "South Korea": "Corea del Sud",
+    "Korea DPR": "Corea del Nord", "Czech Republic": "R.Ceca",
+    "Czechia": "R.Ceca", "Czech Rep.": "R.Ceca",
+    "Canada": "Canada", "Bosnia and Herzegovina": "Bosnia",
+    "Bosnia-Herzegovina": "Bosnia", "Bosnia & Herzegovina": "Bosnia",
+    "Bosnia": "Bosnia", "Qatar": "Qatar", "Switzerland": "Svizzera",
+    "Brazil": "Brasile", "Brasil": "Brasile", "Morocco": "Marocco",
+    "Haiti": "Haiti", "Scotland": "Scozia",
+    "USA": "USA", "United States": "USA", "United States of America": "USA",
+    "Paraguay": "Paraguay", "Australia": "Australia",
+    "Turkey": "Turchia", "Türkiye": "Turchia",
+    "Germany": "Germania", "Curaçao": "Curacao", "Curacao": "Curacao",
+    "Ivory Coast": "Costa d'Avorio", "Côte d'Ivoire": "Costa d'Avorio",
+    "Cote d'Ivoire": "Costa d'Avorio", "Ecuador": "Ecuador",
+    "Netherlands": "Olanda", "Holland": "Olanda", "Japan": "Giappone",
+    "Sweden": "Svezia", "Tunisia": "Tunisia",
+    "Belgium": "Belgio", "Egypt": "Egitto", "Iran": "Iran",
     "New Zealand": "Nuova Zelanda",
-    # Gruppo H
-    "Spain": "Spagna",
-    "Cape Verde": "Capo Verde",
-    "Cabo Verde": "Capo Verde",
-    "Saudi Arabia": "Arabia Saudita",
-    "KSA": "Arabia Saudita",
-    "Uruguay": "Uruguay",
-    # Gruppo I
-    "France": "Francia",
-    "Senegal": "Senegal",
-    "Iraq": "Iraq",
-    "Norway": "Norvegia",
-    # Gruppo J
-    "Argentina": "Argentina",
-    "Algeria": "Algeria",
-    "Austria": "Austria",
+    "Spain": "Spagna", "Cape Verde": "Capo Verde", "Cabo Verde": "Capo Verde",
+    "Saudi Arabia": "Arabia Saudita", "KSA": "Arabia Saudita", "Uruguay": "Uruguay",
+    "France": "Francia", "Senegal": "Senegal", "Iraq": "Iraq", "Norway": "Norvegia",
+    "Argentina": "Argentina", "Algeria": "Algeria", "Austria": "Austria",
     "Jordan": "Giordania",
-    # Gruppo K
-    "Portugal": "Portogallo",
-    "Congo": "Congo",
-    "DR Congo": "Congo",
-    "Democratic Republic of the Congo": "Congo",
-    "Republic of Congo": "Congo",
-    "Uzbekistan": "Uzbekistan",
-    "Colombia": "Colombia",
-    # Gruppo L
-    "England": "Inghilterra",
-    "Croatia": "Croazia",
-    "Ghana": "Ghana",
-    "Panama": "Panama",
+    "Portugal": "Portogallo", "Congo": "Congo", "DR Congo": "Congo",
+    "Democratic Republic of the Congo": "Congo", "Republic of Congo": "Congo",
+    "Uzbekistan": "Uzbekistan", "Colombia": "Colombia",
+    "England": "Inghilterra", "Croatia": "Croazia", "Ghana": "Ghana", "Panama": "Panama",
 }
 
 def traduci(nome: str) -> str:
-    """Traduce il nome squadra da inglese a italiano."""
     return NOMI_SQUADRE.get(nome, nome)
 
-# Gironi per i dropdown
 GIRONI_SQUADRE = {
     'A': ['Messico', 'Sud Africa', 'Corea del Sud', 'Repubblica Ceca'],
     'B': ['Canada', 'Bosnia Erzegovina', 'Qatar', 'Svizzera'],
@@ -185,7 +120,6 @@ TUTTE_LE_PARTITE = [
 
 
 def _api(endpoint: str) -> dict:
-    """Chiama worldcup26.ir e ritorna il JSON."""
     url = f"{API_BASE}/{endpoint}"
     req = urllib.request.Request(url, headers={"User-Agent": "TotoMondiale/1.0"})
     try:
@@ -197,11 +131,9 @@ def _api(endpoint: str) -> dict:
 
 
 def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
-    """Parsa la stringa marcatori da worldcup26.ir."""
     if not scorers_str or scorers_str == "null":
         return [], False
     import re
-    # Rimuove graffe e tutti i tipi di virgolette incluse quelle unicode curly
     scorers_str = scorers_str.strip('{}')
     scorers_str = re.sub(r'[\u0022\u0027\u201c\u201d\u2018\u2019\u00ab\u00bb]', '', scorers_str)
     nomi = []
@@ -210,7 +142,6 @@ def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
         s = s.strip()
         if not s or s == "null":
             continue
-        # Rimuove il minuto (es. "J. Quiñones 9'" o "J. Quiñones 9'+" → "J. Quiñones")
         nome = re.sub(r"\s+\d+\+?'?$", "", s).strip()
         nome = re.sub(r"\s+\d+\+?['\u2019]?$", "", nome).strip()
         if "autogoal" in nome.lower() or "own goal" in nome.lower():
@@ -221,126 +152,115 @@ def _parse_scorers(scorers_str: str) -> tuple[list[str], bool]:
 
 
 def scarica_risultati() -> dict[str, dict]:
-    """Scarica risultati e marcatori da worldcup26.ir."""
     log.info("Scarico partite da worldcup26.ir...")
     data = _api("get/games")
     risultati = {}
-
     for match in data.get("games", []):
         if match.get("finished", "FALSE").upper() != "TRUE":
             continue
-
         home = traduci(match.get("home_team_name_en", ""))
         away = traduci(match.get("away_team_name_en", ""))
         gh = int(match.get("home_score", 0) or 0)
         ga = int(match.get("away_score", 0) or 0)
         nome = f"{home}-{away}"
-
         gol_home, auto_home = _parse_scorers(match.get("home_scorers", "null"))
         gol_away, auto_away = _parse_scorers(match.get("away_scorers", "null"))
         gol = gol_home + gol_away
         ha_autogol = auto_home or auto_away
-
         marcatori_str = ", ".join(gol)
         if ha_autogol:
             marcatori_str = (marcatori_str + ", autogol").strip(", ")
-
-        risultati[nome] = {
-            "risultato": f"{gh}-{ga}",
-            "marcatori": marcatori_str,
-        }
+        risultati[nome] = {"risultato": f"{gh}-{ga}", "marcatori": marcatori_str}
         log.info(f"  {nome}: {gh}-{ga} | {marcatori_str}")
-
     log.info(f"Scaricate {len(risultati)} partite completate")
     return risultati
 
 
 def scarica_gironi() -> dict[str, dict]:
-    """Scarica le classifiche dei gironi da worldcup26.ir."""
     log.info("Scarico classifiche gironi...")
     data = _api("get/groups")
     classifiche = {}
-
     for gruppo in data.get("groups", []):
         lettera = gruppo.get("name", "").replace("Group ", "").strip()
         teams = gruppo.get("teams", [])
         if len(teams) >= 2:
-            # Ordina per punti desc
             teams_sorted = sorted(teams, key=lambda t: int(t.get("pts", 0) or 0), reverse=True)
             classifiche[lettera] = {
                 "prima":   traduci(teams_sorted[0].get("team_name_en", "")),
                 "seconda": traduci(teams_sorted[1].get("team_name_en", "")),
             }
-
     log.info(f"Classifiche gironi: {len(classifiche)}")
     return classifiche
 
 
-def aggiorna_json_manuali(partite_api: dict) -> dict:
+def aggiorna_json_manuali(partite_api: dict) -> tuple[dict, dict]:
     """
     Aggiorna risultati_manuali.json con i dati dell'API.
-    Le partite con _manuale: true NON vengono mai toccate dall'API.
-    Restituisce i dati manuali da usare come override nel risultati.xlsx.
+    Restituisce (dati_manuali_partite, gironi_manuali).
+    Le voci con _manuale: true NON vengono mai toccate dall'API.
     """
     try:
         if not RISULTATI_MANUALI_FILE.exists():
             log.warning("risultati_manuali.json non trovato")
-            return {}
+            return {}, {}
 
         with open(RISULTATI_MANUALI_FILE, "r", encoding="utf-8") as f:
             json_data = json.load(f)
 
+        # ── Partite ──────────────────────────────────────────────────────────
         partite_json = json_data.get("partite", {})
         dati_manuali = {}
 
         for partita, dati in partite_json.items():
             is_manuale = dati.get("_manuale", False)
             api_info = partite_api.get(partita, {})
-
             if is_manuale:
-                # _manuale: true → MAI toccare, vince sempre sull'API
                 dati_manuali[partita] = {
                     "risultato": dati.get("risultato", ""),
                     "marcatori": dati.get("marcatori", ""),
                 }
                 log.info(f"  ✋ MANUALE protetto: {partita} ({dati.get('marcatori','')})")
             elif api_info:
-                # Aggiorna con i dati API solo se non è manuale
                 partite_json[partita]["risultato"] = api_info.get("risultato", "")
                 partite_json[partita]["marcatori"] = api_info.get("marcatori", "")
-            # API down + non manuale → lascia valori esistenti nel JSON
 
-        # Salva JSON aggiornato (le partite manuali restano intatte)
+        # ── Gironi manuali ────────────────────────────────────────────────────
+        gironi_json = json_data.get("gironi", {})
+        gironi_manuali = {}
+        for lettera, dati in gironi_json.items():
+            if dati.get("_manuale", False):
+                gironi_manuali[lettera] = {
+                    "prima":   dati.get("prima", ""),
+                    "seconda": dati.get("seconda", ""),
+                }
+                log.info(f"  ✋ GIRONE MANUALE {lettera}: {dati.get('prima','')} / {dati.get('seconda','')}")
+
         json_data["partite"] = partite_json
         with open(RISULTATI_MANUALI_FILE, "w", encoding="utf-8") as f:
             json.dump(json_data, f, ensure_ascii=False, indent=2)
 
-        log.info(f"risultati_manuali.json aggiornato ({len(dati_manuali)} override manuali attivi)")
-        return dati_manuali
+        log.info(f"risultati_manuali.json aggiornato ({len(dati_manuali)} partite manuali, {len(gironi_manuali)} gironi manuali)")
+        return dati_manuali, gironi_manuali
 
     except Exception as e:
         log.error(f"Errore aggiornamento JSON manuali: {e}")
-        return {}
+        return {}, {}
 
 
 def scrivi_risultati(partite: dict, gironi: dict) -> None:
-    """Scrive risultati.xlsx con i dati aggiornati."""
     bordo = lambda: Border(
-        left=Side(style='thin', color='BDC3C7'),
-        right=Side(style='thin', color='BDC3C7'),
-        top=Side(style='thin', color='BDC3C7'),
-        bottom=Side(style='thin', color='BDC3C7'),
+        left=Side(style='thin', color='BDC3C7'), right=Side(style='thin', color='BDC3C7'),
+        top=Side(style='thin', color='BDC3C7'), bottom=Side(style='thin', color='BDC3C7'),
     )
     h_fill = PatternFill("solid", start_color="2E4057")
     h_font = Font(bold=True, color="FFFFFF", size=11)
     h_alg  = Alignment(horizontal="center", vertical="center")
-    f_alt  = [PatternFill("solid", start_color="F8F9FA"),
-              PatternFill("solid", start_color="FFFFFF")]
+    f_alt  = [PatternFill("solid", start_color="F8F9FA"), PatternFill("solid", start_color="FFFFFF")]
 
-    # Aggiorna JSON con dati API e ottieni override manuali
-    dati_manuali = aggiorna_json_manuali(partite)
+    # Aggiorna JSON e ottieni override manuali
+    dati_manuali, gironi_manuali = aggiorna_json_manuali(partite)
 
-    # Leggi JSON esistente come fallback quando API è down
+    # Fallback JSON esistente per partite
     partite_json_esistente = {}
     try:
         if RISULTATI_MANUALI_FILE.exists():
@@ -356,27 +276,21 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     ws.title = "PARTITE"
     for col, h in enumerate(["PARTITA", "RISULTATO", "MARCATORE"], 1):
         c = ws.cell(row=1, column=col, value=h)
-        c.font = h_font; c.fill = h_fill
-        c.alignment = h_alg; c.border = bordo()
+        c.font = h_font; c.fill = h_fill; c.alignment = h_alg; c.border = bordo()
     ws.row_dimensions[1].height = 24
 
     for i, (incontro, _) in enumerate(TUTTE_LE_PARTITE):
         info = partite.get(incontro, {})
-        # Dati manuali hanno sempre priorità sull'API
         manuale = dati_manuali.get(incontro, {})
-        # Fallback al JSON esistente se API è down e non c'è manuale
         json_esistente = partite_json_esistente.get(incontro, {})
         if manuale:
-            # _manuale: true vince su tutto — API, JSON, xlsx
             risultato_finale = manuale.get("risultato", "")
             marcatori_finali = manuale.get("marcatori", "")
             log.info(f"  ✋ {incontro}: MANUALE ({risultato_finale} | {marcatori_finali})")
         elif info:
-            # API ha risposto → usa dati API
             risultato_finale = info.get("risultato", "")
             marcatori_finali = info.get("marcatori", "")
         else:
-            # API down → fallback JSON esistente
             risultato_finale = json_esistente.get("risultato", "")
             marcatori_finali = json_esistente.get("marcatori", "")
             if risultato_finale:
@@ -396,13 +310,18 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     ws_g = wb.create_sheet("GIRONI")
     for col, h in enumerate(["GIRONE", "1° CLASSIFICATA", "2° CLASSIFICATA"], 1):
         c = ws_g.cell(row=1, column=col, value=h)
-        c.font = h_font; c.fill = h_fill
-        c.alignment = h_alg; c.border = bordo()
+        c.font = h_font; c.fill = h_fill; c.alignment = h_alg; c.border = bordo()
     ws_g.row_dimensions[1].height = 24
 
     gir_fill = PatternFill("solid", start_color="EEF2F7")
     for i, (lettera, squadre) in enumerate(GIRONI_SQUADRE.items(), 2):
-        info = gironi.get(lettera, {})
+        # Gironi manuali vincono sull'API
+        if lettera in gironi_manuali:
+            info = gironi_manuali[lettera]
+            log.info(f"  ✋ Girone {lettera}: MANUALE ({info.get('prima','')} / {info.get('seconda','')})")
+        else:
+            info = gironi.get(lettera, {})
+
         c = ws_g.cell(row=i, column=1, value=lettera)
         c.font = Font(bold=True, size=11, color="1A2E45")
         c.fill = gir_fill; c.alignment = h_alg; c.border = bordo()
@@ -425,10 +344,8 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     ws_s = wb.create_sheet("SPECIALI")
     for col, h in enumerate(["VOCE", "VALORE"], 1):
         c = ws_s.cell(row=1, column=col, value=h)
-        c.font = h_font; c.fill = h_fill
-        c.alignment = h_alg; c.border = bordo()
+        c.font = h_font; c.fill = h_fill; c.alignment = h_alg; c.border = bordo()
 
-    # Leggi valori speciali esistenti dal file attuale (non sovrascriverli)
     speciali_esistenti = {}
     try:
         wb_old = openpyxl.load_workbook(RISULTATI_FILE, data_only=True)
@@ -461,7 +378,6 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
 
 
 def salva_storico_posizioni(punteggi, storico_path: Path) -> None:
-    """Salva le posizioni correnti in JSON prima di aggiornare."""
     storico_path.parent.mkdir(parents=True, exist_ok=True)
     posizioni = {p.nome_completo: idx + 1 for idx, p in enumerate(punteggi)}
     try:
@@ -476,30 +392,24 @@ def main():
     log.info("=== Avvio aggiornamento automatico ===")
     log.info("Fonte dati: worldcup26.ir (gratuita, no API key)")
 
-    # 1. Scarica risultati reali
     partite = scarica_risultati()
     gironi  = scarica_gironi()
 
-    # 2. Scrivi risultati.xlsx con dati API + override JSON manuale
-    # Se l'API ha 0 partite (errore/down), scrivi comunque per applicare JSON manuali
     scrivi_risultati(partite, gironi)
     if len(partite) > 0:
         log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
     else:
         log.info("API down (0 partite) — risultati.xlsx aggiornato solo con dati JSON manuali")
 
-    # 3. Leggi pronostici partecipanti
     from src.config import PRONOSTICI_DIR
     partecipanti = leggi_tutti_pronostici(PRONOSTICI_DIR)
     if not partecipanti:
         log.warning("Nessun partecipante trovato!")
         return
 
-    # 4. Calcola punteggi
     risultati = leggi_risultati(RISULTATI_FILE)
     punteggi  = calcola_tutti_punteggi(partecipanti, risultati)
 
-    # 5. Salva storico posizioni e genera output
     storico_path = Path(__file__).parent / "data" / "storico_posizioni.json"
     salva_storico_posizioni(punteggi, storico_path)
     genera_excel_classifica(punteggi)
