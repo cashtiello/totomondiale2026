@@ -20,7 +20,6 @@
         * { box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #2c3e50; min-height: 100vh; }
 
-        /* ── HERO ── */
         .hero {
             position: relative; overflow: hidden;
             background: #0d1b2a;
@@ -47,14 +46,12 @@
         .hero-trophy { font-size: 4.5rem; display: block; margin-bottom: .5rem; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-        /* ── CARDS ── */
         .stat-card { background: white; border-radius: 1rem; padding: 1.25rem 1rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.08); border-top: 4px solid var(--primary); transition: transform .2s; }
         .stat-card:hover { transform: translateY(-4px); }
         .stat-card .icon { font-size: 2rem; margin-bottom: .3rem; }
         .stat-card .num { font-size: 1.9rem; font-weight: 900; color: var(--primary); }
         .stat-card .lbl { font-size: .75rem; color: #666; font-weight: 600; text-transform: uppercase; }
 
-        /* ── PODIO ── */
         .podio-section { margin-bottom: 2rem; }
         .podio-stage { display: flex; align-items: flex-end; justify-content: center; gap: 0; }
         .podio-slot { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 200px; }
@@ -71,7 +68,6 @@
         .podio-block span { font-size: 1.6rem; }
         .podio-block small { font-size: .7rem; opacity: .9; font-weight: 700; }
 
-        /* ── TABELLA ── */
         .table-section { background: white; border-radius: 1.2rem; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
         .table thead th { background: var(--primary); color: white; font-weight: 600; font-size: .8rem; text-transform: uppercase; border: none; padding: .9rem .6rem; white-space: nowrap; }
         .table tbody tr { transition: background .15s; }
@@ -88,11 +84,9 @@
         .badge-n { background: #ecf0f1; color: #555; }
         .pts-badge { background: var(--primary); color: white; border-radius: 1rem; padding: .2rem .7rem; font-weight: 700; }
 
-        /* ── PULSANTE DETTAGLIO ── */
         .btn-dettaglio { background: none; border: 1px solid var(--primary); color: var(--primary); border-radius: 2rem; padding: .15rem .7rem; font-size: .75rem; cursor: pointer; transition: all .2s; white-space: nowrap; }
         .btn-dettaglio:hover { background: var(--primary); color: white; }
 
-        /* ── RECORD ── */
         .record-card { background: white; border-radius: 1rem; padding: 1rem 1.25rem; box-shadow: 0 3px 15px rgba(0,0,0,.07); border-left: 5px solid var(--accent); }
         .record-card .rec-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; color: #888; }
         .record-card .rec-name { font-weight: 700; }
@@ -101,7 +95,6 @@
         footer { background: var(--primary); color: rgba(255,255,255,.65); text-align: center; padding: 1.5rem; font-size: .8rem; margin-top: 3rem; }
         footer .footer-flags { font-size: 1.2rem; margin-bottom: .3rem; }
 
-        /* ── MODAL ── */
         .modal-dettaglio .modal-dialog { max-width: 900px; }
         .modal-dettaglio .modal-content { border-radius: 1.2rem; overflow: hidden; }
         .modal-dettaglio .modal-header { background: var(--primary); color: white; border: none; }
@@ -119,7 +112,6 @@
         .badge-no   { background: #f8d7da; color: #721c24; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; font-weight: 600; }
         .badge-wait { background: #e2e3e5; color: #555; border-radius: .4rem; padding: .15rem .5rem; font-size: .75rem; }
 
-        .tbl-pron tbody td img.emoji { height: 1.2em; width: 1.2em; vertical-align: -0.2em; }
         .girone-row-inv     { background: rgba(255,193,7,.1) !important; }
         .girone-row-singola { background: rgba(23,162,184,.08) !important; }
 
@@ -130,15 +122,54 @@
         .arrow-new   { color: #8e44ad; font-size: .65rem; font-weight: 700; }
         .arrow-stabile { color: #bdc3c7; font-size: .75rem; }
 
+        /* ── ELIMINATORIE ── */
+        .fasi-tabs { display: flex; gap: .4rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .fase-tab {
+            padding: .35rem .9rem; border-radius: 2rem; font-size: .8rem; font-weight: 600;
+            border: 2px solid #dee2e6; color: #666; cursor: pointer; background: white; transition: all .2s;
+        }
+        .fase-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .fase-tab.locked { opacity: .4; cursor: default; pointer-events: none; }
+
+        .fase-header {
+            background: linear-gradient(135deg, #1a2e45, #0f3d2e);
+            border-radius: .8rem .8rem 0 0; padding: .8rem 1.2rem;
+            display: flex; align-items: center; gap: .8rem;
+        }
+        .fase-badge {
+            background: var(--gold); color: #1a2e45; font-weight: 800;
+            font-size: .72rem; border-radius: 2rem; padding: .2rem .7rem;
+            text-transform: uppercase; letter-spacing: .5px; white-space: nowrap;
+        }
+        .fase-title-name { color: white; font-weight: 700; font-size: .95rem; }
+        .fase-sub-pts { color: rgba(255,255,255,.65); font-size: .75rem; }
+
+        .elim-match-row {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            align-items: center; gap: .4rem; padding: .5rem .4rem;
+            border-bottom: 1px solid #f0f4f8; font-size: .82rem;
+        }
+        .elim-match-row:last-child { border-bottom: none; }
+        .elim-match-row:hover { background: #f8fafc; }
+        .elim-match-name { font-weight: 600; font-size: .8rem; }
+        .elim-reale { font-size: .72rem; color: #888; }
+        .elim-body { background: white; border-radius: 0 0 .8rem .8rem; padding: .5rem; margin-bottom: 1rem; }
+        .elim-header-row {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: .4rem; padding: .4rem .4rem;
+            font-size: .7rem; color: #888; font-weight: 700;
+            border-bottom: 2px solid #dee2e6; margin-bottom: .2rem;
+        }
+
         @media (max-width: 768px) {
             .table thead th:nth-child(n+5) { display: none; }
             .table tbody td:nth-child(n+5) { display: none; }
+            .elim-match-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; font-size: .75rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-lines"></div>
@@ -152,26 +183,22 @@
 
 <div class="container-xl py-4">
 
-    <!-- PODIO -->
     {% if punteggi | length >= 3 %}
     <div class="podio-section">
         <h5 class="text-center mb-4"><i class="fas fa-trophy me-2"></i>Podio</h5>
         <div class="podio-stage">
-            <!-- 2° posto -->
             <div class="podio-slot">
                 <div class="podio-avatar av-2">{{ punteggi[1].nome_completo[:2].upper() }}</div>
                 <div class="podio-name">{{ punteggi[1].nome_completo }}</div>
                 <div class="podio-pts-label">{{ punteggi[1].punti_totali }} pt</div>
                 <div class="podio-block podio-block-2"><span>🥈</span><small>2°</small></div>
             </div>
-            <!-- 1° posto -->
             <div class="podio-slot">
                 <div class="podio-avatar av-1">{{ punteggi[0].nome_completo[:2].upper() }}</div>
                 <div class="podio-name">{{ punteggi[0].nome_completo }}</div>
                 <div class="podio-pts-label">{{ punteggi[0].punti_totali }} pt</div>
                 <div class="podio-block podio-block-1"><span>🥇</span><small>1°</small></div>
             </div>
-            <!-- 3° posto -->
             <div class="podio-slot">
                 <div class="podio-avatar av-3">{{ punteggi[2].nome_completo[:2].upper() }}</div>
                 <div class="podio-name">{{ punteggi[2].nome_completo }}</div>
@@ -182,7 +209,6 @@
     </div>
     {% endif %}
 
-    <!-- TABELLA CLASSIFICA -->
     <div class="table-section mb-4">
         <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
             <h5 class="mb-0 fw-bold"><i class="fas fa-list-ol me-2 text-primary"></i>Classifica Completa</h5>
@@ -238,7 +264,6 @@
         </div>
     </div>
 
-    <!-- STAT CARDS -->
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-3">
             <div class="stat-card">
@@ -270,7 +295,6 @@
         </div>
     </div>
 
-    <!-- RECORD -->
     <h5 class="fw-bold mb-3"><i class="fas fa-trophy me-2 text-warning"></i>Record & Statistiche</h5>
     <div class="row g-3 mb-4">
         {% for rec in records %}
@@ -284,141 +308,51 @@
         {% endfor %}
     </div>
 
-    <!-- STATISTICHE TORNEO -->
     {% if stats %}
     <h5 class="fw-bold mb-3"><i class="fas fa-chart-bar me-2 text-info"></i>Statistiche Torneo</h5>
-
-    <!-- Totali aggregati -->
     <div class="row g-3 mb-3">
         <div class="col-6 col-md-3">
             <div class="stat-card" style="border-color:#3498db;">
-                <div class="icon">✅</div>
-                <div class="num">{{ stats.tot_esiti }}</div>
+                <div class="icon">✅</div><div class="num">{{ stats.tot_esiti }}</div>
                 <div class="lbl">Esiti indovinati totali</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="stat-card" style="border-color:#27ae60;">
-                <div class="icon">🎯</div>
-                <div class="num">{{ stats.tot_risultati }}</div>
+                <div class="icon">🎯</div><div class="num">{{ stats.tot_risultati }}</div>
                 <div class="lbl">Risultati esatti totali</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="stat-card" style="border-color:#e67e22;">
-                <div class="icon">👟</div>
-                <div class="num">{{ stats.tot_marcatori }}</div>
+                <div class="icon">👟</div><div class="num">{{ stats.tot_marcatori }}</div>
                 <div class="lbl">Marcatori indovinati totali</div>
             </div>
         </div>
         <div class="col-6 col-md-3">
             <div class="stat-card" style="border-color:#9b59b6;">
-                <div class="icon">🏟️</div>
-                <div class="num">{{ stats.tot_gironi_esatti }}</div>
+                <div class="icon">🏟️</div><div class="num">{{ stats.tot_gironi_esatti }}</div>
                 <div class="lbl">Gironi esatti totali</div>
             </div>
         </div>
     </div>
-
-    <!-- Chi ha indovinato di più -->
     <div class="row g-3 mb-3">
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">✅ Più esiti indovinati</div>
-                <div class="rec-name">{{ stats.top_esiti.nome }}</div>
-                <div class="rec-val">{{ stats.top_esiti.val }} esiti corretti</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">🎯 Più risultati esatti</div>
-                <div class="rec-name">{{ stats.top_risultati.nome }}</div>
-                <div class="rec-val">{{ stats.top_risultati.val }} risultati esatti</div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">👟 Più marcatori indovinati</div>
-                <div class="rec-name">{{ stats.top_marcatori.nome }}</div>
-                <div class="rec-val">{{ stats.top_marcatori.val }} marcatori</div>
-            </div>
-        </div>
+        <div class="col-md-4"><div class="record-card"><div class="rec-label">✅ Più esiti indovinati</div><div class="rec-name">{{ stats.top_esiti.nome }}</div><div class="rec-val">{{ stats.top_esiti.val }} esiti corretti</div></div></div>
+        <div class="col-md-4"><div class="record-card"><div class="rec-label">🎯 Più risultati esatti</div><div class="rec-name">{{ stats.top_risultati.nome }}</div><div class="rec-val">{{ stats.top_risultati.val }} risultati esatti</div></div></div>
+        <div class="col-md-4"><div class="record-card"><div class="rec-label">👟 Più marcatori indovinati</div><div class="rec-name">{{ stats.top_marcatori.nome }}</div><div class="rec-val">{{ stats.top_marcatori.val }} marcatori</div></div></div>
     </div>
-
-    <!-- Partite più/meno indovinate + marcatore top -->
     <div class="row g-3 mb-3">
-        {% if stats.risultato_piu_indovinato %}
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">🎯 Risultato esatto più indovinato</div>
-                <div class="rec-name">{{ stats.risultato_piu_indovinato.partita }} <strong>{{ stats.risultato_piu_indovinato.risultato }}</strong></div>
-                <div class="rec-val">indovinato da {{ stats.risultato_piu_indovinato.n }} partecipanti</div>
-            </div>
-        </div>
-        {% endif %}
-        {% if stats.partita_piu_indovinata %}
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">🟢 Partita più indovinata</div>
-                <div class="rec-name">{{ stats.partita_piu_indovinata.nome }}</div>
-                <div class="rec-val">{{ stats.partita_piu_indovinata.n_esito }}/{{ stats.n_partecipanti }} ({{ stats.partita_piu_indovinata.pct_esito }}%)</div>
-            </div>
-        </div>
-        {% endif %}
-        {% if stats.partita_meno_indovinata %}
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">🔴 Partita meno indovinata</div>
-                <div class="rec-name">{{ stats.partita_meno_indovinata.nome }}</div>
-                <div class="rec-val">{{ stats.partita_meno_indovinata.n_esito }}/{{ stats.n_partecipanti }} ({{ stats.partita_meno_indovinata.pct_esito }}%)</div>
-            </div>
-        </div>
-        {% endif %}
-        {% if stats.marcatore_top %}
-        <div class="col-md-4">
-            <div class="record-card">
-                <div class="rec-label">👟 Marcatore più indovinato</div>
-                <div class="rec-name">{{ stats.marcatore_top.nome }}</div>
-                <div class="rec-val">indovinato da {{ stats.marcatore_top.val }} partecipanti</div>
-            </div>
-        </div>
-        {% endif %}
+        {% if stats.risultato_piu_indovinato %}<div class="col-md-4"><div class="record-card"><div class="rec-label">🎯 Risultato esatto più indovinato</div><div class="rec-name">{{ stats.risultato_piu_indovinato.partita }} <strong>{{ stats.risultato_piu_indovinato.risultato }}</strong></div><div class="rec-val">indovinato da {{ stats.risultato_piu_indovinato.n }} partecipanti</div></div></div>{% endif %}
+        {% if stats.partita_piu_indovinata %}<div class="col-md-4"><div class="record-card"><div class="rec-label">🟢 Partita più indovinata</div><div class="rec-name">{{ stats.partita_piu_indovinata.nome }}</div><div class="rec-val">{{ stats.partita_piu_indovinata.n_esito }}/{{ stats.n_partecipanti }} ({{ stats.partita_piu_indovinata.pct_esito }}%)</div></div></div>{% endif %}
+        {% if stats.partita_meno_indovinata %}<div class="col-md-4"><div class="record-card"><div class="rec-label">🔴 Partita meno indovinata</div><div class="rec-name">{{ stats.partita_meno_indovinata.nome }}</div><div class="rec-val">{{ stats.partita_meno_indovinata.n_esito }}/{{ stats.n_partecipanti }} ({{ stats.partita_meno_indovinata.pct_esito }}%)</div></div></div>{% endif %}
+        {% if stats.marcatore_top %}<div class="col-md-4"><div class="record-card"><div class="rec-label">👟 Marcatore più indovinato</div><div class="rec-name">{{ stats.marcatore_top.nome }}</div><div class="rec-val">indovinato da {{ stats.marcatore_top.val }} partecipanti</div></div></div>{% endif %}
     </div>
-
-    <!-- Vincitore più votato -->
     {% if stats.vincitore_gettonato %}
-    <div class="mb-3">
-        <div class="record-card">
-            <div class="rec-label mb-2">🏆 Vincitore più pronosticato</div>
-            <div class="d-flex flex-wrap gap-2">
-                {% for squadra, voti in stats.vincitore_gettonato %}
-                <span style="background:#eaf3de;color:#3B6D11;border-radius:.4rem;padding:.2rem .7rem;font-size:.8rem;font-weight:600;">
-                    {{ squadra }} <strong>{{ voti }}x</strong>
-                </span>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+    <div class="mb-3"><div class="record-card"><div class="rec-label mb-2">🏆 Vincitore più pronosticato</div><div class="d-flex flex-wrap gap-2">{% for squadra, voti in stats.vincitore_gettonato %}<span style="background:#eaf3de;color:#3B6D11;border-radius:.4rem;padding:.2rem .7rem;font-size:.8rem;font-weight:600;">{{ squadra }} <strong>{{ voti }}x</strong></span>{% endfor %}</div></div></div>
+    {% endif %}
+    <div class="mb-4"><div class="record-card"><div class="rec-label mb-2">📊 Distribuzione punteggi</div><div class="row g-2 text-center">{% for fascia, count in stats.fasce.items() %}<div class="col-3"><div style="font-size:.75rem;color:#888;margin-bottom:.2rem;">{{ fascia }} pt</div><div style="font-size:1.3rem;font-weight:700;color:#1a2e45;">{{ count }}</div><div style="font-size:.7rem;color:#aaa;">partecipanti</div></div>{% endfor %}</div></div></div>
     {% endif %}
 
-    <!-- Distribuzione punteggi -->
-    <div class="mb-4">
-        <div class="record-card">
-            <div class="rec-label mb-2">📊 Distribuzione punteggi</div>
-            <div class="row g-2 text-center">
-                {% for fascia, count in stats.fasce.items() %}
-                <div class="col-3">
-                    <div style="font-size:.75rem;color:#888;margin-bottom:.2rem;">{{ fascia }} pt</div>
-                    <div style="font-size:1.3rem;font-weight:700;color:#1a2e45;">{{ count }}</div>
-                    <div style="font-size:.7rem;color:#aaa;">partecipanti</div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    <!-- REGOLAMENTO -->
     <div class="accordion mb-4" id="accRegolamento">
         <div class="accordion-item border-0 rounded-3 overflow-hidden shadow-sm">
             <h2 class="accordion-header">
@@ -433,7 +367,7 @@
                             <h6 class="fw-bold text-primary">⚽ Partite</h6>
                             <ul class="list-unstyled small">
                                 <li>🔵 Esito 1X2 corretto → <strong>1 pt</strong></li>
-                                <li>🟢 Risultato esatto → <strong>5 pt</strong> (indipendente dall'esito 1X2)</li>
+                                <li>🟢 Risultato esatto → <strong>5 pt</strong></li>
                                 <li>🟡 Marcatore → <strong>2 pt</strong></li>
                             </ul>
                         </div>
@@ -466,7 +400,7 @@
 
 </div>
 
-<!-- ══ MODAL DETTAGLIO PARTECIPANTE ══════════════════════════════════════════ -->
+<!-- MODAL -->
 <div class="modal fade modal-dettaglio" id="modalDettaglio" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
@@ -477,13 +411,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-0">
-
-                <!-- Tabs -->
                 <div class="p-3 border-bottom bg-light">
                     <ul class="nav nav-pills nav-pills-custom" id="tabsDettaglio">
                         <li class="nav-item"><a class="nav-link active" data-tab="partite" href="#">⚽ Partite</a></li>
                         <li class="nav-item"><a class="nav-link" data-tab="gironi" href="#">🏟️ Gironi</a></li>
                         <li class="nav-item"><a class="nav-link" data-tab="speciali" href="#">🏆 Speciali</a></li>
+                        <li class="nav-item"><a class="nav-link" data-tab="eliminatorie" href="#">⚔️ Eliminatorie</a></li>
                     </ul>
                 </div>
 
@@ -497,16 +430,14 @@
                         </div>
                         <div class="table-responsive">
                             <table class="table tbl-pron table-hover table-bordered w-100">
-                                <thead>
-                                    <tr>
-                                        <th>Partita</th>
-                                        <th class="text-center">Esito Pron.</th>
-                                        <th class="text-center">Risultato Pron.</th>
-                                        <th class="text-center">Marcatore Pron.</th>
-                                        <th class="text-center">Risultato Reale</th>
-                                        <th class="text-center">Marcatori Reali</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr>
+                                    <th>Partita</th>
+                                    <th class="text-center">Esito Pron.</th>
+                                    <th class="text-center">Risultato Pron.</th>
+                                    <th class="text-center">Marcatore Pron.</th>
+                                    <th class="text-center">Risultato Reale</th>
+                                    <th class="text-center">Marcatori Reali</th>
+                                </tr></thead>
                                 <tbody id="tbodyPartite"></tbody>
                             </table>
                         </div>
@@ -523,16 +454,14 @@
                         </div>
                         <div class="table-responsive">
                             <table class="table tbl-pron table-hover table-bordered w-100">
-                                <thead>
-                                    <tr>
-                                        <th>Girone</th>
-                                        <th class="text-center">1° Pronosticata</th>
-                                        <th class="text-center">2° Pronosticata</th>
-                                        <th class="text-center">1° Reale</th>
-                                        <th class="text-center">2° Reale</th>
-                                        <th class="text-center">Risultato</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr>
+                                    <th>Girone</th>
+                                    <th class="text-center">1° Pronosticata</th>
+                                    <th class="text-center">2° Pronosticata</th>
+                                    <th class="text-center">1° Reale</th>
+                                    <th class="text-center">2° Reale</th>
+                                    <th class="text-center">Risultato</th>
+                                </tr></thead>
                                 <tbody id="tbodyGironi"></tbody>
                             </table>
                         </div>
@@ -542,16 +471,22 @@
                     <div id="tab-speciali" style="display:none;">
                         <div class="table-responsive">
                             <table class="table tbl-pron table-hover table-bordered w-100">
-                                <thead>
-                                    <tr>
-                                        <th>Premio</th>
-                                        <th class="text-center">Pronostico</th>
-                                        <th class="text-center">Reale</th>
-                                        <th class="text-center">Esito</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr>
+                                    <th>Premio</th>
+                                    <th class="text-center">Pronostico</th>
+                                    <th class="text-center">Reale</th>
+                                    <th class="text-center">Esito</th>
+                                </tr></thead>
                                 <tbody id="tbodySpeciali"></tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab Eliminatorie -->
+                    <div id="tab-eliminatorie" style="display:none;">
+                        <div class="fasi-tabs" id="elimFasiTabs"></div>
+                        <div id="elimContent">
+                            <p class="text-muted text-center py-4">Nessun pronostico eliminatorie disponibile.</p>
                         </div>
                     </div>
                 </div>
@@ -566,22 +501,18 @@
     <p class="mt-1" style="font-size:.7rem; opacity:.4;">FIFA World Cup 2026 — 11 Giugno / 19 Luglio 2026</p>
 </footer>
 
-<!-- Dati partecipanti in JSON -->
-<script id="datiPartecipanti" type="application/json">
-{{ dettagli | tojson }}
-</script>
+<script id="datiPartecipanti" type="application/json">{{ dettagli | tojson }}</script>
+<script id="datiEliminatorie" type="application/json">{{ dettagli_eliminatorie | tojson }}</script>
 
-    <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-// Carica dati partecipanti
 const DATI = JSON.parse(document.getElementById('datiPartecipanti').textContent);
+const DATI_ELIM = JSON.parse(document.getElementById('datiEliminatorie').textContent);
 
-// DataTables
 $(document).ready(function() {
     $('#tbl-classifica').DataTable({
         paging: false, info: false, searching: true, order: [],
@@ -592,22 +523,15 @@ $(document).ready(function() {
             { className: 'text-start', targets: [1] },
         ]
     });
-    // Animazione barre
-    setTimeout(() => {
-        document.querySelectorAll('.pts-bar').forEach(b => {
-            const w = b.style.width; b.style.width = '0';
-            requestAnimationFrame(() => { b.style.width = w; });
-        });
-    }, 200);
 });
 
-// Tabs nel modal
+// Tabs modal
 document.querySelectorAll('[data-tab]').forEach(btn => {
     btn.addEventListener('click', e => {
         e.preventDefault();
         document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        ['partite','gironi','speciali'].forEach(t => {
+        ['partite','gironi','speciali','eliminatorie'].forEach(t => {
             document.getElementById('tab-' + t).style.display = 'none';
         });
         document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
@@ -616,14 +540,61 @@ document.querySelectorAll('[data-tab]').forEach(btn => {
 
 function formatMarcatori(str) {
     if (!str) return str;
-    // Rimuove minuto normale (es. "R. Jiménez 67") e recupero (es. "F. Balogun 45+5")
-    // Sostituisce (OG) con "(A)" per autogol
     return str.split(',').map(m => {
         m = m.trim();
-        m = m.replace(/\s*\d+(\+\d+)?'?\s*(?=\(|$)/, '');  // rimuovi minuto (anche attaccato a OG)
-        m = m.replace(/\(OG\)/gi, ' (A)');           // OG → (A)
+        m = m.replace(/\s*\d+(\+\d+)?'?\s*(?=\(|$)/, '');
+        m = m.replace(/\(OG\)/gi, ' (A)');
         return m.trim();
     }).join(', ');
+}
+
+function renderElimFase(elimData, faseKey) {
+    const fase = elimData.fasi.find(f => f.fase === faseKey);
+    if (!fase || !fase.disponibile) return;
+    const elimContent = document.getElementById('elimContent');
+
+    let html = `<div class="fase-header">
+        <span class="fase-badge">${fase.icona} ${fase.label.replace(/^[^ ]+ /,'')}</span>
+        <div>
+            <div class="fase-title-name">${fase.punti_totali} pt eliminatorie</div>
+            <div class="fase-sub-pts">✅ ${fase.n_esiti} esiti · 🎯 ${fase.n_risultati} risultati · 👟 ${fase.n_marcatori} marcatori</div>
+        </div>
+    </div>
+    <div class="elim-body">
+        <div class="elim-header-row">
+            <div>PARTITA</div><div class="text-center">ESITO</div>
+            <div class="text-center">RISULTATO</div><div class="text-center">MARCATORE</div>
+        </div>`;
+
+    fase.partite.forEach(p => {
+        const nomePartita = `${p.casa || ''} vs ${p.ospite || ''}`;
+        const realeInfo = p.giocata && p.risultato_reale
+            ? `<div class="elim-reale">${p.risultato_reale}${p.marcatori_reali ? ' · ' + formatMarcatori(p.marcatori_reali) : ''}</div>`
+            : '';
+
+        if (!p.giocata) {
+            html += `<div class="elim-match-row">
+                <div><div class="elim-match-name">${nomePartita}</div></div>
+                <div class="text-center"><span class="badge-wait">${p.esito_pron}</span></div>
+                <div class="text-center"><span class="badge-wait">${p.risultato_pron}</span></div>
+                <div class="text-center"><span class="badge-wait">${p.marcatore_pron}</span></div>
+            </div>`;
+        } else {
+            const eb = p.esito_ok ? `<span class="badge-ok">✅ ${p.esito_pron}</span>` : `<span class="badge-no">❌ ${p.esito_pron}</span>`;
+            const rb = p.risultato_ok ? `<span class="badge-ok">✅ ${p.risultato_pron}</span>` : `<span class="badge-no">❌ ${p.risultato_pron}</span>`;
+            const mp = p.marcatore_pron === '—' || !p.marcatore_pron ? '—' : p.marcatore_pron;
+            const mb = p.marcatore_ok ? `<span class="badge-ok">✅ ${mp}</span>` : (mp === '—' ? '—' : `<span class="badge-no">❌ ${mp}</span>`);
+            html += `<div class="elim-match-row">
+                <div><div class="elim-match-name">${nomePartita}</div>${realeInfo}</div>
+                <div class="text-center">${eb}</div>
+                <div class="text-center">${rb}</div>
+                <div class="text-center">${mb}</div>
+            </div>`;
+        }
+    });
+
+    html += '</div>';
+    elimContent.innerHTML = html;
 }
 
 function apriDettaglio(nome) {
@@ -632,15 +603,14 @@ function apriDettaglio(nome) {
 
     document.getElementById('modalNome').textContent = nome;
 
-    // Reset tabs
     document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
     document.querySelector('[data-tab="partite"]').classList.add('active');
-    ['partite','gironi','speciali'].forEach(t => {
+    ['partite','gironi','speciali','eliminatorie'].forEach(t => {
         document.getElementById('tab-' + t).style.display = 'none';
     });
     document.getElementById('tab-partite').style.display = 'block';
 
-    // Popola partite
+    // Partite
     const tbP = document.getElementById('tbodyPartite');
     tbP.innerHTML = '';
     d.partite.forEach(p => {
@@ -650,100 +620,96 @@ function apriDettaglio(nome) {
             risultatoBadge = `<span class="badge-wait">${p.risultato_pron !== '—' ? p.risultato_pron : '—'}</span>`;
             marcatoreBadge = `<span class="badge-wait">${p.marcatore_pron !== '—' ? p.marcatore_pron : '—'}</span>`;
         } else {
-            esitoBadge = p.esito_ok
-                ? `<span class="badge-ok">✅ ${p.esito_pron}</span>`
-                : `<span class="badge-no">❌ ${p.esito_pron}</span>`;
-            risultatoBadge = p.risultato_ok
-                ? `<span class="badge-ok">✅ ${p.risultato_pron}</span>`
-                : `<span class="badge-no">❌ ${p.risultato_pron}</span>`;
+            esitoBadge = p.esito_ok ? `<span class="badge-ok">✅ ${p.esito_pron}</span>` : `<span class="badge-no">❌ ${p.esito_pron}</span>`;
+            risultatoBadge = p.risultato_ok ? `<span class="badge-ok">✅ ${p.risultato_pron}</span>` : `<span class="badge-no">❌ ${p.risultato_pron}</span>`;
             marcatoreBadge = p.marcatore_ok
                 ? `<span class="badge-ok">✅ ${p.marcatore_pron}</span>`
                 : (p.marcatore_pron === '—' ? '—' : `<span class="badge-no">❌ ${p.marcatore_pron}</span>`);
-                    }
-        tbP.innerHTML += `
-            <tr>
-                <td style="font-size:.85rem;">${p.incontro_display || p.incontro}</td>
-                <td class="text-center">${esitoBadge}</td>
-                <td class="text-center">${risultatoBadge}</td>
-                <td class="text-center">${marcatoreBadge}</td>
-                <td class="text-center">${p.risultato_reale || (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
-                <td class="text-center">${p.marcatore_reale ? formatMarcatori(p.marcatore_reale) : (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
-            </tr>`;
+        }
+        tbP.innerHTML += `<tr>
+            <td style="font-size:.85rem;">${p.incontro_display || p.incontro}</td>
+            <td class="text-center">${esitoBadge}</td>
+            <td class="text-center">${risultatoBadge}</td>
+            <td class="text-center">${marcatoreBadge}</td>
+            <td class="text-center">${p.risultato_reale || (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+            <td class="text-center">${p.marcatore_reale ? formatMarcatori(p.marcatore_reale) : (p.giocata ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+        </tr>`;
     });
 
-    // Popola gironi
+    // Gironi
     const tbG = document.getElementById('tbodyGironi');
     tbG.innerHTML = '';
     d.gironi.forEach(g => {
-        let cls = '', esito = '', punti = 0;
+        let cls = '', esito = '';
         let prima_cls = '', seconda_cls = '';
-
         if (!g.definito) {
             esito = `<span class="badge-wait">⏳</span>`;
         } else if (g.coppia_ok) {
-            cls = 'girone-row-ok';
             esito = `<span class="badge-ok" style="font-size:.8rem;">✅ 6 pt</span>`;
-            punti = 6;
-            prima_cls = 'background:#d4edda;color:#155724;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
-            seconda_cls = prima_cls;
+            prima_cls = seconda_cls = 'background:#d4edda;color:#155724;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
         } else if (g.invertita) {
             cls = 'girone-row-inv';
             esito = `<span style="background:#fff3cd;color:#856404;border-radius:.4rem;padding:.15rem .5rem;font-size:.8rem;font-weight:600;">🔄 4 pt</span>`;
-            punti = 4;
-            prima_cls = 'background:#fff3cd;color:#856404;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
-            seconda_cls = prima_cls;
+            prima_cls = seconda_cls = 'background:#fff3cd;color:#856404;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;';
         } else if (g.singola_prima || g.singola_seconda) {
             cls = 'girone-row-singola';
             let pt_singola = (g.singola_prima ? 1 : 0) + (g.singola_seconda ? 1 : 0);
             esito = `<span style="background:#d1ecf1;color:#0c5460;border-radius:.4rem;padding:.15rem .5rem;font-size:.8rem;font-weight:600;">☑️ ${pt_singola} pt</span>`;
-            punti = pt_singola;
-            // Colora ogni badge in base a se quella squadra specifica è tra i qualificati reali
             const reali = [g.prima_reale, g.seconda_reale].filter(Boolean).map(s => s.toLowerCase().trim());
-            const primaIndovinata = reali.some(r => r === g.prima_pron.toLowerCase().trim() || r.includes(g.prima_pron.toLowerCase().trim()) || g.prima_pron.toLowerCase().trim().includes(r));
-            const secondaIndovinata = reali.some(r => r === g.seconda_pron.toLowerCase().trim() || r.includes(g.seconda_pron.toLowerCase().trim()) || g.seconda_pron.toLowerCase().trim().includes(r));
-            prima_cls = primaIndovinata
-                ? 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;'
-                : 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
-            seconda_cls = secondaIndovinata
-                ? 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;'
-                : 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+            const primaOk = reali.some(r => r === g.prima_pron.toLowerCase().trim() || r.includes(g.prima_pron.toLowerCase().trim()) || g.prima_pron.toLowerCase().trim().includes(r));
+            const secondaOk = reali.some(r => r === g.seconda_pron.toLowerCase().trim() || r.includes(g.seconda_pron.toLowerCase().trim()) || g.seconda_pron.toLowerCase().trim().includes(r));
+            prima_cls = primaOk ? 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;' : 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
+            seconda_cls = secondaOk ? 'background:#d1ecf1;color:#0c5460;border-radius:.3rem;padding:.1rem .4rem;font-weight:600;' : 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
         } else if (g.definito) {
             esito = `<span class="badge-no" style="font-size:.8rem;">❌ 0 pt</span>`;
-            prima_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
-            seconda_cls = prima_cls;
+            prima_cls = seconda_cls = 'background:#f8d7da;color:#721c24;border-radius:.3rem;padding:.1rem .4rem;';
         }
-
-        tbG.innerHTML += `
-            <tr class="${cls}">
-                <td class="text-center"><strong>Girone ${g.girone}</strong></td>
-                <td class="text-center"><span style="${prima_cls}">${g.prima_pron}</span></td>
-                <td class="text-center"><span style="${seconda_cls}">${g.seconda_pron}</span></td>
-                <td class="text-center">${g.prima_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
-                <td class="text-center">${g.seconda_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
-                <td class="text-center">${esito}</td>
-            </tr>`;
+        tbG.innerHTML += `<tr class="${cls}">
+            <td class="text-center"><strong>Girone ${g.girone}</strong></td>
+            <td class="text-center"><span style="${prima_cls}">${g.prima_pron}</span></td>
+            <td class="text-center"><span style="${seconda_cls}">${g.seconda_pron}</span></td>
+            <td class="text-center">${g.prima_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+            <td class="text-center">${g.seconda_reale || (g.definito ? '—' : '<span class="badge-wait">⏳</span>')}</td>
+            <td class="text-center">${esito}</td>
+        </tr>`;
     });
 
-    // Popola speciali
+    // Speciali
     const tbS = document.getElementById('tbodySpeciali');
     tbS.innerHTML = '';
     d.speciali.forEach(s => {
-        let esitoBadge;
-        if (!s.reale) {
-            esitoBadge = `<span class="badge-wait">⏳ Non assegnato</span>`;
-        } else if (s.ok) {
-            esitoBadge = `<span class="badge-ok">✅ Indovinato</span>`;
-        } else {
-            esitoBadge = `<span class="badge-no">❌ Sbagliato</span>`;
-        }
-        tbS.innerHTML += `
-            <tr>
-                <td><strong>${s.voce}</strong></td>
-                <td class="text-center">${s.pron}</td>
-                <td class="text-center">${s.reale || '<span class="badge-wait">⏳</span>'}</td>
-                <td class="text-center">${esitoBadge}</td>
-            </tr>`;
+        let esitoBadge = !s.reale ? `<span class="badge-wait">⏳ Non assegnato</span>` : s.ok ? `<span class="badge-ok">✅ Indovinato</span>` : `<span class="badge-no">❌ Sbagliato</span>`;
+        tbS.innerHTML += `<tr><td><strong>${s.voce}</strong></td><td class="text-center">${s.pron}</td><td class="text-center">${s.reale || '<span class="badge-wait">⏳</span>'}</td><td class="text-center">${esitoBadge}</td></tr>`;
     });
+
+    // Eliminatorie
+    const elimData = DATI_ELIM[nome];
+    const elimFasiTabs = document.getElementById('elimFasiTabs');
+    const elimContent = document.getElementById('elimContent');
+    elimFasiTabs.innerHTML = '';
+    elimContent.innerHTML = '<p class="text-muted text-center py-4">Nessun pronostico eliminatorie disponibile.</p>';
+
+    if (elimData && elimData.fasi) {
+        let primaFaseDisp = null;
+        elimData.fasi.forEach(fase => {
+            const btn = document.createElement('div');
+            btn.className = 'fase-tab' + (fase.disponibile ? '' : ' locked');
+            btn.textContent = (fase.icona || '') + ' ' + (fase.label || fase.fase);
+            btn.dataset.fase = fase.fase;
+            if (fase.disponibile && !primaFaseDisp) {
+                primaFaseDisp = fase.fase;
+                btn.classList.add('active');
+            }
+            btn.addEventListener('click', () => {
+                if (!fase.disponibile) return;
+                elimFasiTabs.querySelectorAll('.fase-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderElimFase(elimData, fase.fase);
+            });
+            elimFasiTabs.appendChild(btn);
+        });
+        if (primaFaseDisp) renderElimFase(elimData, primaFaseDisp);
+    }
 
     new bootstrap.Modal(document.getElementById('modalDettaglio')).show();
 }
