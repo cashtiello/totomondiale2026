@@ -218,6 +218,7 @@ def genera_html(
         # Aggiungi punti eliminatorie al totale visualizzato
         from src.calcolo_eliminatorie import punti_eliminatorie_totali
         p.pt_eliminatorie = punti_eliminatorie_totali(p.nome_completo, eliminatorie)
+        p.gran_totale = p.punti_totali + p.pt_eliminatorie
 
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),
