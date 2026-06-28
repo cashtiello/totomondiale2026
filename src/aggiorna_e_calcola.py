@@ -15,6 +15,8 @@ from src.logger import setup_logging, get_logger
 from src.config import RISULTATI_FILE
 
 RISULTATI_MANUALI_FILE = Path(__file__).parent.parent / "data" / "risultati_manuali.json"
+ELIMINATORIE_DIR = Path(__file__).parent.parent / "data" / "eliminatorie"
+
 from src.excel_reader import leggi_tutti_pronostici
 from src.parser_risultati import leggi_risultati
 from src.calcolo_punti import calcola_tutti_punteggi
@@ -194,11 +196,6 @@ def scarica_gironi() -> dict[str, dict]:
 
 
 def aggiorna_json_manuali(partite_api: dict) -> tuple[dict, dict]:
-    """
-    Aggiorna risultati_manuali.json con i dati dell'API.
-    Restituisce (dati_manuali_partite, gironi_manuali).
-    Le voci con _manuale: true NON vengono mai toccate dall'API.
-    """
     try:
         if not RISULTATI_MANUALI_FILE.exists():
             log.warning("risultati_manuali.json non trovato")
@@ -207,7 +204,6 @@ def aggiorna_json_manuali(partite_api: dict) -> tuple[dict, dict]:
         with open(RISULTATI_MANUALI_FILE, "r", encoding="utf-8") as f:
             json_data = json.load(f)
 
-        # ── Partite ──────────────────────────────────────────────────────────
         partite_json = json_data.get("partite", {})
         dati_manuali = {}
 
@@ -219,12 +215,11 @@ def aggiorna_json_manuali(partite_api: dict) -> tuple[dict, dict]:
                     "risultato": dati.get("risultato", ""),
                     "marcatori": dati.get("marcatori", ""),
                 }
-                log.info(f"  ✋ MANUALE protetto: {partita} ({dati.get('marcatori','')})")
+                log.info(f"  ✋ MANUALE protetto: {partita}")
             elif api_info:
                 partite_json[partita]["risultato"] = api_info.get("risultato", "")
                 partite_json[partita]["marcatori"] = api_info.get("marcatori", "")
 
-        # ── Gironi manuali ────────────────────────────────────────────────────
         gironi_json = json_data.get("gironi", {})
         gironi_manuali = {}
         for lettera, dati in gironi_json.items():
@@ -247,6 +242,28 @@ def aggiorna_json_manuali(partite_api: dict) -> tuple[dict, dict]:
         return {}, {}
 
 
+def carica_eliminatorie() -> dict:
+    """
+    Carica tutti i file eliminatorie da data/eliminatorie/.
+    Struttura: {fase: {partecipante: {partite: [...]}}}
+    """
+    eliminatorie = {}
+    if not ELIMINATORIE_DIR.exists():
+        return eliminatorie
+
+    for fase_file in sorted(ELIMINATORIE_DIR.glob("*.json")):
+        fase = fase_file.stem  # es. "sedicesimi"
+        try:
+            with open(fase_file, encoding="utf-8") as f:
+                data = json.load(f)
+            eliminatorie[fase] = data
+            log.info(f"Caricata fase {fase}: {len(data)} partecipanti")
+        except Exception as e:
+            log.error(f"Errore lettura {fase_file}: {e}")
+
+    return eliminatorie
+
+
 def scrivi_risultati(partite: dict, gironi: dict) -> None:
     bordo = lambda: Border(
         left=Side(style='thin', color='BDC3C7'), right=Side(style='thin', color='BDC3C7'),
@@ -257,10 +274,8 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     h_alg  = Alignment(horizontal="center", vertical="center")
     f_alt  = [PatternFill("solid", start_color="F8F9FA"), PatternFill("solid", start_color="FFFFFF")]
 
-    # Aggiorna JSON e ottieni override manuali
     dati_manuali, gironi_manuali = aggiorna_json_manuali(partite)
 
-    # Fallback JSON esistente per partite
     partite_json_esistente = {}
     try:
         if RISULTATI_MANUALI_FILE.exists():
@@ -271,7 +286,6 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
 
     wb = openpyxl.Workbook()
 
-    # ── PARTITE ───────────────────────────────────────────────────────────────
     ws = wb.active
     ws.title = "PARTITE"
     for col, h in enumerate(["PARTITA", "RISULTATO", "MARCATORE"], 1):
@@ -306,7 +320,6 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     ws.column_dimensions['B'].width = 14
     ws.column_dimensions['C'].width = 35
 
-    # ── GIRONI ────────────────────────────────────────────────────────────────
     ws_g = wb.create_sheet("GIRONI")
     for col, h in enumerate(["GIRONE", "1° CLASSIFICATA", "2° CLASSIFICATA"], 1):
         c = ws_g.cell(row=1, column=col, value=h)
@@ -315,7 +328,6 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
 
     gir_fill = PatternFill("solid", start_color="EEF2F7")
     for i, (lettera, squadre) in enumerate(GIRONI_SQUADRE.items(), 2):
-        # Gironi manuali vincono sull'API
         if lettera in gironi_manuali:
             info = gironi_manuali[lettera]
             log.info(f"  ✋ Girone {lettera}: MANUALE ({info.get('prima','')} / {info.get('seconda','')})")
@@ -340,7 +352,6 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
     ws_g.column_dimensions['B'].width = 28
     ws_g.column_dimensions['C'].width = 28
 
-    # ── SPECIALI ──────────────────────────────────────────────────────────────
     ws_s = wb.create_sheet("SPECIALI")
     for col, h in enumerate(["VOCE", "VALORE"], 1):
         c = ws_s.cell(row=1, column=col, value=h)
@@ -390,16 +401,10 @@ def salva_storico_posizioni(punteggi, storico_path: Path) -> None:
 
 def main():
     log.info("=== Avvio aggiornamento automatico ===")
-    log.info("Fonte dati: worldcup26.ir (gratuita, no API key)")
 
     partite = scarica_risultati()
     gironi  = scarica_gironi()
-
     scrivi_risultati(partite, gironi)
-    if len(partite) > 0:
-        log.info(f"risultati.xlsx aggiornato con {len(partite)} partite dall'API")
-    else:
-        log.info("API down (0 partite) — risultati.xlsx aggiornato solo con dati JSON manuali")
 
     from src.config import PRONOSTICI_DIR
     partecipanti = leggi_tutti_pronostici(PRONOSTICI_DIR)
@@ -410,7 +415,10 @@ def main():
     risultati = leggi_risultati(RISULTATI_FILE)
     punteggi  = calcola_tutti_punteggi(partecipanti, risultati)
 
-    storico_path = Path(__file__).parent / "data" / "storico_posizioni.json"
+    # Carica dati eliminatorie
+    eliminatorie = carica_eliminatorie()
+
+    storico_path = Path(__file__).parent.parent / "data" / "storico_posizioni.json"
     salva_storico_posizioni(punteggi, storico_path)
     genera_excel_classifica(punteggi)
     genera_html(
@@ -419,6 +427,7 @@ def main():
         partecipanti=partecipanti,
         risultati=risultati,
         storico_path=storico_path,
+        eliminatorie=eliminatorie,
     )
 
     log.info(f"=== Completato: {len(punteggi)} partecipanti, {len(partite)} partite ===")
