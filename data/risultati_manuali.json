@@ -434,4 +434,66 @@
       "_manuale": false
     }
   }
+"gironi": {
+"A": {
+"prima": "Messico",
+"seconda": "Sud Africa",
+"_manuale": true
+},
+"B": {
+"prima": "Svizzera",
+"seconda": "Canada",
+"_manuale": true
+},
+"C": {
+"prima": "Brasile",
+"seconda": "Marocco",
+"_manuale": true
+},
+"D": {
+"prima": "USA",
+"seconda": "Australia",
+"_manuale": true
+},
+"E": {
+"prima": "Germania",
+"seconda": "Costa d'Avorio",
+"_manuale": true
+},
+"F": {
+"prima": "Olanda",
+"seconda": "Giappone",
+"_manuale": true
+},
+"G": {
+"prima": "Belgio",
+"seconda": "Egitto",
+"_manuale": true
+},
+"H": {
+"prima": "Spagna",
+"seconda": "Capo Verde",
+"_manuale": true
+},
+"I": {
+"prima": "Francia",
+"seconda": "Norvegia",
+"_manuale": true
+},
+"J": {
+"prima": "Argentina",
+"seconda": "Austria",
+"_manuale": true
+},
+"K": {
+"prima": "Colombia",
+"seconda": "Portogallo",
+"_manuale": true
+},
+"L": {
+"prima": "Inghilterra",
+"seconda": "Croazia",
+"_manuale": true
+}
+}
 }
