@@ -8,29 +8,18 @@ from datetime import datetime
 
 
 def normalizza_stringa(s: Optional[str]) -> str:
-    """
-    Normalizza una stringa per il confronto:
-    - strip spazi
-    - lowercase
-    - rimuovi accenti
-    - compatta spazi multipli
-    """
     if s is None:
         return ""
     if not isinstance(s, str):
         s = str(s)
-    # Rimuovi spazi iniziali/finali
     s = s.strip()
-    # Compatta spazi multipli
     s = re.sub(r"\s+", " ", s)
-    # Normalizza accenti (NFKD + rimozione combining chars)
     s = unicodedata.normalize("NFKD", s)
     s = "".join(c for c in s if not unicodedata.combining(c))
     return s.lower()
 
 
 def normalizza_squadra(nome: Optional[str]) -> str:
-    """Normalizza il nome di una squadra mantenendo la forma originale ma pulita."""
     if nome is None:
         return ""
     if not isinstance(nome, str):
@@ -41,35 +30,16 @@ def normalizza_squadra(nome: Optional[str]) -> str:
 
 
 def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
-    """
-    Confronto intelligente tra due nomi (squadre o giocatori).
-
-    Gestisce i casi:
-    - Confronto esatto normalizzato:      "Kane" == "Kane"
-    - Match parziale cognome:             "Kane" in "Harry Kane"
-    - Accenti e maiuscole ignorate:       "Mbappe" == "Mbappé"
-    - Abbreviazioni con punto:            "H. Kane" ~ "Harry Kane"
-    - Nome puntato + cognome:             "J.David" ~ "Jonathan David" ~ "David"
-    - Sottostringa fuzzy:                 "Rapinha" ~ "Raphinha"
-    - Alias comuni:                       "Vini Jr" ~ "Vinicius Junior"
-    """
     na = normalizza_stringa(a)
     nb = normalizza_stringa(b)
 
     if not na or not nb:
         return False
 
-    # ── 1. Confronto esatto ───────────────────────────────────────────────────
     if na == nb:
         return True
 
-    # ── 2. Match parziale contenimento ───────────────────────────────────────
-    # Evita false corrispondenze tipo "Gimenez" in "Jimenez"
-    # Solo se la parola principale inizia con la stessa lettera
     if na in nb and len(na) >= 4:
-        # Verifica che non sia solo una sottostringa casuale
-        # es. "son" in "person" → False, "jimenez" in "r. jimenez" → True
-        # Minimo 4 caratteri per evitare "ito" in "mitoma"
         idx = nb.index(na)
         if idx == 0 or nb[idx-1] in (' ', '.', '-'):
             return True
@@ -78,15 +48,11 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
         if idx == 0 or na[idx-1] in (' ', '.', '-'):
             return True
 
-    # ── 3. Nome puntato: "j.david" → "david" oppure "jonathan david" ─────────
-    # Rimuovi iniziali tipo "j." "r." all'inizio o in mezzo
     def rimuovi_iniziali(s: str) -> str:
         parole = s.split()
         return " ".join(p for p in parole if not re.fullmatch(r"[a-z]\.", p))
 
-    # Gestisci anche "j.david" senza spazio → "david"
     def espandi_nome_puntato(s: str) -> str:
-        # "j.david" → "david", "r.lewandowski" → "lewandowski"
         return re.sub(r"^[a-z]\.", "", s).strip()
 
     na2 = rimuovi_iniziali(na)
@@ -97,7 +63,6 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     if na2 and nb2:
         if na2 == nb2:
             return True
-        # Minimo 4 caratteri per evitare "ito" in "mitoma"
         if len(na2) >= 4 and len(nb2) >= 4 and (na2 in nb2 or nb2 in na2):
             return True
     if na3 and nb3:
@@ -110,21 +75,15 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     if nb3 and na2 and len(nb3) >= 4 and len(na2) >= 4 and (nb3 in na2 or na2 in nb3):
         return True
 
-    # ── 4. Parole significative condivise ─────────────────────────────────────
-    # Es. "De Bruyne" vs "Kevin De Bruyne" → parola "de bruyne" in comune
     parole_a = {p for p in na2.split() if len(p) > 2}
     parole_b = {p for p in nb2.split() if len(p) > 2}
     if parole_a and parole_b:
         comuni = parole_a & parole_b
         if comuni and (len(parole_a) == 1 or len(parole_b) == 1):
             return True
-        # Tutte le parole di uno sono nell'altro
         if parole_a.issubset(parole_b) or parole_b.issubset(parole_a):
             return True
 
-    # ── 5. Similarità fuzzy per errori di battitura ───────────────────────────
-    # Es. "rapinha" vs "raphinha", "vinicius" vs "vini"
-    # Usa distanza di Levenshtein semplificata
     def distanza_levenshtein(s1: str, s2: str) -> int:
         if len(s1) > len(s2):
             s1, s2 = s2, s1
@@ -136,7 +95,6 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
             distanze = nuove
         return distanze[-1]
 
-    # Confronta le parole più lunghe dei due nomi (probabile cognome)
     def parola_principale(s: str) -> str:
         parole = [p for p in s.split() if len(p) > 3]
         return max(parole, key=len) if parole else s
@@ -144,8 +102,9 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
     pp_a = parola_principale(na)
     pp_b = parola_principale(nb)
 
-    # ── 6. Alias e soprannomi comuni (PRIMA del fuzzy per evitare return False anticipato) ──
+    # ── 6. Alias e soprannomi comuni ─────────────────────────────────────────
     ALIAS = {
+        # Giocatori
         "vini jr":        ["vinicius junior", "vinicius", "vini", "junior", "v. junior"],
         "vini":           ["vinicius junior", "vinicius", "junior", "v. junior"],
         "vinicius":       ["vinicius junior", "vini jr", "vini", "junior", "v. junior"],
@@ -164,6 +123,65 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
         "firmino":        ["roberto firmino"],
         "luiz diaz":      ["luis diaz"],
         "luis diaz":      ["luiz diaz"],
+        # Nazioni italiano ↔ inglese
+        "brasile":        ["brazil", "brasil"],
+        "brazil":         ["brasile", "brasil"],
+        "brasil":         ["brasile", "brazil"],
+        "inghilterra":    ["england"],
+        "england":        ["inghilterra"],
+        "germania":       ["germany"],
+        "germany":        ["germania"],
+        "francia":        ["france"],
+        "france":         ["francia"],
+        "spagna":         ["spain"],
+        "spain":          ["spagna"],
+        "olanda":         ["netherlands", "holland"],
+        "netherlands":    ["olanda", "holland"],
+        "holland":        ["olanda", "netherlands"],
+        "belgio":         ["belgium"],
+        "belgium":        ["belgio"],
+        "portogallo":     ["portugal"],
+        "portugal":       ["portogallo"],
+        "svizzera":       ["switzerland"],
+        "switzerland":    ["svizzera"],
+        "norvegia":       ["norway"],
+        "norway":         ["norvegia"],
+        "svezia":         ["sweden"],
+        "sweden":         ["svezia"],
+        "giappone":       ["japan"],
+        "japan":          ["giappone"],
+        "messico":        ["mexico"],
+        "mexico":         ["messico"],
+        "marocco":        ["morocco"],
+        "morocco":        ["marocco"],
+        "croazia":        ["croatia"],
+        "croatia":        ["croazia"],
+        "senegal":        ["senegal"],
+        "egitto":         ["egypt"],
+        "egypt":          ["egitto"],
+        "nuova zelanda":  ["new zealand"],
+        "new zealand":    ["nuova zelanda"],
+        "arabia saudita": ["saudi arabia", "ksa"],
+        "saudi arabia":   ["arabia saudita"],
+        "ksa":            ["arabia saudita"],
+        "capo verde":     ["cape verde", "cabo verde"],
+        "cape verde":     ["capo verde"],
+        "cabo verde":     ["capo verde"],
+        "corea del sud":  ["korea republic", "south korea"],
+        "korea republic": ["corea del sud"],
+        "south korea":    ["corea del sud"],
+        "costa d'avorio": ["ivory coast", "cote d'ivoire"],
+        "ivory coast":    ["costa d'avorio"],
+        "sud africa":     ["south africa"],
+        "south africa":   ["sud africa"],
+        "r.ceca":         ["czech republic", "czechia"],
+        "czech republic": ["r.ceca"],
+        "czechia":        ["r.ceca"],
+        "bosnia":         ["bosnia and herzegovina", "bosnia-herzegovina"],
+        "bosnia and herzegovina": ["bosnia"],
+        "bosnia-herzegovina":     ["bosnia"],
+        "dr congo":       ["congo", "democratic republic of the congo"],
+        "congo":          ["dr congo"],
     }
 
     for alias_key, alias_vals in ALIAS.items():
@@ -178,7 +196,6 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
 
     # ── 7. Fuzzy per errori di battitura ──────────────────────────────────────
     if pp_a and pp_b:
-        # La prima lettera deve coincidere per evitare false corrispondenze
         if pp_a[0] != pp_b[0]:
             return False
         lunghezza_max = max(len(pp_a), len(pp_b))
@@ -192,26 +209,18 @@ def confronta_squadre(a: Optional[str], b: Optional[str]) -> bool:
 
 
 def normalizza_risultato(risultato: Optional[str]) -> Optional[str]:
-    """
-    Normalizza un risultato tipo "2 - 1", "2-1 ", "2:1" → "2-1"
-    Ritorna None se non valido.
-    """
     if not risultato:
         return None
     if not isinstance(risultato, str):
         risultato = str(risultato)
-    # Sostituisci separatori alternativi
     r = re.sub(r"[\s:–—]", "-", risultato.strip())
-    # Rimuovi spazi attorno al trattino
     r = re.sub(r"\s*-\s*", "-", r)
-    # Verifica formato N-N
     if re.fullmatch(r"\d+-\d+", r):
         return r
     return None
 
 
 def normalizza_esito(esito: Optional[str]) -> Optional[str]:
-    """Normalizza esito: accetta '1','X','x','2' → '1','X','2'"""
     if not esito:
         return None
     e = str(esito).strip().upper()
@@ -221,7 +230,6 @@ def normalizza_esito(esito: Optional[str]) -> Optional[str]:
 
 
 def estrai_goller(risultato: Optional[str]) -> tuple[int, int]:
-    """Estrae (gol_casa, gol_ospite) da un risultato normalizzato."""
     if not risultato:
         return (0, 0)
     try:
@@ -232,7 +240,6 @@ def estrai_goller(risultato: Optional[str]) -> tuple[int, int]:
 
 
 def calcola_esito_da_risultato(risultato: Optional[str]) -> Optional[str]:
-    """Calcola l'esito 1/X/2 da un risultato 'N-N'."""
     r = normalizza_risultato(risultato)
     if not r:
         return None
@@ -246,22 +253,19 @@ def calcola_esito_da_risultato(risultato: Optional[str]) -> Optional[str]:
 
 
 def timestamp_ora() -> str:
-    """Restituisce il timestamp attuale formattato in ora italiana (UTC+2)."""
     from datetime import timezone, timedelta
-    tz_italia = timezone(timedelta(hours=2))  # CEST (ora legale italiana)
+    tz_italia = timezone(timedelta(hours=2))
     return datetime.now(tz=tz_italia).strftime("%d/%m/%Y %H:%M:%S")
 
 
 def safe_str(val) -> str:
-    """Converte qualsiasi valore in stringa sicura, None → ''."""
     if val is None:
         return ""
-    if isinstance(val, float) and val != val:  # NaN check
+    if isinstance(val, float) and val != val:
         return ""
     return str(val).strip()
 
 
-# Dizionario bandiere per paese
 BANDIERE = {
     "messico": "🇲🇽", "sud africa": "🇿🇦", "corea del sud": "🇰🇷",
     "repubblica ceca": "🇨🇿", "r.ceca": "🇨🇿", "canada": "🇨🇦",
@@ -284,7 +288,6 @@ BANDIERE = {
 
 
 def bandiera(nome_squadra: str) -> str:
-    """Restituisce la bandiera emoji per una squadra."""
     if not nome_squadra:
         return ""
     key = normalizza_stringa(nome_squadra)
