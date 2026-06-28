@@ -415,8 +415,22 @@ def main():
     risultati = leggi_risultati(RISULTATI_FILE)
     punteggi  = calcola_tutti_punteggi(partecipanti, risultati)
 
-    # Carica dati eliminatorie
+    # Carica dati eliminatorie e somma punti al totale
     eliminatorie = carica_eliminatorie()
+    if eliminatorie:
+        from src.calcolo_eliminatorie import punti_eliminatorie_totali
+        for p in punteggi:
+            p.pt_eliminatorie = punti_eliminatorie_totali(p.nome_completo, eliminatorie)
+        # Riordina includendo i punti eliminatorie nel totale
+        punteggi.sort(
+            key=lambda x: (
+                x.punti_totali + getattr(x, 'pt_eliminatorie', 0),
+                x.n_risultati_esatti,
+                x.n_marcatori_corretti,
+            ),
+            reverse=True,
+        )
+        log.info(f"Punti eliminatorie aggiunti al totale per {len(punteggi)} partecipanti")
 
     storico_path = Path(__file__).parent.parent / "data" / "storico_posizioni.json"
     salva_storico_posizioni(punteggi, storico_path)
