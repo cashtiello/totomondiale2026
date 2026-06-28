@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ Sedicesimi – TotoMondiale 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0d1b2a;
+    color: #eaf0fb;
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(135deg, #1a2e45, #0d1b2a);
+    border-bottom: 3px solid #f1c40f;
+    padding: 1.2rem 1rem 1rem;
+    text-align: center;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 800; color: #f1c40f; letter-spacing: 1px; }
+  header p { font-size: .8rem; color: #8fa8c8; margin-top: .2rem; }
+
+  .container { max-width: 540px; margin: 0 auto; padding: 1rem; }
+
+  /* Nome/Cognome */
+  .player-box {
+    background: #1a2e45;
+    border-radius: .8rem;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #2c4a6e;
+  }
+  .player-box h2 { font-size: .85rem; color: #f1c40f; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .7rem; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+
+  label { display: block; font-size: .72rem; color: #8fa8c8; margin-bottom: .25rem; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; }
+  input[type=text] {
+    width: 100%; padding: .55rem .7rem;
+    background: #0d1b2a; border: 1px solid #2c4a6e;
+    border-radius: .5rem; color: #eaf0fb; font-size: .9rem;
+    outline: none; transition: border .2s;
+  }
+  input[type=text]:focus { border-color: #f1c40f; }
+
+  /* Partita card */
+  .match-card {
+    background: #1a2e45;
+    border-radius: .8rem;
+    padding: .9rem 1rem;
+    margin-bottom: .8rem;
+    border: 1px solid #2c4a6e;
+  }
+  .match-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: .7rem;
+  }
+  .match-num { font-size: .65rem; color: #f1c40f; font-weight: 700; text-transform: uppercase; }
+  .match-teams { font-size: .95rem; font-weight: 700; color: #eaf0fb; text-align: center; flex: 1; }
+  .match-teams span { color: #8fa8c8; font-weight: 400; font-size: .8rem; }
+
+  .match-fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .5rem; }
+  .field-group { display: flex; flex-direction: column; }
+
+  /* Esito buttons */
+  .esito-group { display: flex; gap: .3rem; }
+  .esito-btn {
+    flex: 1; padding: .4rem 0; border: 1px solid #2c4a6e;
+    background: #0d1b2a; color: #8fa8c8; border-radius: .4rem;
+    font-size: .85rem; font-weight: 700; cursor: pointer; transition: all .15s;
+    text-align: center;
+  }
+  .esito-btn.selected-1 { background: #27ae60; border-color: #27ae60; color: white; }
+  .esito-btn.selected-X { background: #f39c12; border-color: #f39c12; color: white; }
+  .esito-btn.selected-2 { background: #e74c3c; border-color: #e74c3c; color: white; }
+
+  /* Submit */
+  .submit-section { margin-top: 1.5rem; text-align: center; padding-bottom: 2rem; }
+  .btn-submit {
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+    color: #0d1b2a; font-weight: 800; font-size: 1rem;
+    border: none; border-radius: 2rem; padding: .85rem 2.5rem;
+    cursor: pointer; width: 100%; letter-spacing: .5px;
+    transition: opacity .2s;
+  }
+  .btn-submit:active { opacity: .85; }
+
+  /* Riepilogo */
+  #riepilogo {
+    display: none;
+    background: #1a2e45; border-radius: .8rem;
+    padding: 1.2rem; margin-top: 1rem;
+    border: 2px solid #27ae60;
+  }
+  #riepilogo h3 { color: #27ae60; margin-bottom: .8rem; font-size: 1rem; }
+  #riepilogo pre {
+    font-size: .72rem; color: #eaf0fb; white-space: pre-wrap;
+    line-height: 1.6; font-family: monospace;
+  }
+  .copy-btn {
+    margin-top: .8rem; background: #27ae60; color: white;
+    border: none; border-radius: .5rem; padding: .5rem 1.2rem;
+    font-size: .85rem; cursor: pointer; font-weight: 600; width: 100%;
+  }
+
+  .section-title {
+    font-size: .7rem; color: #f1c40f; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 1.2rem 0 .5rem;
+    padding-left: .2rem;
+    border-left: 3px solid #f1c40f;
+    padding-left: .5rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏆 TotoMondiale 2026</h1>
+  <p>Pronostici Sedicesimi di Finale</p>
+</header>
+
+<div class="container">
+
+  <!-- Nome Cognome -->
+  <div class="player-box">
+    <h2>👤 Chi sei?</h2>
+    <div class="row2">
+      <div>
+        <label>Nome</label>
+        <input type="text" id="nome" placeholder="es. Mario">
+      </div>
+      <div>
+        <label>Cognome</label>
+        <input type="text" id="cognome" placeholder="es. Rossi">
+      </div>
+    </div>
+  </div>
+
+  <!-- Partite -->
+  <div class="section-title">⚽ Sedicesimi di Finale</div>
+  <div id="partite"></div>
+
+  <div class="submit-section">
+    <button class="btn-submit" onclick="genera()">📋 Genera Riepilogo</button>
+    <div id="riepilogo">
+      <h3>✅ Il tuo pronostico</h3>
+      <pre id="testo-riepilogo"></pre>
+      <button class="copy-btn" onclick="copia()">📋 Copia testo</button>
+      <button class="copy-btn" style="background:#25D366;margin-top:.5rem;" onclick="inviaWhatsApp()">📲 Invia su WhatsApp</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const PARTITE = [
+  { id: 1, casa: "Germania", ospite: "Paraguay" },
+  { id: 2, casa: "Francia", ospite: "Svezia" },
+  { id: 3, casa: "USA", ospite: "Bosnia-Erzegovina" },
+  { id: 4, casa: "Belgio", ospite: "Senegal" },
+  { id: 5, casa: "Sud Africa", ospite: "Canada" },
+  { id: 6, casa: "Olanda", ospite: "Marocco" },
+  { id: 7, casa: "Brasile", ospite: "Giappone" },
+  { id: 8, casa: "Costa d'Avorio", ospite: "Norvegia" },
+  { id: 9, casa: "Portogallo", ospite: "Croazia" },
+  { id: 10, casa: "Spagna", ospite: "Austria" },
+  { id: 11, casa: "Messico", ospite: "Ecuador" },
+  { id: 12, casa: "Inghilterra", ospite: "DR Congo" },
+  { id: 13, casa: "Argentina", ospite: "Capo Verde" },
+  { id: 14, casa: "Australia", ospite: "Egitto" },
+  { id: 15, casa: "Svizzera", ospite: "Algeria" },
+  { id: 16, casa: "Colombia", ospite: "Ghana" },
+];
+
+const esiti = {};
+
+function renderPartite() {
+  const container = document.getElementById('partite');
+  PARTITE.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'match-card';
+    card.innerHTML = `
+      <div class="match-header">
+        <span class="match-num">Partita ${p.id}</span>
+      </div>
+      <div class="match-teams">${p.casa} <span>vs</span> ${p.ospite}</div>
+      <div style="margin-top:.7rem;">
+        <div class="match-fields">
+          <div class="field-group">
+            <label>Esito</label>
+            <div class="esito-group" id="esito-group-${p.id}">
+              <button class="esito-btn" onclick="setEsito(${p.id},'1')">1</button>
+              <button class="esito-btn" onclick="setEsito(${p.id},'X')">X</button>
+              <button class="esito-btn" onclick="setEsito(${p.id},'2')">2</button>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Risultato</label>
+            <input type="text" id="ris-${p.id}" placeholder="es. 2-1" style="text-align:center;">
+          </div>
+          <div class="field-group">
+            <label>Marcatore</label>
+            <input type="text" id="marc-${p.id}" placeholder="es. Kane">
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function setEsito(id, val) {
+  esiti[id] = val;
+  const group = document.getElementById(`esito-group-${id}`);
+  group.querySelectorAll('.esito-btn').forEach(btn => {
+    btn.className = 'esito-btn';
+    if (btn.textContent === val) btn.classList.add(`selected-${val}`);
+  });
+}
+
+function genera() {
+  const nome = document.getElementById('nome').value.trim();
+  const cognome = document.getElementById('cognome').value.trim();
+  if (!nome || !cognome) { alert('Inserisci nome e cognome!'); return; }
+
+  let testo = `🏆 TOTOMONDIALE 2026 – SEDICESIMI\n`;
+  testo += `👤 ${nome} ${cognome}\n`;
+  testo += `${'─'.repeat(32)}\n\n`;
+
+  PARTITE.forEach(p => {
+    const esito = esiti[p.id] || '—';
+    const ris = document.getElementById(`ris-${p.id}`).value.trim() || '—';
+    const marc = document.getElementById(`marc-${p.id}`).value.trim() || '—';
+    testo += `${p.id}. ${p.casa} vs ${p.ospite}\n`;
+    testo += `   Esito: ${esito}  |  Risultato: ${ris}  |  Marcatore: ${marc}\n\n`;
+  });
+
+  document.getElementById('testo-riepilogo').textContent = testo;
+  document.getElementById('riepilogo').style.display = 'block';
+  document.getElementById('riepilogo').scrollIntoView({ behavior: 'smooth' });
+}
+
+function inviaWhatsApp() {
+  const testo = document.getElementById("testo-riepilogo").textContent;
+  if (!testo) { genera(); return; }
+  const encoded = encodeURIComponent(testo);
+  window.open(`https://wa.me/393318875357?text=${encoded}`, "_blank");
+}
+
+function copia() {
+  const testo = document.getElementById('testo-riepilogo').textContent;
+  navigator.clipboard.writeText(testo).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ Copiato!';
+    setTimeout(() => btn.textContent = '📋 Copia testo', 2000);
+  });
+}
+
+renderPartite();
+</script>
+</body>
+</html>
