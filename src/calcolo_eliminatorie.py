@@ -4,6 +4,7 @@ Calcola i punti delle fasi eliminatorie leggendo i JSON centralizzati.
 """
 
 import re
+import unicodedata
 from src.utils import confronta_squadre, normalizza_risultato, calcola_esito_da_risultato
 from src.config import PUNTI_ESITO, PUNTI_RISULTATO_ESATTO, PUNTI_MARCATORE
 from src.logger import get_logger
@@ -21,8 +22,49 @@ FASI_LABEL = {
 }
 
 
+def _normalizza_nome(s: str) -> str:
+    """Normalizza un nome per il confronto: lowercase, no accenti, no spazi doppi."""
+    if not s:
+        return ""
+    s = s.strip().lower()
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = re.sub(r"\s+", " ", s)
+    return s
+
+
+def _trova_pronostico(nome_completo: str, pronostici: dict) -> dict | None:
+    """
+    Cerca il pronostico di un partecipante nel dizionario usando match fuzzy:
+    - Confronto esatto normalizzato
+    - Sottostringa (es. "RENATO LUCCI" matcha "Renato Lucci")
+    - Parole in comune
+    """
+    nome_norm = _normalizza_nome(nome_completo)
+    
+    # 1. Confronto esatto normalizzato
+    for chiave, dati in pronostici.items():
+        if _normalizza_nome(chiave) == nome_norm:
+            return dati
+    
+    # 2. Sottostringa bidirezionale
+    for chiave, dati in pronostici.items():
+        chiave_norm = _normalizza_nome(chiave)
+        if nome_norm in chiave_norm or chiave_norm in nome_norm:
+            return dati
+    
+    # 3. Tutte le parole del nome sono nella chiave o viceversa
+    parole_nome = set(nome_norm.split())
+    for chiave, dati in pronostici.items():
+        parole_chiave = set(_normalizza_nome(chiave).split())
+        if parole_nome and parole_chiave:
+            if parole_nome.issubset(parole_chiave) or parole_chiave.issubset(parole_nome):
+                return dati
+    
+    return None
+
+
 def _calcola_partita(pron: dict, ris_reale: dict) -> dict:
-    """Calcola esito/risultato/marcatore per una singola partita eliminatoria."""
     r_real = normalizza_risultato(ris_reale.get("risultato", ""))
     esito_reale = ris_reale.get("esito") or calcola_esito_da_risultato(r_real)
     marcatori_reali_str = ris_reale.get("marcatori", "") or ""
@@ -36,12 +78,12 @@ def _calcola_partita(pron: dict, ris_reale: dict) -> dict:
     marcatore_pron = pron.get("marcatore")
     marcatore_ok = False
 
-    if r_real == "0-0" and not (marcatore_pron or "").strip():
+    if r_real == "0-0" and (marcatore_pron is None or str(marcatore_pron).strip() == ""):
         marcatore_ok = True
-    elif marcatore_pron and marcatori_reali_str:
+    elif marcatore_pron and str(marcatore_pron).strip() and marcatori_reali_str:
         for mr in [m.strip() for m in marcatori_reali_str.split(",") if m.strip()]:
             mr_pulito = re.sub(r"\s+\d+(\+\d+)?'?$", "", mr).strip()
-            if confronta_squadre(marcatore_pron, mr_pulito):
+            if confronta_squadre(str(marcatore_pron), mr_pulito):
                 marcatore_ok = True
                 break
 
@@ -58,11 +100,6 @@ def calcola_eliminatorie_partecipante(
     nome_completo: str,
     eliminatorie: dict,
 ) -> dict:
-    """
-    Calcola punti e dettaglio per tutte le fasi eliminatorie di un partecipante.
-    eliminatorie: {fase: {nome_completo: {partite: [...], risultati: {...}}}}
-    Restituisce: {fase: {punti, dettaglio_partite}}
-    """
     risultato = {}
 
     for fase in FASI_ORDINE:
@@ -70,12 +107,11 @@ def calcola_eliminatorie_partecipante(
         if not fase_data:
             continue
 
-        # Pronostici del partecipante
-        partecipante_data = fase_data.get("pronostici", {}).get(nome_completo)
+        pronostici = fase_data.get("pronostici", {})
+        partecipante_data = _trova_pronostico(nome_completo, pronostici)
         if not partecipante_data:
             continue
 
-        # Risultati reali della fase
         risultati_reali = fase_data.get("risultati", {})
 
         pt_esito = pt_ris = pt_marc = 0
@@ -85,7 +121,6 @@ def calcola_eliminatorie_partecipante(
         for pron in partecipante_data.get("partite", []):
             incontro = pron.get("incontro", "")
 
-            # Trova risultato reale
             ris_reale = None
             for key, ris in risultati_reali.items():
                 if confronta_squadre(incontro, key):
@@ -148,6 +183,5 @@ def calcola_eliminatorie_partecipante(
 
 
 def punti_eliminatorie_totali(nome_completo: str, eliminatorie: dict) -> int:
-    """Somma punti di tutte le fasi eliminatorie per un partecipante."""
     dati = calcola_eliminatorie_partecipante(nome_completo, eliminatorie)
     return sum(f["punti_totali"] for f in dati.values())
