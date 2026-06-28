@@ -190,19 +190,19 @@
             <div class="podio-slot">
                 <div class="podio-avatar av-2">{{ punteggi[1].nome_completo[:2].upper() }}</div>
                 <div class="podio-name">{{ punteggi[1].nome_completo }}</div>
-                <div class="podio-pts-label">{{ punteggi[1].punti_totali }} pt</div>
+                <div class="podio-pts-label">{{ punteggi[1].punti_totali + (punteggi[1].pt_eliminatorie | default(0)) }} pt</div>
                 <div class="podio-block podio-block-2"><span>🥈</span><small>2°</small></div>
             </div>
             <div class="podio-slot">
                 <div class="podio-avatar av-1">{{ punteggi[0].nome_completo[:2].upper() }}</div>
                 <div class="podio-name">{{ punteggi[0].nome_completo }}</div>
-                <div class="podio-pts-label">{{ punteggi[0].punti_totali }} pt</div>
+                <div class="podio-pts-label">{{ punteggi[0].punti_totali + (punteggi[0].pt_eliminatorie | default(0)) }} pt</div>
                 <div class="podio-block podio-block-1"><span>🥇</span><small>1°</small></div>
             </div>
             <div class="podio-slot">
                 <div class="podio-avatar av-3">{{ punteggi[2].nome_completo[:2].upper() }}</div>
                 <div class="podio-name">{{ punteggi[2].nome_completo }}</div>
-                <div class="podio-pts-label">{{ punteggi[2].punti_totali }} pt</div>
+                <div class="podio-pts-label">{{ punteggi[2].punti_totali + (punteggi[2].pt_eliminatorie | default(0)) }} pt</div>
                 <div class="podio-block podio-block-3"><span>🥉</span><small>3°</small></div>
             </div>
         </div>
@@ -239,7 +239,7 @@
                             {% else %}<span class="arrow-stabile">—</span>{% endif %}
                         </td>
                         <td><strong>{{ p.nome_completo }}</strong></td>
-                        <td class="text-center"><span class="pts-badge">{{ p.punti_totali }}</span></td>
+                        <td class="text-center"><span class="pts-badge">{{ p.punti_totali + (p.pt_eliminatorie | default(0)) }}</span></td>
                         <td class="text-center">
                             <button class="btn-dettaglio" onclick="apriDettaglio('{{ p.nome_completo }}')">
                                 <i class="fas fa-eye me-1"></i>Vedi
