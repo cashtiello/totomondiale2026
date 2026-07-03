@@ -363,9 +363,9 @@
     },
     "Norvegia-Francia": {
       "girone": "I",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-4",
+      "marcatori": "Dembele, Dembele, Aasgaard , Dembele, Larsen (OG), Doue",
+      "_manuale": true
     },
     "Senegal-Iraq": {
       "girone": "I",
@@ -375,27 +375,27 @@
     },
     "Uruguay-Spagna": {
       "girone": "H",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "0-1",
+      "marcatori": "Baena",
+      "_manuale": true
     },
     "Capo Verde-Arabia Saudita": {
       "girone": "H",
-      "risultato": "",
+      "risultato": "0-0",
       "marcatori": "",
-      "_manuale": false
+      "_manuale": true
     },
     "Egitto-Iran": {
       "girone": "G",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-1",
+      "marcatori": "Saber, Rezaeian",
+      "_manuale": true
     },
     "Nuova Zelanda-Belgio": {
       "girone": "G",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-5",
+      "marcatori": "Trossard,Trossard, De bruyne, Just, Lukaku, Saelemaekers",
+      "_manuale": true
     },
     "Panama-Inghilterra": {
       "girone": "L",
@@ -411,9 +411,9 @@
     },
     "Colombia-Portogallo": {
       "girone": "K",
-      "risultato": "",
+      "risultato": "0-0",
       "marcatori": "",
-      "_manuale": false
+      "_manuale": true
     },
     "Congo-Uzbekistan": {
       "girone": "K",
@@ -423,15 +423,15 @@
     },
     "Giordania-Argentina": {
       "girone": "J",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "1-3",
+      "marcatori": "Lo Celso, Lautaro Martinez, Tamari, Messi",
+      "_manuale": true
     },
     "Algeria-Austria": {
       "girone": "J",
-      "risultato": "",
-      "marcatori": "",
-      "_manuale": false
+      "risultato": "3-3",
+      "marcatori": "Arnautovic, Belghali, Sabitzer, Mahrez,Mahrez, Kalajdzic",
+      "_manuale": true
     }
   },
   "gironi": {
