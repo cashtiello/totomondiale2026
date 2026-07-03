@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏆 TotoMondiale 2026 – Ottavi di Finale</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1a2e45 100%);
+      min-height: 100vh; color: #fff; padding: 16px;
+    }
+    .header {
+      text-align: center; padding: 24px 16px 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px; margin-bottom: 20px;
+    }
+    .header h1 { font-size: 1.5rem; font-weight: 900; }
+    .header h1 span { color: #f1c40f; }
+    .header p { font-size: .85rem; opacity: .7; margin-top: 6px; }
+    .form-group { margin-bottom: 8px; }
+    label { display: block; font-size: .8rem; font-weight: 600; color: #aaa; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
+    input[type=text] {
+      width: 100%; padding: 12px 14px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08); color: #fff;
+      font-size: .95rem; outline: none; transition: border .2s;
+    }
+    input[type=text]:focus { border-color: #f1c40f; }
+    input[type=text]::placeholder { color: rgba(255,255,255,0.3); }
+    .match-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 16px; margin-bottom: 14px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .match-title {
+      font-size: 1rem; font-weight: 700; margin-bottom: 14px;
+      color: #f1c40f; text-align: center;
+    }
+    .match-num {
+      display: inline-block; background: #f1c40f; color: #1a2e45;
+      border-radius: 50%; width: 22px; height: 22px;
+      text-align: center; line-height: 22px; font-size: .75rem;
+      font-weight: 900; margin-right: 6px;
+    }
+    .esito-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .esito-btn {
+      padding: 12px 0; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05); color: #fff; font-size: 1rem;
+      font-weight: 700; cursor: pointer; text-align: center; transition: all .2s;
+    }
+    .esito-btn.selected { background: #f1c40f; color: #1a2e45; border-color: #f1c40f; }
+    .section-title {
+      font-size: .75rem; font-weight: 700; color: #aaa;
+      text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;
+    }
+    .nome-box {
+      background: rgba(255,255,255,0.06); border-radius: 14px;
+      padding: 16px; margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-send {
+      width: 100%; padding: 16px; border-radius: 14px; border: none;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff; font-size: 1.05rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 10px; margin-top: 8px;
+    }
+    .btn-send:active { transform: scale(0.98); }
+    .footer { text-align: center; margin-top: 20px; font-size: .75rem; opacity: .4; }
+    .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏆 Toto<span>Mondiale</span> 2026</h1>
+  <p>⚔️ Ottavi di Finale — Inserisci i tuoi pronostici</p>
+</div>
+
+<div class="nome-box">
+  <div class="form-group">
+    <label>👤 Il tuo nome e cognome</label>
+    <input type="text" id="nome" placeholder="Es. Mario Rossi">
+  </div>
+</div>
+
+<div id="matches"></div>
+
+<button class="btn-send" onclick="invia()">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  Invia su WhatsApp
+</button>
+
+<div class="footer">TotoMondiale 2026 • Ottavi di Finale</div>
+
+<script>
+const PARTITE = [
+  { id: 1, casa: "Paraguay", ospite: "Francia" },
+  { id: 2, casa: "Canada", ospite: "Marocco" },
+  { id: 3, casa: "Portogallo", ospite: "Spagna" },
+  { id: 4, casa: "USA", ospite: "Belgio" },
+  { id: 5, casa: "Brasile", ospite: "Norvegia" },
+  { id: 6, casa: "Messico", ospite: "Inghilterra" },
+  { id: 7, casa: "Argentina", ospite: "Egitto" },
+  { id: 8, casa: "Svizzera", ospite: "Colombia" },
+];
+
+const stati = {};
+PARTITE.forEach(p => { stati[p.id] = { esito: "", risultato: "", marcatore: "" }; });
+
+function renderMatches() {
+  const container = document.getElementById('matches');
+  container.innerHTML = PARTITE.map(p => `
+    <div class="match-card">
+      <div class="match-title">
+        <span class="match-num">${p.id}</span>${p.casa} vs ${p.ospite}
+      </div>
+      <div class="section-title">Esito</div>
+      <div class="esito-grid">
+        <div class="esito-btn ${stati[p.id].esito==='1'?'selected':''}" onclick="setEsito(${p.id},'1')">1<br><small style="font-size:.65rem;font-weight:400">${p.casa}</small></div>
+        <div class="esito-btn ${stati[p.id].esito==='X'?'selected':''}" onclick="setEsito(${p.id},'X')">X<br><small style="font-size:.65rem;font-weight:400">Pareggio</small></div>
+        <div class="esito-btn ${stati[p.id].esito==='2'?'selected':''}" onclick="setEsito(${p.id},'2')">2<br><small style="font-size:.65rem;font-weight:400">${p.ospite}</small></div>
+      </div>
+      <div class="divider"></div>
+      <div class="form-group">
+        <label>Risultato esatto</label>
+        <input type="text" placeholder="Es. 2-1" value="${stati[p.id].risultato}"
+          oninput="stati[${p.id}].risultato=this.value">
+      </div>
+      <div class="form-group">
+        <label>Marcatore 🥅</label>
+        <input type="text" placeholder="Es. Mbappe" value="${stati[p.id].marcatore}"
+          oninput="stati[${p.id}].marcatore=this.value">
+      </div>
+    </div>
+  `).join('');
+}
+
+function setEsito(id, val) {
+  stati[id].esito = val;
+  renderMatches();
+}
+
+function invia() {
+  const nome = document.getElementById('nome').value.trim();
+  if (!nome) { alert('Inserisci il tuo nome!'); return; }
+
+  let msg = `🏆 TOTOMONDIALE 2026 – OTTAVI\n👤 ${nome}\n${'─'.repeat(32)}\n\n`;
+  let ok = true;
+
+  PARTITE.forEach(p => {
+    const s = stati[p.id];
+    if (!s.esito || !s.risultato) { ok = false; }
+    msg += `${p.id}. ${p.casa} vs ${p.ospite}\n`;
+    msg += `   Esito: ${s.esito||'?'}  |  Risultato: ${s.risultato||'?'}  |  Marcatore: ${s.marcatore||'—'}\n\n`;
+  });
+
+  if (!ok) {
+    if (!confirm('Alcuni campi non sono compilati. Vuoi inviare comunque?')) return;
+  }
+
+  const numero = "393318875357";
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+renderMatches();
+</script>
+</body>
+</html>
