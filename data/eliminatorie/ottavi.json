@@ -2108,6 +2108,74 @@
           "marcatore": "Embolo"
         }
       ]
+    },
+    "Tommaso Matteo Fenderico": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "0-0",
+          "marcatore": ""
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Balogun"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Manzambi"
+        }
+      ]
     }
   },
   "risultati": {
