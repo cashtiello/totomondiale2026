@@ -1,0 +1,2155 @@
+{
+  "_fase": "ottavi",
+  "pronostici": {
+    "Emiliano Castiello": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-0",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Manzambi"
+        }
+      ]
+    },
+    "Gianmarco Noschese": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Ronaldo"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Tielemans"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Lautaro"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Embolo"
+        }
+      ]
+    },
+    "Vincenzo Rubino": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Diaz"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius junior"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Lautaro"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Francesco Albricci": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Balogun"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "2-1",
+          "marcatore": "Embolo"
+        }
+      ]
+    },
+    "Pietro De Magistris": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "De Bruyne"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-0",
+          "marcatore": "Lautaro Martinez"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Antonio Giova": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Dembele"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Hakimi"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Doku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Rice"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "L. Diaz"
+        }
+      ]
+    },
+    "Stefano Sola": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Balogun"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Rios"
+        }
+      ]
+    },
+    "Stefano Ferrante": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-4",
+          "marcatore": "Mbappè"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Balogun"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Luis Diaz"
+        }
+      ]
+    },
+    "Mattia Petti": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Trossard"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Embolo"
+        }
+      ]
+    },
+    "Cristian Sparatore": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "3-2",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Alessandro Barrese": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Matteo Scala": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-4",
+          "marcatore": "Olise"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Hakimi"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "3-2",
+          "marcatore": "Bruno Fernandes"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "0-0",
+          "marcatore": ""
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "3-3",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "4-1",
+          "marcatore": "Lautaro Martinez"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "0-0",
+          "marcatore": ""
+        }
+      ]
+    },
+    "Andrea Ranavolo": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Dembélé"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "2",
+          "risultato": "1-0",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Gaetano Sebastianelli": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "2-1",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Roberto Piezzo": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Andrea Esposito": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Luis Diaz"
+        }
+      ]
+    },
+    "Riccardo & Antonio": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-2",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius junior"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Giulio Plini": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Balogun"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Embolo"
+        }
+      ]
+    },
+    "Anthony Tammaro": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappè"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Ronaldo"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "De Bruyne"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Lorenzo Trematerra": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Ronaldo"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Luis Diaz"
+        }
+      ]
+    },
+    "Pierluigi Pellone": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Brahim Díaz"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Lamine Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius Jr"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Luis Diaz"
+        }
+      ]
+    },
+    "Francesco Postiglione": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Olise"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "De Bruyne"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "2",
+          "risultato": "2-3",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Embolo"
+        }
+      ]
+    },
+    "Giovanni Corvino": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Diaz"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Trossard"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Luis Diaz"
+        }
+      ]
+    },
+    "Domenico Grimaldi": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Dembele"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "David J."
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Embolo"
+        }
+      ]
+    },
+    "Massimo Castellano": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Renato Lucci": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-4",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Ronaldo"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Lukaku"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Munoz"
+        }
+      ]
+    },
+    "Antonio Tolino": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius Junior"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Santiago Gimenez"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Luis Diaz"
+        }
+      ]
+    },
+    "Stefano Carloni": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-4",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "0-0",
+          "marcatore": ""
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Lautaro Martinez"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Lorenzo Sarcinelli": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappè"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Pulisic"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Vinicius Jr"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "L.Diaz"
+        }
+      ]
+    },
+    "Luca Petti": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Balogun"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "X",
+          "risultato": "2-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "Diaz"
+        }
+      ]
+    },
+    "Emiliano & Simone": {
+      "partite": [
+        {
+          "incontro": "Paraguay-Francia",
+          "casa": "Paraguay",
+          "ospite": "Francia",
+          "esito": "2",
+          "risultato": "0-3",
+          "marcatore": "Mbappè"
+        },
+        {
+          "incontro": "Canada-Marocco",
+          "casa": "Canada",
+          "ospite": "Marocco",
+          "esito": "2",
+          "risultato": "0-1",
+          "marcatore": "Saibari"
+        },
+        {
+          "incontro": "Portogallo-Spagna",
+          "casa": "Portogallo",
+          "ospite": "Spagna",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Lamine Yamal"
+        },
+        {
+          "incontro": "USA-Belgio",
+          "casa": "USA",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Trossard"
+        },
+        {
+          "incontro": "Brasile-Norvegia",
+          "casa": "Brasile",
+          "ospite": "Norvegia",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Vinicius"
+        },
+        {
+          "incontro": "Messico-Inghilterra",
+          "casa": "Messico",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Egitto",
+          "casa": "Argentina",
+          "ospite": "Egitto",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Svizzera-Colombia",
+          "casa": "Svizzera",
+          "ospite": "Colombia",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Embolo"
+        }
+      ]
+    }
+  },
+  "risultati": {
+    "Paraguay-Francia": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Canada-Marocco": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Portogallo-Spagna": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "USA-Belgio": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Brasile-Norvegia": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Messico-Inghilterra": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Argentina-Egitto": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Svizzera-Colombia": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    }
+  }
+}
