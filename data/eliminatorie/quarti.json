@@ -1,0 +1,999 @@
+{
+  "_fase": "quarti",
+  "pronostici": {
+    "Stefano Carloni": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Lautaro Martinez"
+        }
+      ]
+    },
+    "Gaetano Sebastianelli": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Anthony Tammaro": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Domenico Grimaldi": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Olise"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Alvarez"
+        }
+      ]
+    },
+    "Francesco Albricci": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Andrea Ranavolo": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "2",
+          "risultato": "0-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Alessandro Barrese": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Vincenzo Rubino": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Mbappé"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Giulio Plini": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Pietro De Magistris": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Dembele"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Julian Alvarez"
+        }
+      ]
+    },
+    "Luca Petti": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Tommaso Matteo Fenderico": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Massimo Castellano": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Emiliano Castiello": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Antonio Giova": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Olise"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Baena"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Paredes"
+        }
+      ]
+    },
+    "Lorenzo Trematerra": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Andrea Esposito": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Roberto Piezzo": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-3",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Lorenzo Sarcinelli": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappè"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "3-0",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Cristian Sparatore": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "2-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Antonio Corvino": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Stefano Ferrante": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappè"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Riccardo & Antonio": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Francesco Postiglione": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Olise"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Emiliano & Simone": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Kane"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Antonio Tolino": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Mattia Petti": {
+      "partite": [
+        {
+          "incontro": "Francia-Marocco",
+          "casa": "Francia",
+          "ospite": "Marocco",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Spagna-Belgio",
+          "casa": "Spagna",
+          "ospite": "Belgio",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Baena"
+        },
+        {
+          "incontro": "Norvegia-Inghilterra",
+          "casa": "Norvegia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Haaland"
+        },
+        {
+          "incontro": "Argentina-Svizzera",
+          "casa": "Argentina",
+          "ospite": "Svizzera",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Messi"
+        }
+      ]
+    }
+  },
+  "risultati": {
+    "Francia-Marocco": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Spagna-Belgio": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Norvegia-Inghilterra": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Argentina-Svizzera": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    }
+  }
+}
