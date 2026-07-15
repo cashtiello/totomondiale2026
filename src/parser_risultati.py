@@ -1,22 +1,10 @@
 """
 parser_risultati.py - Legge il file Excel dei risultati reali.
-
-Struttura attesa: data/risultati_reali/risultati.xlsx
-
-Foglio "PARTITE":
-  | PARTITA | RISULTATO | MARCATORE |
-
-Foglio "GIRONI":
-  | GIRONE | 1° CLASSIFICATA | 2° CLASSIFICATA |
-
-Foglio "SPECIALI":
-  | VOCE | VALORE |
-
-Se i fogli non esistono, cerca i dati nel primo foglio con un approccio flessibile.
 """
 
 from pathlib import Path
 from typing import Optional
+import json
 
 import openpyxl
 
@@ -30,7 +18,8 @@ from src.logger import get_logger
 
 log = get_logger(__name__)
 
-# Chiavi riconosciute nel foglio SPECIALI
+RISULTATI_SPECIALI_FILE = Path(__file__).parent.parent / "data" / "risultati_speciali.json"
+
 CHIAVI_SPECIALI = {
     "vincitore":        ("vincitore", "vincitrice", "vincitrice competizione"),
     "finalista_1":      ("finalista 1", "team 1", "finalista1"),
@@ -44,7 +33,6 @@ CHIAVI_SPECIALI = {
 
 
 def _match_chiave(raw: str) -> Optional[str]:
-    """Trova la chiave speciale corrispondente a una label grezza."""
     n = normalizza_stringa(raw)
     for campo, varianti in CHIAVI_SPECIALI.items():
         for v in varianti:
@@ -53,8 +41,34 @@ def _match_chiave(raw: str) -> Optional[str]:
     return None
 
 
+def _leggi_speciali_da_json() -> dict[str, Optional[str]]:
+    """Legge i risultati speciali da data/risultati_speciali.json."""
+    speciali = {}
+    try:
+        if RISULTATI_SPECIALI_FILE.exists():
+            with open(RISULTATI_SPECIALI_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            mapping = {
+                "vincitore":        "vincitore",
+                "finalista_1":      "finalista_1",
+                "finalista_2":      "finalista_2",
+                "capocannoniere":   "capocannoniere",
+                "assistman":        "assistman",
+                "mvp":              "mvp",
+                "miglior_portiere": "miglior_portiere",
+                "miglior_giovane":  "miglior_giovane",
+            }
+            for key, campo in mapping.items():
+                val = data.get(key, "")
+                if val:
+                    speciali[campo] = val.strip()
+                    log.info(f"  📋 Speciale da JSON: {campo} = {val}")
+    except Exception as e:
+        log.warning(f"Errore lettura risultati_speciali.json: {e}")
+    return speciali
+
+
 def _leggi_foglio_partite(ws) -> dict[str, RisultatoPartita]:
-    """Legge un foglio strutturato come tabella PARTITA | RISULTATO | MARCATORE."""
     risultati: dict[str, RisultatoPartita] = {}
     header_trovato = False
 
@@ -62,8 +76,6 @@ def _leggi_foglio_partite(ws) -> dict[str, RisultatoPartita]:
         vals = [safe_str(v) for v in row]
         if not any(vals):
             continue
-
-        # Riconosci header
         if not header_trovato:
             ns = [normalizza_stringa(v) for v in vals]
             if any("partita" in n or "incontro" in n for n in ns):
@@ -87,7 +99,6 @@ def _leggi_foglio_partite(ws) -> dict[str, RisultatoPartita]:
 
 
 def _leggi_foglio_gironi(ws) -> dict[str, RisultatoGirone]:
-    """Legge un foglio strutturato come tabella GIRONE | 1° | 2°."""
     gironi: dict[str, RisultatoGirone] = {}
     header_trovato = False
 
@@ -95,7 +106,6 @@ def _leggi_foglio_gironi(ws) -> dict[str, RisultatoGirone]:
         vals = [safe_str(v) for v in row]
         if not any(vals):
             continue
-
         if not header_trovato:
             ns = [normalizza_stringa(v) for v in vals]
             if any("girone" in n for n in ns):
@@ -119,7 +129,6 @@ def _leggi_foglio_gironi(ws) -> dict[str, RisultatoGirone]:
 
 
 def _leggi_foglio_speciali(ws) -> dict[str, Optional[str]]:
-    """Legge un foglio VOCE | VALORE per i premi individuali."""
     speciali: dict[str, Optional[str]] = {}
     header_trovato = False
 
@@ -127,7 +136,6 @@ def _leggi_foglio_speciali(ws) -> dict[str, Optional[str]]:
         vals = [safe_str(v) for v in row]
         if not any(vals):
             continue
-
         if not header_trovato:
             ns = [normalizza_stringa(v) for v in vals]
             if any("voce" in n or "categoria" in n for n in ns):
@@ -145,10 +153,6 @@ def _leggi_foglio_speciali(ws) -> dict[str, Optional[str]]:
 
 
 def leggi_risultati(percorso: Path = RISULTATI_FILE) -> RisultatiReali:
-    """
-    Legge il file risultati.xlsx e restituisce un oggetto RisultatiReali.
-    Se il file non esiste o ha errori, restituisce un oggetto vuoto.
-    """
     risultati = RisultatiReali()
 
     if not percorso.exists():
@@ -182,10 +186,15 @@ def leggi_risultati(percorso: Path = RISULTATI_FILE) -> RisultatiReali:
         risultati.gironi = _leggi_foglio_gironi(wb[sheet_names_lower["gironi"]])
         log.info(f"Risultati gironi caricati: {len(risultati.gironi)}")
 
-    # ── Speciali ─────────────────────────────────────────────────────────────
-    speciali: dict[str, Optional[str]] = {}
+    # ── Speciali: prima JSON, poi Excel come fallback ─────────────────────────
+    speciali = _leggi_speciali_da_json()
+
+    # Fallback Excel per campi non presenti nel JSON
     if "speciali" in sheet_names_lower:
-        speciali = _leggi_foglio_speciali(wb[sheet_names_lower["speciali"]])
+        speciali_excel = _leggi_foglio_speciali(wb[sheet_names_lower["speciali"]])
+        for campo, valore in speciali_excel.items():
+            if campo not in speciali and valore:
+                speciali[campo] = valore
 
     risultati.vincitore         = speciali.get("vincitore")
     risultati.finalista_1       = speciali.get("finalista_1")
@@ -196,20 +205,17 @@ def leggi_risultati(percorso: Path = RISULTATI_FILE) -> RisultatiReali:
     risultati.miglior_portiere  = speciali.get("miglior_portiere")
     risultati.miglior_giovane   = speciali.get("miglior_giovane")
 
-    log.info("File risultati caricato con successo.")
+    log.info(f"Speciali caricati: {speciali}")
     return risultati
 
 
 def _crea_file_esempio(percorso: Path) -> None:
-    """Crea un file risultati.xlsx di esempio se non esiste."""
     percorso.parent.mkdir(parents=True, exist_ok=True)
 
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Alignment
 
     wb = Workbook()
-
-    # ── Foglio PARTITE ────────────────────────────────────────────────────────
     ws_p = wb.active
     ws_p.title = "PARTITE"
     header = ["PARTITA", "RISULTATO", "MARCATORE"]
@@ -218,55 +224,32 @@ def _crea_file_esempio(percorso: Path) -> None:
         cell.font = Font(bold=True, color="FFFFFF")
         cell.fill = PatternFill("solid", start_color="2E4057")
         cell.alignment = Alignment(horizontal="center")
-
-    partite_esempio = [
-        ("Messico-Sud Africa", "", ""),
-        ("Corea del Sud-R.Ceca", "", ""),
-        ("Canada-Bosnia", "", ""),
-    ]
-    for riga in partite_esempio:
-        ws_p.append(riga)
-
     ws_p.column_dimensions["A"].width = 30
     ws_p.column_dimensions["B"].width = 15
     ws_p.column_dimensions["C"].width = 20
 
-    # ── Foglio GIRONI ─────────────────────────────────────────────────────────
     ws_g = wb.create_sheet("GIRONI")
     ws_g.append(["GIRONE", "1° CLASSIFICATA", "2° CLASSIFICATA"])
     for cell in ws_g[1]:
         cell.font = Font(bold=True, color="FFFFFF")
         cell.fill = PatternFill("solid", start_color="2E4057")
         cell.alignment = Alignment(horizontal="center")
-
     for g in "ABCDEFGHIJKL":
         ws_g.append([g, "", ""])
-
     ws_g.column_dimensions["A"].width = 10
     ws_g.column_dimensions["B"].width = 25
     ws_g.column_dimensions["C"].width = 25
 
-    # ── Foglio SPECIALI ───────────────────────────────────────────────────────
     ws_s = wb.create_sheet("SPECIALI")
     ws_s.append(["VOCE", "VALORE"])
     for cell in ws_s[1]:
         cell.font = Font(bold=True, color="FFFFFF")
         cell.fill = PatternFill("solid", start_color="2E4057")
         cell.alignment = Alignment(horizontal="center")
-
-    voci = [
-        ("VINCITORE", ""),
-        ("FINALISTA 1", ""),
-        ("FINALISTA 2", ""),
-        ("CAPOCANNONIERE", ""),
-        ("ASSISTMAN", ""),
-        ("MVP TORNEO", ""),
-        ("MIGLIOR PORTIERE", ""),
-        ("MIGLIOR GIOVANE U21", ""),
-    ]
-    for voce in voci:
+    for voce in [("VINCITORE",""),("FINALISTA 1",""),("FINALISTA 2",""),
+                 ("CAPOCANNONIERE",""),("ASSISTMAN",""),("MVP TORNEO",""),
+                 ("MIGLIOR PORTIERE",""),("MIGLIOR GIOVANE U21","")]:
         ws_s.append(voce)
-
     ws_s.column_dimensions["A"].width = 25
     ws_s.column_dimensions["B"].width = 25
 
