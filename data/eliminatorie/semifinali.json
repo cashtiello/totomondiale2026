@@ -462,6 +462,28 @@
       ]
     }
   },
+  ,
+    "Emiliano Castiello": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        }
+      ]
+    }
+  },
   "risultati": {
     "Francia-Spagna": {
       "risultato": "0-2",
