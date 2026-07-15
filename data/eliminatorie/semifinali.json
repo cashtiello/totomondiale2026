@@ -1,0 +1,477 @@
+{
+  "_fase": "semifinali",
+  "pronostici": {
+    "Gaetano Sebastianelli": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Domenico Grimaldi": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Olise"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Francesco Albricci": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Antonio Giova": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Dembelé"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Salvatore Scala": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "2",
+          "risultato": "2-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Giulio Plini": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Francesco Postiglione": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Alessandro Barrese": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Vincenzo Rubino": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "0-0",
+          "marcatore": ""
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Andrea Ranavolo": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "3-2",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Pierluigi Pellone": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Dembele"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "2",
+          "risultato": "0-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Antony Tammaro": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Pietro De Magistris": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Luca Petti": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Roberto Piezzo": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "2",
+          "risultato": "1-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Massimo Castellano": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Bellingham"
+        }
+      ]
+    },
+    "Andrea Esposito": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Emiliano & Simone": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Antonio Tolino": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Riccardo & Antonio": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Tommaso Matteo Fenderico": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Lorenzo Sarcinelli": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        }
+      ]
+    },
+    "Cristian Sparatore": {
+      "partite": [
+        {
+          "incontro": "Francia-Spagna",
+          "casa": "Francia",
+          "ospite": "Spagna",
+          "esito": "1",
+          "risultato": "3-2",
+          "marcatore": "Mbappe"
+        },
+        {
+          "incontro": "Inghilterra-Argentina",
+          "casa": "Inghilterra",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "2-2",
+          "marcatore": "Messi"
+        }
+      ]
+    }
+  },
+  "risultati": {
+    "Francia-Spagna": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Inghilterra-Argentina": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    }
+  }
+}
