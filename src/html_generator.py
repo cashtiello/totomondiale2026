@@ -128,13 +128,19 @@ def _build_dettaglio_partecipante(
         })
 
     s, r = partecipante.speciali, risultati
+    # Finalisti reali (insieme, ordine non importa)
+    finalisti_reali = [f for f in [r.finalista_1, r.finalista_2] if f]
+    def _e_finalista(pron_squadra):
+        if not pron_squadra or not finalisti_reali:
+            return False
+        return any(confronta_squadre(pron_squadra, fr) for fr in finalisti_reali)
     speciali_detail = [
         {"voce": "🏆 Vincitore Mondiale", "pron": s.vincitore or "—", "reale": r.vincitore,
          "ok": bool(s.vincitore and r.vincitore and confronta_squadre(s.vincitore, r.vincitore))},
         {"voce": "🥇 Finalista 1", "pron": s.finalista_1 or "—", "reale": r.finalista_1,
-         "ok": bool(s.finalista_1 and r.finalista_1 and confronta_squadre(s.finalista_1, r.finalista_1))},
+         "ok": _e_finalista(s.finalista_1)},
         {"voce": "🥈 Finalista 2", "pron": s.finalista_2 or "—", "reale": r.finalista_2,
-         "ok": bool(s.finalista_2 and r.finalista_2 and confronta_squadre(s.finalista_2, r.finalista_2))},
+         "ok": _e_finalista(s.finalista_2)},
         {"voce": "⚽ Capocannoniere", "pron": s.capocannoniere or "—", "reale": r.capocannoniere,
          "ok": bool(s.capocannoniere and r.capocannoniere and confronta_squadre(s.capocannoniere, r.capocannoniere))},
         {"voce": "🅰️ Assistman", "pron": s.assistman or "—", "reale": r.assistman,
