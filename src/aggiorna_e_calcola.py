@@ -16,6 +16,7 @@ from src.config import RISULTATI_FILE
 
 RISULTATI_MANUALI_FILE = Path(__file__).parent.parent / "data" / "risultati_manuali.json"
 ELIMINATORIE_DIR = Path(__file__).parent.parent / "data" / "eliminatorie"
+RISULTATI_SPECIALI_FILE = Path(__file__).parent.parent / "data" / "risultati_speciali.json"
 
 from src.excel_reader import leggi_tutti_pronostici
 from src.parser_risultati import leggi_risultati
@@ -358,13 +359,38 @@ def scrivi_risultati(partite: dict, gironi: dict) -> None:
         c.font = h_font; c.fill = h_fill; c.alignment = h_alg; c.border = bordo()
 
     speciali_esistenti = {}
+    # 1. Prima prova a leggere da risultati_speciali.json
+    try:
+        if RISULTATI_SPECIALI_FILE.exists():
+            with open(RISULTATI_SPECIALI_FILE, "r", encoding="utf-8") as f:
+                rs = json.load(f)
+            mapping = {
+                "vincitore":        "VINCITORE",
+                "finalista_1":      "FINALISTA 1",
+                "finalista_2":      "FINALISTA 2",
+                "capocannoniere":   "CAPOCANNONIERE",
+                "assistman":        "ASSISTMAN",
+                "mvp":              "MVP TORNEO",
+                "miglior_portiere": "MIGLIOR PORTIERE",
+                "miglior_giovane":  "MIGLIOR GIOVANE U21",
+            }
+            for key, voce in mapping.items():
+                val = rs.get(key, "")
+                if val:
+                    speciali_esistenti[voce] = val
+                    log.info(f"  📋 Speciale da JSON: {voce} = {val}")
+    except Exception as e:
+        log.warning(f"Errore lettura risultati_speciali.json: {e}")
+    # 2. Fallback: leggi dall'Excel esistente per valori non in JSON
     try:
         wb_old = openpyxl.load_workbook(RISULTATI_FILE, data_only=True)
         if "SPECIALI" in wb_old.sheetnames:
             ws_old = wb_old["SPECIALI"]
             for row in ws_old.iter_rows(min_row=2, values_only=True):
                 if row[0] and row[1]:
-                    speciali_esistenti[str(row[0]).strip()] = str(row[1]).strip()
+                    voce = str(row[0]).strip()
+                    if voce not in speciali_esistenti:
+                        speciali_esistenti[voce] = str(row[1]).strip()
     except Exception:
         pass
 
