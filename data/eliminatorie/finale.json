@@ -421,6 +421,12 @@
         }
       ]
     },
+    "Lorenzo Sarcinelli": {
+  "partite": [
+    {"incontro": "Spagna-Argentina", "casa": "Spagna", "ospite": "Argentina", "esito": "1", "risultato": "3-0", "marcatore": "Yamal"},
+    {"incontro": "Francia-Inghilterra", "casa": "Francia", "ospite": "Inghilterra", "esito": "1", "risultato": "1-1", "marcatore": "Doue"}
+  ]
+},
     "Emiliano & Simone": {
       "partite": [
         {
