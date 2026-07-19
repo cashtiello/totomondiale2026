@@ -1,0 +1,457 @@
+{
+  "_fase": "finale",
+  "pronostici": {
+    "Andrea Ranavolo": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "4-3",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Salvatore Scala": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Antony Tammaro": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Merino"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Vincenzo Rubino": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappé"
+        }
+      ]
+    },
+    "Riccardo & Antonio": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "1-0",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Antonio Giova": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Stefano Ferrante": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappè"
+        }
+      ]
+    },
+    "Mattia Petti": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Kane"
+        }
+      ]
+    },
+    "Pietro De Magistris": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Francesco Albricci": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "X",
+          "risultato": "2-1",
+          "marcatore": "Dembelè"
+        }
+      ]
+    },
+    "Alessandro Barrese": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "2",
+          "risultato": "0-0",
+          "marcatore": "Jesus"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-0",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Massimo Castellano": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Domenico Grimaldi": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "4-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Gaetano Sebastianelli": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-2",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappè"
+        }
+      ]
+    },
+    "Emiliano Castiello": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-0",
+          "marcatore": "Merino"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Roberto Piezzo": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Andrea Esposito": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Luca Petti": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Giulio Plini": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Antonio Tolino": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "1",
+          "risultato": "3-2",
+          "marcatore": "Oyarzabal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Tommaso Matteo Fenderico": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Yamal"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "2-1",
+          "marcatore": "Mbappe"
+        }
+      ]
+    },
+    "Emiliano & Simone": {
+      "partite": [
+        {
+          "incontro": "Spagna-Argentina",
+          "casa": "Spagna",
+          "ospite": "Argentina",
+          "esito": "X",
+          "risultato": "1-1",
+          "marcatore": "Messi"
+        },
+        {
+          "incontro": "Francia-Inghilterra",
+          "casa": "Francia",
+          "ospite": "Inghilterra",
+          "esito": "1",
+          "risultato": "3-1",
+          "marcatore": "Mbappè"
+        }
+      ]
+    }
+  },
+  "risultati": {
+    "Spagna-Argentina": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    },
+    "Francia-Inghilterra": {
+      "risultato": "",
+      "esito": "",
+      "marcatori": ""
+    }
+  }
+}
