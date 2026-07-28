@@ -5,3 +5,10 @@ data/logs/
 data/output/classifica.xlsx
 *.tmp
 ~$*
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
